@@ -144,8 +144,8 @@ function Gallery() {
       <div className="max-w-6xl mx-auto px-5 md:px-8 py-24 md:py-32">
         <div className="text-center mb-16 md:mb-20">
           <div className="eyebrow mb-6">OUR STANCE</div>
-          <h2 className="display-serif text-[26px] md:text-[40px] leading-[1.55] md:leading-[1.45]">
-            施術への想いも、<br className="md:hidden" />
+          <h2 className="display-serif text-[26px] md:text-[40px] leading-[1.6] md:leading-[1.5]">
+            施術への想いも、<br />
             経営の数字と同じだけ、大切に。
           </h2>
         </div>
@@ -214,7 +214,8 @@ function Features() {
         <div className="text-center mb-16 md:mb-20">
           <div className="eyebrow mb-6">FEATURES</div>
           <h2 className="display-serif text-[28px] md:text-[44px] leading-[1.5] md:leading-[1.4]">
-            HairSalonLink で<br className="md:hidden" />できること
+            HairSalonLink で<br />
+            できること。
           </h2>
         </div>
 
@@ -259,7 +260,7 @@ function Why() {
         <div className="text-center mb-14">
           <div className="eyebrow mb-6">WHY HAIRSALONLINK</div>
           <h2 className="display-serif text-[28px] md:text-[42px] leading-[1.5] md:leading-[1.4]">
-            はじめやすさを、<br className="md:hidden" />
+            はじめやすさを、<br />
             いちばんに考えて。
           </h2>
         </div>
@@ -332,8 +333,8 @@ function Pricing() {
         <div className="text-center mb-16 md:mb-20">
           <div className="eyebrow mb-6">PRICING</div>
           <h2 className="display-serif text-[28px] md:text-[44px] leading-[1.5] md:leading-[1.4]">
-            席数で選ぶ、<br className="md:hidden" />
-            シンプルな3プラン
+            席数で選ぶ、<br />
+            シンプルな3プラン。
           </h2>
           <p className="mt-6 text-[13px] text-[#6b5d57] tracking-wide">
             初期費用 ¥0 / いつでも解約可能 / 契約期間の縛りなし
