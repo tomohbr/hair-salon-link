@@ -65,19 +65,19 @@ function Hero() {
           HAIR SALON &nbsp;×&nbsp; LINE &nbsp;×&nbsp; HOT PEPPER
         </div>
 
-        <h1 className="display-serif text-[34px] md:text-[58px] leading-[1.45] md:leading-[1.35] text-[#ebe1cf]">
-          はじめてのお客さまを、<br />
-          ずっと通ってくださる方へ。
+        <h1 className="display-serif text-[36px] md:text-[64px] leading-[1.4] md:leading-[1.3] text-[#ebe1cf]">
+          店をつづける、<br />
+          ということ。
         </h1>
 
-        <p className="mt-10 text-[15px] md:text-base text-[#8a7f6e] leading-[2]">
-          ホットペッパーでご来店いただいた新規のお客さまを、<br className="hidden md:block" />
-          LINE のやさしいつながりで、自社の常連さまへ。
+        <p className="mt-10 text-[14px] md:text-[15px] text-[#8a7f6e] leading-[2.1] max-w-xl mx-auto">
+          ホットペッパーの広告が、いつか要らなくなる日まで。<br className="hidden md:block" />
+          美容室の経営を、静かに支えるための顧客管理ツール。
         </p>
 
         <div className="mt-12 flex flex-col sm:flex-row gap-3 justify-center items-center">
           <Link href="/register" className="btn-cta">
-            新規ご登録（月額 ¥4,980）
+            HAIRSALONLINK を始める
           </Link>
           <Link href="/login" className="btn-cta-ghost">
             ログイン
@@ -105,21 +105,20 @@ function About() {
       <div className="max-w-3xl mx-auto px-5 md:px-8 py-24 md:py-32 text-center">
         <div className="eyebrow mb-8">ABOUT</div>
         <h2 className="display-serif text-[28px] md:text-[44px] leading-[1.55] md:leading-[1.45] mb-14">
-          美容室のための、<br />
-          やさしい集客のしくみ。
+          技術だけでは、<br />
+          店は回らない。
         </h2>
 
         <div className="space-y-7 text-[14px] md:text-[15px] leading-[2.1] text-[#b5a98f] text-left md:text-center">
           <p>
-            美容室のオーナーさまにとって、ホットペッパービューティーからの集客コストは、決して小さくない負担です。
-            せっかくご来店いただいた新規のお客さまが、次はご自身のサロンへ直接来てくださるようになれば、
-            広告に頼る経営から、一歩ずつ離れていくことができます。
+            技術は確かだ。お客さまも、覚えていてくれる。
+            それでも、毎月の広告費と、紙のカルテと、オーナー個人のLINEの返信が、小さな店を少しずつ削っていく。
+            広告への依存から、少しずつ離れていくための地図が、そろそろ必要だと思う。
           </p>
           <p>
-            HairSalonLink は、そんな個人〜小規模のサロンさまのための、小さなサービスです。
-            予約管理も、薬剤カルテも、指名料の計算も、LINE 配信も、むずかしい設定なしではじめていただけます。
-            ホットペッパーからの新規のお客さまを、どれだけ自社にお迎えできたか。
-            独自の指標で、数字でやさしく見守ります。
+            HairSalonLink は、その削られる部分だけを、静かに引き受けるためのツール。
+            予約、薬剤カルテ、指名料、LINE配信、そしてHPB経由の新規客が自社リピートに変わった割合——
+            技術の邪魔をせず、店の経営だけを支える設計にしています。
           </p>
         </div>
       </div>
@@ -133,20 +132,20 @@ function About() {
 
 function Gallery() {
   const quotes = [
-    { label: 'CUT', caption: '似合うを、丁寧にかたちに。' },
-    { label: 'COLOR', caption: 'お客さまの個性を、そっと引き立てて。' },
-    { label: 'PERM', caption: '毎日のスタイリングを、やさしく。' },
-    { label: 'CARE', caption: '髪のことは、ずっとおつきあい。' },
+    { label: 'CUT', caption: '似合うを、かたちに。' },
+    { label: 'COLOR', caption: '個性を、ひと押しで。' },
+    { label: 'PERM', caption: '毎朝の手間を、引き算。' },
+    { label: 'CARE', caption: '髪は、時間をかけて。' },
   ];
 
   return (
     <section className="section-alt">
       <div className="max-w-6xl mx-auto px-5 md:px-8 py-24 md:py-32">
         <div className="text-center mb-16 md:mb-20">
-          <div className="eyebrow mb-6">OUR STANCE</div>
+          <div className="eyebrow mb-6">ON OUR DESK</div>
           <h2 className="display-serif text-[26px] md:text-[40px] leading-[1.6] md:leading-[1.5]">
-            施術への想いも、<br />
-            経営の数字と同じだけ、大切に。
+            道具は、<br />
+            技術の邪魔をしない。
           </h2>
         </div>
 
@@ -178,33 +177,33 @@ function Features() {
   const features = [
     {
       n: '01',
-      title: 'LINE でつながる予約',
-      body: 'LINE 公式アカウントからそのままご予約いただけます。LIFF 対応のため、お客さまはアプリのインストール不要。予約の前日には、リマインドも自動でお送りします。',
+      title: '予約は、LINEから。',
+      body: 'LINE公式アカウントからそのまま予約を受ける。LIFF対応でアプリ不要。前日のリマインドは自動で流れる。',
     },
     {
       n: '02',
-      title: 'ひとつのカレンダーで、すべての予約を',
-      body: 'ホットペッパー・LINE・自社ホームページからのご予約を、ひとつのカレンダーに集約します。CSV取込にも対応しているため、既存のお客さまデータを手間なく移行していただけます。',
+      title: 'カレンダーは、ひとつ。',
+      body: 'HPB・LINE・自社ホームページからの予約を、同じカレンダーに集める。既存データはCSV取込で移行できる。',
     },
     {
       n: '03',
-      title: 'ホットペッパーからの流れを、見える化',
-      body: 'ホットペッパー経由でご来店いただいた新規のお客さまのうち、次回ご自身のサロンへ戻ってきてくださった割合を、独自の指標で可視化。他のサービスにはない視点で、じっくりと改善を重ねていけます。',
+      title: 'HPBからの流れを、追う。',
+      body: 'HPB経由で来店した新規客のうち、次回をLINEや自社で予約した割合を、独自KPIで可視化する。広告費の判断材料として残しておく。',
     },
     {
       n: '04',
-      title: '薬剤履歴カルテと、指名の管理',
-      body: 'カラー剤のブランド・比率・日付、アレルギー、ダメージレベルを一元管理。Director / Top / Stylist / Junior / Assistant の5階層と、指名料の設定にも対応します。',
+      title: '薬剤と、指名を、残す。',
+      body: 'カラー剤の銘柄・比率・日付、アレルギー、ダメージレベル1〜5。Director / Top / Stylist / Junior / Assistant の5階層と、指名料の自動計算にも対応する。',
     },
     {
       n: '05',
-      title: 'セグメント別の、やさしい配信',
-      body: '休眠されているお客さま、LINE のお友だち、初回ご来店のお客さま。セグメントに応じて、ちょうどよいタイミングで、ちょうどよい内容のご連絡をお届けできます。',
+      title: '配信は、撃ちすぎない。',
+      body: '「休眠90日超」「VIP」「初回来店」など、条件に合う顧客だけにLINE配信する。無駄打ちは、顧客を疲れさせる。',
     },
     {
       n: '06',
-      title: 'スタイルギャラリー',
-      body: 'サロンさまが撮影された作品を、ひとつの場所に。お客さまは気になったスタイルから、そのままご予約いただけるように設計しています。',
+      title: 'スタイルは、そのまま予約に。',
+      body: '撮影した作品を並べておくと、お客さまは気になったスタイルから、そのまま予約に進める。ギャラリーと予約は、地続きであるべきだ。',
     },
   ];
 
@@ -212,10 +211,9 @@ function Features() {
     <section id="features" className="bg-[#120e0c]">
       <div className="max-w-5xl mx-auto px-5 md:px-8 py-24 md:py-32">
         <div className="text-center mb-16 md:mb-20">
-          <div className="eyebrow mb-6">FEATURES</div>
+          <div className="eyebrow mb-6">TOOLS</div>
           <h2 className="display-serif text-[28px] md:text-[44px] leading-[1.5] md:leading-[1.4]">
-            HairSalonLink で<br />
-            できること。
+            道具について。
           </h2>
         </div>
 
@@ -249,19 +247,19 @@ function Features() {
 
 function Why() {
   const points = [
-    { label: '初期費用 ¥0', body: '契約金・導入支援費用はいただきません。ご登録後、すぐにはじめていただけます。' },
-    { label: '契約期間の縛りなし', body: '月単位で解約していただけます。解約時は顧客データを CSV でエクスポートできます。' },
-    { label: '美容室特化の設計', body: '指名料の5階層、薬剤カルテ、HPB移行率追跡など、美容室の現場に合わせて設計しています。' },
+    { label: '初期費用 ¥0', body: '契約金・導入支援費用は取らない。登録後すぐに使える。' },
+    { label: '契約期間の縛りなし', body: '月単位で解約できる。解約時は顧客データをCSVでエクスポートできる。' },
+    { label: '美容室特化の設計', body: '指名料5階層・薬剤カルテ・HPB移行率追跡など、現場に合わせて作っている。' },
   ];
 
   return (
     <section className="section-alt">
       <div className="max-w-4xl mx-auto px-5 md:px-8 py-24 md:py-32">
         <div className="text-center mb-14">
-          <div className="eyebrow mb-6">WHY HAIRSALONLINK</div>
+          <div className="eyebrow mb-6">THREE THINGS</div>
           <h2 className="display-serif text-[28px] md:text-[42px] leading-[1.5] md:leading-[1.4]">
-            はじめやすさを、<br />
-            いちばんに考えて。
+            始めるときに、<br />
+            邪魔になるものを、外す。
           </h2>
         </div>
 
@@ -301,7 +299,7 @@ function Pricing() {
       name: 'Free',
       price: '¥0',
       desc: 'まずは機能確認',
-      target: '個人オーナーさま / お試し用',
+      target: '個人オーナー / 試験導入',
       seats: '1席',
       reservations: '月50件まで',
       features: ['顧客 30名まで', '基本カルテ', 'LINE予約URL'],
@@ -309,8 +307,8 @@ function Pricing() {
     {
       name: 'Standard',
       price: '¥4,980',
-      desc: '個人〜小規模サロン',
-      target: 'オーナー1名 + スタッフ1〜2名',
+      desc: '1〜5席の店舗',
+      target: '1〜5席の店舗',
       seats: '1〜5席',
       reservations: '無制限',
       features: ['顧客 500名', 'LINE連携・配信', '薬剤カルテ', '指名管理', 'HPB移行追跡', 'セグメント分析'],
@@ -319,8 +317,8 @@ function Pricing() {
     {
       name: 'Pro',
       price: '¥9,980',
-      desc: '成長期 / 複数スタッフ',
-      target: 'スタッフ5名以上の拠点',
+      desc: '複数スタッフ / 拠点',
+      target: 'スタッフ5名以上の店舗',
       seats: '4席〜',
       reservations: '無制限',
       features: ['顧客無制限', 'AI離反予測', 'スタイルギャラリー', '複数スタッフ管理', '初期設定サポート'],
@@ -333,11 +331,11 @@ function Pricing() {
         <div className="text-center mb-16 md:mb-20">
           <div className="eyebrow mb-6">PRICING</div>
           <h2 className="display-serif text-[28px] md:text-[44px] leading-[1.5] md:leading-[1.4]">
-            席数で選ぶ、<br />
-            シンプルな3プラン。
+            席数で、<br />
+            プランを選ぶ。
           </h2>
           <p className="mt-6 text-[13px] text-[#8a7f6e] tracking-wide">
-            初期費用 ¥0 / いつでも解約可能 / 契約期間の縛りなし
+            初期費用 ¥0　/　いつでも解約可能　/　契約期間の縛りなし
           </p>
         </div>
 
@@ -414,28 +412,28 @@ function Pricing() {
 function Faq() {
   const faqs = [
     {
-      q: '既存のお客さまデータは移行できますか？',
-      a: 'はい。ホットペッパービューティー の CSV エクスポートを、そのままお取り込みいただけます。顧客情報と過去のご予約履歴を自動で結合し、電話番号の重複も名寄せして、数分で移行を完了します。',
+      q: '既存の顧客データは移行できますか？',
+      a: 'はい。ホットペッパービューティーのCSVエクスポートを直接取り込めます。顧客情報と過去の予約履歴を自動で結合、電話番号の重複は名寄せして、数分で移行が完了します。',
     },
     {
       q: '最低契約期間はありますか？',
-      a: 'ありません。月単位で解約していただけます。解約時から 30日間は、顧客データの CSV ダウンロードにも対応します。契約期間の縛りや違約金はございません。',
+      a: 'ありません。月単位で解約できます。解約後30日間は顧客データのCSVダウンロードにも対応します。縛りや違約金はありません。',
     },
     {
-      q: 'スタッフさまへの教育は大変ですか？',
-      a: '予約管理とお客さまカルテを中心に、アイコンベースのシンプルな管理画面です。LINE を普段お使いのスタッフさまであれば、特別な研修や専任担当者を置かずに、運用をはじめていただけます。',
+      q: 'スタッフ教育は大変ですか？',
+      a: '予約管理と顧客カルテを中心に、アイコンベースのシンプルな管理画面にしています。LINEを普段使っているスタッフであれば、特別な研修や専任担当者は必要ありません。',
     },
     {
       q: 'LINE 公式アカウントは別途必要ですか？',
-      a: 'はい、LINE 公式アカウント（Messaging API）のご用意が別途必要です。料金・無料配信通数の詳細は LINE for Business の公式情報をご確認ください。HairSalonLink 側は、設定画面で Channel ID / Access Token を入力いただくだけで接続完了します。',
+      a: 'はい、LINE公式アカウント（Messaging API）が別途必要です。料金・無料配信通数はLINE for Businessの公式情報をご確認ください。接続は管理画面でChannel ID / Access Tokenを入力するだけで完了します。',
     },
     {
       q: 'サポート体制を教えてください',
-      a: 'メールでのお問い合わせを承ります（support@hairsalonlink.demo）。Pro プランでは、初期設定のサポートも含まれます。',
+      a: 'メールで受け付けます（support@hairsalonlink.demo）。Proプランでは初期設定のサポートも含まれます。',
     },
     {
       q: 'お支払い方法は？',
-      a: 'Stripe によるクレジットカードの月額決済です。初回ご登録時にカード情報をご入力いただき、以降は自動更新。領収書はメールで自動発行いたします。',
+      a: 'Stripe によるクレジットカードの月額決済です。初回登録時にカード情報を入力、以降は自動更新。領収書はメールで自動発行されます。',
     },
   ];
 
@@ -459,11 +457,11 @@ function Faq() {
         </div>
 
         <div className="mt-14 text-center text-[13px] text-[#8a7f6e]">
-          ほかにご不明な点がございましたら、{' '}
+          ほかにご不明な点は、{' '}
           <a href="mailto:support@hairsalonlink.demo" className="brand-text font-semibold underline underline-offset-4">
             support@hairsalonlink.demo
           </a>
-          {' '}までお気軽にお問い合わせください。
+          {' '} までどうぞ。
         </div>
       </div>
     </section>
@@ -480,17 +478,17 @@ function FinalCta() {
       <div className="relative max-w-3xl mx-auto px-5 md:px-8 py-24 md:py-32 text-center">
         <div className="eyebrow mb-8">GET STARTED</div>
         <h2 className="display-serif text-[30px] md:text-[48px] leading-[1.5] md:leading-[1.4] text-[#ebe1cf]">
-          サロンさまの毎日を、<br />
-          もう少しだけ、やさしく。
+          次の一人の常連を、<br />
+          自分の手で。
         </h2>
         <p className="mt-8 text-[14px] md:text-[15px] leading-[2] text-[#8a7f6e]">
-          はじめての方も、どうぞお気軽にご登録ください。<br className="hidden md:block" />
-          ご登録は数分、契約期間の縛りもございません。
+          ホットペッパーは、今日もはたらいてくれる。<br className="hidden md:block" />
+          けれど、次の常連を誰が連れてくるかは、自分で決めたい。
         </p>
 
         <div className="mt-12 flex flex-col sm:flex-row gap-3 justify-center items-center">
           <Link href="/register" className="btn-cta-gold">
-            新規ご登録（月額 ¥4,980）
+            HAIRSALONLINK を始める
           </Link>
           <Link
             href="/book/hair-salon-demo"
@@ -524,8 +522,8 @@ function Footer() {
               </div>
             </div>
             <p className="text-[11px] leading-[1.9] text-[#7a6e68]">
-              美容室のオーナーさまのための、<br />
-              自社集客のためのサービスです。
+              広告に頼らない経営のための、<br />
+              美容室専用の管理ツール。
             </p>
           </div>
 

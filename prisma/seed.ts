@@ -32,6 +32,12 @@ async function main() {
     console.log('✓ Created superadmin: super@hairsalonlink.demo / super1234');
   }
 
+  // Migrate stale 'light' plan to 'standard' for any existing salons
+  await prisma.salon.updateMany({
+    where: { plan: 'light' },
+    data: { plan: 'standard' },
+  });
+
   // Demo Salon (決済済み active 状態)
   let demoSalon = await prisma.salon.findUnique({ where: { slug: 'hair-salon-demo' } });
   if (demoSalon) {
@@ -47,7 +53,7 @@ async function main() {
       address: '東京都渋谷区神宮前1-2-3 アートビル2F',
       phone: '03-1234-5678',
       description: '神宮前のプライベート美容室。',
-      plan: 'light',
+      plan: 'standard',
       status: 'active',
     },
   });
