@@ -334,8 +334,9 @@ function Solution() {
       <div className="max-w-6xl mx-auto px-5 md:px-6">
         <div className="text-center max-w-2xl mx-auto mb-14 md:mb-16">
           <div className="eyebrow justify-center mb-4">解決の仕組み</div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight">
-            たった3ステップで、<br className="md:hidden" />自社集客へ。
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.25]">
+            <span className="inline-block">たった3ステップで、</span>
+            <span className="inline-block">自社集客へ。</span>
           </h2>
         </div>
 
@@ -655,8 +656,9 @@ function Pricing() {
       <div className="max-w-6xl mx-auto px-5 md:px-6">
         <div className="text-center max-w-2xl mx-auto mb-12 md:mb-14">
           <div className="eyebrow mb-4">Pricing</div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight">
-            席数で選ぶ、<br className="md:hidden" />シンプルな3プラン
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.25]">
+            <span className="inline-block">席数で選ぶ、</span>
+            <span className="inline-block">シンプルな3プラン</span>
           </h2>
           <p className="mt-4 text-stone-600">初期費用¥0 / いつでも解約可能 / 登録から最短5分でご利用開始</p>
         </div>
@@ -672,8 +674,10 @@ function Pricing() {
               }`}
             >
               {p.recommended && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="badge brand-bg !text-white px-3 py-1">もっとも選ばれています</span>
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
+                  <span className="inline-block brand-bg text-white text-[11px] font-bold px-3.5 py-1.5 rounded-full shadow-md whitespace-nowrap">
+                    もっとも選ばれています
+                  </span>
                 </div>
               )}
 
