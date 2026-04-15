@@ -103,7 +103,7 @@ function Hero() {
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link href="/book/hair-salon-demo" className="btn-cta-ghost justify-center sm:justify-start">
-                30秒でデモを触る
+                デモ画面を見てみる
               </Link>
             </div>
 
