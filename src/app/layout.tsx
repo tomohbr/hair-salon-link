@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Serif_JP } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,9 +12,15 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const notoSerifJp = Noto_Serif_JP({
+  variable: "--font-serif-jp",
+  weight: ["500", "700", "900"],
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
-  title: "HairSalonLink — 美容室向け顧客囲い込みSaaS",
-  description: "美容室の自社集客・LINE連携・指名管理・カルテを月額¥4,980で。",
+  title: "HairSalonLink — 美容室のための、自社集客サービス",
+  description: "ホットペッパーでご来店いただいた新規のお客さまを、LINEのやさしいつながりで、自社の常連さまへ。月額 ¥4,980 の美容室特化 SaaS。",
 };
 
 export default function RootLayout({
@@ -24,8 +30,8 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      lang="ja"
+      className={`${geistSans.variable} ${geistMono.variable} ${notoSerifJp.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

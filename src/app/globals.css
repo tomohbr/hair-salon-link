@@ -131,8 +131,19 @@
 }
 
 :root {
-  --brand: #1e3a8a;
-  --brand-light: #e0e7ff;
+  --brand: #3d2b2e;
+  --brand-light: #f5ede6;
+  --cream: #fbf7f1;
+  --cream-deep: #f5ede4;
+  --ink: #1f1b1e;
+  --ink-muted: #6b5d57;
+}
+
+/* Serif display font (Noto Serif JP) */
+.display-serif {
+  font-family: var(--font-serif-jp), "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", serif;
+  font-weight: 700;
+  letter-spacing: 0.01em;
 }
 
 .brand-bg { background: var(--brand); }
@@ -208,57 +219,34 @@
    Landing Page — Utilities
    ================================ */
 
-/* Eyebrow label (section intro) */
+/* Eyebrow label — quiet, centered-friendly */
 .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--brand);
-}
-.eyebrow::before {
-  content: "";
   display: inline-block;
-  width: 18px;
-  height: 1.5px;
-  background: var(--brand);
-  border-radius: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
 }
 
-/* Hero soft gradient background with subtle grid */
+/* Hero soft gradient background (warm monochrome) */
 .hero-bg {
   background:
-    radial-gradient(ellipse 800px 420px at 80% -10%, rgba(30, 58, 138, 0.08), transparent 60%),
-    radial-gradient(ellipse 600px 400px at 0% 110%, rgba(16, 185, 129, 0.06), transparent 60%),
-    linear-gradient(180deg, #ffffff 0%, #fafaf9 100%);
-}
-.hero-grid {
-  background-image:
-    linear-gradient(to right, rgba(30, 58, 138, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(30, 58, 138, 0.05) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(ellipse 60% 50% at 50% 40%, black 40%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 40%, black 40%, transparent 100%);
+    radial-gradient(ellipse 900px 520px at 50% 0%, rgba(245, 237, 230, 0.9), transparent 65%),
+    radial-gradient(ellipse 700px 400px at 90% 100%, rgba(245, 228, 220, 0.6), transparent 60%),
+    linear-gradient(180deg, #fdfaf6 0%, #fbf7f1 100%);
 }
 
-/* Alternating section background */
-.section-alt { background: #fafaf9; }
+/* Alternating section background (warm cream) */
+.section-alt { background: #fbf7f1; }
+.section-cream-deep { background: #f5ede4; }
 
-/* Final CTA — dark navy with grid */
+/* Final CTA — deep espresso with warm glow */
 .cta-dark {
   background:
-    radial-gradient(ellipse 600px 300px at 50% 0%, rgba(224, 231, 255, 0.08), transparent 70%),
-    linear-gradient(180deg, #1e3a8a 0%, #172554 100%);
+    radial-gradient(ellipse 700px 400px at 50% 0%, rgba(245, 228, 220, 0.08), transparent 70%),
+    linear-gradient(180deg, #3d2b2e 0%, #201416 100%);
   color: white;
-}
-.cta-dark-grid {
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 48px 48px;
 }
 
 /* Large metric number */
@@ -268,67 +256,68 @@
   letter-spacing: -0.02em;
 }
 
-/* Soft card hover */
+/* Soft card hover (warm) */
 .card-soft {
   background: white;
-  border: 1px solid #e7e5e4;
-  border-radius: 16px;
-  padding: 24px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  border: 1px solid #ece3d7;
+  border-radius: 4px;
+  padding: 28px 26px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 .card-soft:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px -12px rgba(30, 58, 138, 0.15);
-  border-color: #d6d3d1;
+  box-shadow: 0 14px 36px -18px rgba(61, 43, 46, 0.18);
+  border-color: #d8cec3;
 }
 
-/* Big primary CTA button */
+/* Big primary CTA button — warm espresso */
 .btn-cta {
   background: var(--brand);
   color: white;
-  padding: 14px 26px;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 15px;
+  padding: 15px 30px;
+  border-radius: 2px;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.08em;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-  box-shadow: 0 8px 20px -8px rgba(30, 58, 138, 0.4);
+  gap: 10px;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 .btn-cta:hover {
+  background: #201416;
   transform: translateY(-1px);
-  background: #172554;
-  box-shadow: 0 12px 26px -10px rgba(30, 58, 138, 0.5);
 }
 .btn-cta-ghost {
-  background: white;
-  color: #1c1917;
-  padding: 14px 24px;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 15px;
+  background: transparent;
+  color: var(--ink);
+  padding: 15px 28px;
+  border-radius: 2px;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.08em;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  border: 1px solid #e7e5e4;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  gap: 10px;
+  border: 1px solid #d8cec3;
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 .btn-cta-ghost:hover {
-  border-color: #1c1917;
-  background: #fafaf9;
+  border-color: var(--brand);
+  background: rgba(61, 43, 46, 0.03);
 }
 .btn-cta-light {
   background: white;
   color: var(--brand);
-  padding: 14px 26px;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 15px;
+  padding: 15px 30px;
+  border-radius: 2px;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.08em;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  transition: transform 0.15s ease;
+  gap: 10px;
+  transition: transform 0.2s ease;
 }
 .btn-cta-light:hover { transform: translateY(-1px); }
 

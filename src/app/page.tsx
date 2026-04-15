@@ -1,33 +1,15 @@
 import Link from 'next/link';
-import {
-  Scissors,
-  ArrowRight,
-  Check,
-  MessageCircle,
-  TrendingDown,
-  TrendingUp,
-  BarChart3,
-  Sparkles,
-  AlertCircle,
-  Users,
-  FileText,
-  Zap,
-  Palette,
-  UserCheck,
-  Image as ImageIcon,
-} from 'lucide-react';
+import { Scissors, ArrowRight, Check } from 'lucide-react';
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-white text-stone-900">
+    <div className="min-h-screen bg-[#fbf7f1] text-[#1f1b1e]">
       <Header />
       <Hero />
-      <ProofBar />
-      <Problem />
-      <Solution />
+      <About />
+      <Gallery />
       <Features />
-      <ProductPreview />
-      <Comparison />
+      <Why />
       <Pricing />
       <Faq />
       <FinalCta />
@@ -42,205 +24,71 @@ export default function LandingPage() {
 
 function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-white/85 backdrop-blur">
-      <div className="max-w-6xl mx-auto px-5 md:px-6 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-50 border-b border-[#ece3d7]/80 bg-[#fbf7f1]/90 backdrop-blur">
+      <div className="max-w-6xl mx-auto px-5 md:px-8 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl brand-bg flex items-center justify-center shadow-sm">
-            <Scissors className="w-4.5 h-4.5 text-white" strokeWidth={2.2} />
+          <div className="w-8 h-8 rounded-sm brand-bg flex items-center justify-center">
+            <Scissors className="w-4 h-4 text-white" strokeWidth={2} />
           </div>
           <div className="leading-tight">
-            <div className="font-bold tracking-tight">HairSalonLink</div>
-            <div className="text-[10px] text-stone-500 font-medium">for Hair Salons</div>
+            <div className="font-semibold tracking-tight text-[15px]">HairSalonLink</div>
+            <div className="text-[9px] text-[#6b5d57] tracking-[0.18em] uppercase">for Hair Salons</div>
           </div>
         </Link>
-        <nav className="hidden md:flex items-center gap-7 text-sm text-stone-600">
-          <Link href="#problem" className="hover:text-stone-900 transition">課題</Link>
-          <Link href="#features" className="hover:text-stone-900 transition">機能</Link>
-          <Link href="#pricing" className="hover:text-stone-900 transition">料金</Link>
-          <Link href="#faq" className="hover:text-stone-900 transition">FAQ</Link>
-          <Link href="/login" className="hover:text-stone-900 transition">ログイン</Link>
+        <nav className="hidden md:flex items-center gap-8 text-[13px] text-[#6b5d57]">
+          <Link href="#about" className="hover:text-[#1f1b1e] transition">サービスについて</Link>
+          <Link href="#features" className="hover:text-[#1f1b1e] transition">できること</Link>
+          <Link href="#pricing" className="hover:text-[#1f1b1e] transition">料金</Link>
+          <Link href="#faq" className="hover:text-[#1f1b1e] transition">FAQ</Link>
+          <Link href="/login" className="hover:text-[#1f1b1e] transition">ログイン</Link>
         </nav>
-        <div className="flex items-center gap-2">
-          <Link
-            href="/register"
-            className="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-lg brand-bg text-white hover:opacity-90 transition"
-          >
-            無料で始める
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
+        <Link
+          href="/register"
+          className="hidden sm:inline-flex items-center gap-1.5 text-[12px] font-medium tracking-wider px-4 py-2 brand-bg text-white hover:opacity-90 transition"
+        >
+          新規ご登録
+        </Link>
       </div>
     </header>
   );
 }
 
 /* ────────────────────────────────────────────────────────── */
-/*  Hero                                                      */
+/*  Hero — centered, serif, no mock                          */
 /* ────────────────────────────────────────────────────────── */
 
 function Hero() {
   return (
     <section className="relative hero-bg">
-      <div className="absolute inset-0 hero-grid pointer-events-none overflow-hidden" aria-hidden />
-      <div className="relative max-w-6xl mx-auto px-5 md:px-6 pt-16 pb-24 md:pt-24 md:pb-32">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
-          {/* Left: copy */}
-          <div className="lg:col-span-7 fade-up">
-            <div className="eyebrow mb-5">美容室向け 顧客管理 SaaS</div>
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.15]">
-              HPB依存から、<br />
-              <span className="brand-text">LINE主導</span>の<br className="md:hidden" />経営へ。
-            </h1>
-            <p className="mt-6 text-base md:text-lg text-stone-600 leading-relaxed max-w-xl">
-              ホットペッパー依存から抜け出したい個人〜小規模の美容室のための、
-              LINE 連携・指名・薬剤カルテ・顧客分析がひとつになった管理ツール。
-              <span className="text-stone-900 font-medium">月額 ¥4,980、初期費用 ¥0。</span>
-            </p>
-
-            <div className="mt-8 flex flex-col sm:flex-row gap-3">
-              <Link href="/register" className="btn-cta justify-center sm:justify-start">
-                無料で始める
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link href="/book/hair-salon-demo" className="btn-cta-ghost justify-center sm:justify-start">
-                デモ画面を見てみる
-              </Link>
-            </div>
-
-            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-stone-500">
-              <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" />クレカ登録不要で試せる</span>
-              <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" />契約期間の縛りなし</span>
-              <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" />デモ環境を公開中</span>
-            </div>
-          </div>
-
-          {/* Right: product mock */}
-          <div className="lg:col-span-5 fade-up fade-up-2">
-            <HeroMock />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function HeroMock() {
-  return (
-    <div className="relative">
-      {/* Floating KPI badge */}
-      <div className="absolute -top-4 -left-2 md:-left-6 z-10 bg-white rounded-xl shadow-lg border border-stone-200 px-4 py-3 flex items-center gap-3">
-        <div className="w-9 h-9 rounded-lg brand-light-bg brand-text flex items-center justify-center">
-          <TrendingUp className="w-4.5 h-4.5" />
-        </div>
-        <div>
-          <div className="text-[10px] text-stone-500 font-medium">独自指標</div>
-          <div className="text-sm font-bold text-stone-900 metric">HPB→自社 移行率</div>
-        </div>
-      </div>
-
-      {/* Main dashboard card */}
-      <div className="bg-white rounded-2xl shadow-2xl border border-stone-200 p-5 md:p-6">
-        <div className="flex items-center justify-between mb-5">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-red-400" />
-            <div className="w-2 h-2 rounded-full bg-amber-400" />
-            <div className="w-2 h-2 rounded-full bg-emerald-400" />
-          </div>
-          <div className="text-[10px] text-stone-400 font-mono">dashboard.hairsalonlink.app</div>
+      <div className="relative max-w-4xl mx-auto px-5 md:px-8 pt-20 pb-24 md:pt-32 md:pb-36 text-center fade-up">
+        <div className="text-[10px] tracking-[0.32em] uppercase text-[#6b5d57] mb-8">
+          HAIR SALON &nbsp;×&nbsp; LINE &nbsp;×&nbsp; HOT PEPPER
         </div>
 
-        {/* KPI tiles */}
-        <div className="grid grid-cols-3 gap-3 mb-5">
-          <MiniKpi label="今月売上" value="¥1.84M" trend="+18%" trendColor="text-emerald-600" />
-          <MiniKpi label="新規→定着" value="64%" trend="+9pt" trendColor="text-emerald-600" />
-          <MiniKpi label="予約数" value="286" trend="+42" trendColor="text-emerald-600" />
+        <h1 className="display-serif text-[34px] md:text-[58px] leading-[1.45] md:leading-[1.35] text-[#1f1b1e]">
+          はじめてのお客さまを、<br />
+          ずっと通ってくださる方へ。
+        </h1>
+
+        <p className="mt-10 text-[15px] md:text-base text-[#6b5d57] leading-[2]">
+          ホットペッパーでご来店いただいた新規のお客さまを、<br className="hidden md:block" />
+          LINE のやさしいつながりで、自社の常連さまへ。
+        </p>
+
+        <div className="mt-12 flex flex-col sm:flex-row gap-3 justify-center items-center">
+          <Link href="/register" className="btn-cta">
+            新規ご登録（月額 ¥4,980）
+          </Link>
+          <Link href="/login" className="btn-cta-ghost">
+            ログイン
+          </Link>
         </div>
 
-        {/* Bar chart */}
-        <div className="mb-4">
-          <div className="flex items-center justify-between mb-2.5">
-            <span className="text-xs font-semibold text-stone-700">30日間 売上推移</span>
-            <span className="text-[10px] text-stone-400">週次</span>
-          </div>
-          <div className="flex items-end gap-1.5 h-20">
-            {[38, 52, 44, 61, 55, 72, 68, 80, 74, 88, 92, 85].map((h, i) => (
-              <div
-                key={i}
-                className="flex-1 rounded-t brand-bg"
-                style={{ height: `${h}%`, opacity: 0.35 + (i / 12) * 0.65 }}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Reservation row */}
-        <div className="space-y-2">
-          <div className="text-xs font-semibold text-stone-700 mb-1">本日の予約</div>
-          {[
-            { time: '10:30', name: '田中 まり', menu: 'カット + カラー', stylist: '佐藤' },
-            { time: '13:00', name: '山田 花子', menu: '縮毛矯正', stylist: '田中' },
-          ].map((r) => (
-            <div key={r.time} className="flex items-center gap-3 py-1.5">
-              <div className="text-[11px] font-mono text-stone-500 w-10">{r.time}</div>
-              <div className="w-7 h-7 rounded-full brand-light-bg brand-text text-[11px] font-bold flex items-center justify-center">
-                {r.name.charAt(0)}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-xs font-medium text-stone-900 truncate">{r.name}</div>
-                <div className="text-[10px] text-stone-500 truncate">{r.menu}</div>
-              </div>
-              <div className="text-[10px] badge badge-brand">{r.stylist}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Floating LINE badge */}
-      <div className="absolute -bottom-4 -right-2 md:-right-6 z-10 bg-white rounded-xl shadow-lg border border-stone-200 px-4 py-3 flex items-center gap-3">
-        <div className="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
-          <MessageCircle className="w-4.5 h-4.5" />
-        </div>
-        <div>
-          <div className="text-[10px] text-stone-500 font-medium">LINE 友だち</div>
-          <div className="text-sm font-bold text-stone-900 metric">412名 / +28 今週</div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function MiniKpi({ label, value, trend, trendColor }: { label: string; value: string; trend: string; trendColor: string }) {
-  return (
-    <div className="rounded-lg bg-stone-50 border border-stone-100 p-2.5">
-      <div className="text-[9px] text-stone-500 font-medium">{label}</div>
-      <div className="text-sm font-bold text-stone-900 metric mt-0.5">{value}</div>
-      <div className={`text-[9px] font-semibold ${trendColor} mt-0.5`}>{trend}</div>
-    </div>
-  );
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  Proof Bar                                                 */
-/* ────────────────────────────────────────────────────────── */
-
-function ProofBar() {
-  const items = [
-    { k: '月額', v: '¥4,980〜', s: '税別' },
-    { k: '初期費用', v: '¥0', s: '契約期間なし' },
-    { k: 'HPBデータ', v: 'CSV取込', s: '既存データ移行' },
-    { k: 'デモ環境', v: '公開中', s: '登録不要で閲覧可' },
-  ];
-  return (
-    <section className="border-y border-stone-200 bg-white">
-      <div className="max-w-6xl mx-auto px-5 md:px-6 py-6 md:py-7">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-y-6 md:gap-0">
-          {items.map((it, i) => (
-            <div key={it.k} className={`px-4 md:px-6 text-center md:text-left ${i !== 0 ? 'md:border-l md:border-stone-200' : ''}`}>
-              <div className="text-[11px] text-stone-500 font-medium mb-1">{it.k}</div>
-              <div className="text-xl md:text-2xl font-bold text-stone-900 metric">{it.v}</div>
-              <div className="text-[11px] text-stone-500 mt-0.5">{it.s}</div>
-            </div>
-          ))}
+        <div className="mt-8">
+          <Link href="/book/hair-salon-demo" className="inline-flex items-center gap-1.5 text-xs text-[#6b5d57] hover:text-[#1f1b1e] transition underline underline-offset-4 decoration-[#d8cec3]">
+            サンプル店舗の予約ページを見る
+            <ArrowRight className="w-3 h-3" />
+          </Link>
         </div>
       </div>
     </section>
@@ -248,108 +96,72 @@ function ProofBar() {
 }
 
 /* ────────────────────────────────────────────────────────── */
-/*  Problem                                                   */
+/*  About — prose narrative                                   */
 /* ────────────────────────────────────────────────────────── */
 
-function Problem() {
-  const pains = [
-    {
-      icon: <TrendingDown className="w-5 h-5" />,
-      title: 'HPB手数料が売上を圧迫',
-      body: '掲載料に加え、ネット予約ごとの成果課金が積み重なる。一度LINEで繋がった常連客まで、HPB経由で予約されると紹介料が発生し続ける。',
-      tag: '広告費',
-    },
-    {
-      icon: <MessageCircle className="w-5 h-5" />,
-      title: 'LINE運用がオーナーの個人プレー',
-      body: '個人LINEで予約対応してしまうと、スタッフ間で状況が共有できず、返信対応が属人化。休めない経営の原因になりがち。',
-      tag: '運用',
-    },
-    {
-      icon: <FileText className="w-5 h-5" />,
-      title: 'カルテが紙とExcelのまま',
-      body: '薬剤履歴はスタッフの頭の中。担当が変わると施術判断ができず、せっかくの指名客が離れていく。',
-      tag: 'カルテ',
-    },
-  ];
-
+function About() {
   return (
-    <section id="problem" className="section-alt py-20 md:py-28">
-      <div className="max-w-6xl mx-auto px-5 md:px-6">
-        <div className="max-w-2xl mb-12 md:mb-14">
-          <div className="eyebrow mb-4">現場でよく聞く話</div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight">
-            こんなお悩み、<br className="md:hidden" />ありませんか？
-          </h2>
-          <p className="mt-5 text-stone-600 leading-relaxed">
-            広告費、LINE対応、カルテ管理。サロン経営を圧迫する3つの「見えないコスト」を、HairSalonLink は同時に解決します。
+    <section id="about" className="bg-white border-y border-[#ece3d7]">
+      <div className="max-w-3xl mx-auto px-5 md:px-8 py-24 md:py-32 text-center">
+        <div className="eyebrow mb-8">ABOUT</div>
+        <h2 className="display-serif text-[28px] md:text-[44px] leading-[1.55] md:leading-[1.45] mb-14">
+          美容室のための、<br />
+          やさしい集客のしくみ。
+        </h2>
+
+        <div className="space-y-7 text-[14px] md:text-[15px] leading-[2.1] text-[#4a3f3b] text-left md:text-center">
+          <p>
+            美容室のオーナーさまにとって、ホットペッパービューティーからの集客コストは、決して小さくない負担です。
+            せっかくご来店いただいた新規のお客さまが、次はご自身のサロンへ直接来てくださるようになれば、
+            広告に頼る経営から、一歩ずつ離れていくことができます。
+          </p>
+          <p>
+            HairSalonLink は、そんな個人〜小規模のサロンさまのための、小さなサービスです。
+            予約管理も、薬剤カルテも、指名料の計算も、LINE 配信も、むずかしい設定なしではじめていただけます。
+            ホットペッパーからの新規のお客さまを、どれだけ自社にお迎えできたか。
+            独自の指標で、数字でやさしく見守ります。
           </p>
         </div>
-
-        <div className="grid md:grid-cols-3 gap-5">
-          {pains.map((p) => (
-            <div key={p.title} className="card-soft">
-              <div className="flex items-center justify-between mb-5">
-                <div className="w-11 h-11 rounded-xl bg-red-50 text-red-500 flex items-center justify-center">
-                  {p.icon}
-                </div>
-                <span className="text-[10px] font-semibold text-stone-500 uppercase tracking-wider">{p.tag}</span>
-              </div>
-              <h3 className="font-bold text-lg text-stone-900 mb-2.5 leading-snug">{p.title}</h3>
-              <p className="text-sm text-stone-600 leading-relaxed">{p.body}</p>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );
 }
 
 /* ────────────────────────────────────────────────────────── */
-/*  Solution                                                  */
+/*  Gallery — poetic captions (no photos needed)              */
 /* ────────────────────────────────────────────────────────── */
 
-function Solution() {
-  const steps = [
-    {
-      n: '01',
-      title: 'LINEで受ける',
-      body: '予約URLをLINEで配るだけ。LIFFでアプリ不要、お客様は友だち追加と同時に予約可能。',
-    },
-    {
-      n: '02',
-      title: '顧客を育てる',
-      body: '来店後に自動でセグメント化。休眠90日を超えた顧客には、自動でクーポン配信。',
-    },
-    {
-      n: '03',
-      title: '数字で判断する',
-      body: 'HPB→自社移行率などの独自KPIで、広告費の最適化とスタッフ評価の判断材料に。',
-    },
+function Gallery() {
+  const quotes = [
+    { label: 'CUT', caption: '似合うを、丁寧にかたちに。' },
+    { label: 'COLOR', caption: 'お客さまの個性を、そっと引き立てて。' },
+    { label: 'PERM', caption: '毎日のスタイリングを、やさしく。' },
+    { label: 'CARE', caption: '髪のことは、ずっとおつきあい。' },
   ];
 
   return (
-    <section className="py-20 md:py-28">
-      <div className="max-w-6xl mx-auto px-5 md:px-6">
-        <div className="text-center max-w-2xl mx-auto mb-14 md:mb-16">
-          <div className="eyebrow justify-center mb-4">解決の仕組み</div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.25]">
-            <span className="inline-block">たった3ステップで、</span>
-            <span className="inline-block">自社集客へ。</span>
+    <section className="section-alt">
+      <div className="max-w-6xl mx-auto px-5 md:px-8 py-24 md:py-32">
+        <div className="text-center mb-16 md:mb-20">
+          <div className="eyebrow mb-6">OUR STANCE</div>
+          <h2 className="display-serif text-[26px] md:text-[40px] leading-[1.55] md:leading-[1.45]">
+            施術への想いも、<br className="md:hidden" />
+            経営の数字と同じだけ、大切に。
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 md:gap-8 relative">
-          {/* Connector line (desktop) */}
-          <div className="hidden md:block absolute top-8 left-[16.6%] right-[16.6%] h-px bg-stone-200" aria-hidden />
-
-          {steps.map((s, i) => (
-            <div key={s.n} className="relative text-center">
-              <div className="relative inline-flex items-center justify-center w-16 h-16 rounded-full bg-white border-2 brand-border mb-5">
-                <span className="metric text-xl brand-text">{s.n}</span>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          {quotes.map((q) => (
+            <div
+              key={q.label}
+              className="aspect-[3/4] bg-white border border-[#ece3d7] p-5 md:p-6 flex flex-col justify-between hover:border-[#d8cec3] transition"
+            >
+              <div className="text-[10px] tracking-[0.28em] text-[#6b5d57] uppercase">
+                {q.label}
               </div>
-              <h3 className="font-bold text-xl text-stone-900 mb-3">{s.title}</h3>
-              <p className="text-sm text-stone-600 leading-relaxed max-w-xs mx-auto">{s.body}</p>
+              <p className="display-serif text-[15px] md:text-[17px] leading-[1.9] text-[#1f1b1e]">
+                {q.caption}
+              </p>
             </div>
           ))}
         </div>
@@ -359,75 +171,69 @@ function Solution() {
 }
 
 /* ────────────────────────────────────────────────────────── */
-/*  Features                                                  */
+/*  Features — numbered rows, honorific tone                  */
 /* ────────────────────────────────────────────────────────── */
 
 function Features() {
   const features = [
     {
-      icon: <MessageCircle className="w-5 h-5" />,
-      title: 'LINE予約・リマインド',
-      body: 'LIFF対応でお客様はアプリ不要、友だち追加と同時に予約可能。前日のリマインドを自動送信します。',
-      stat: 'LIFF対応',
+      n: '01',
+      title: 'LINE でつながる予約',
+      body: 'LINE 公式アカウントからそのままご予約いただけます。LIFF 対応のため、お客さまはアプリのインストール不要。予約の前日には、リマインドも自動でお送りします。',
     },
     {
-      icon: <TrendingUp className="w-5 h-5" />,
-      title: 'HPB→自社 移行率追跡',
-      body: 'HPB経由の新規客が、その後LINEや自社経由で再予約したかを自動で集計する独自KPIを搭載。',
-      stat: '独自指標',
+      n: '02',
+      title: 'ひとつのカレンダーで、すべての予約を',
+      body: 'ホットペッパー・LINE・自社ホームページからのご予約を、ひとつのカレンダーに集約します。CSV取込にも対応しているため、既存のお客さまデータを手間なく移行していただけます。',
     },
     {
-      icon: <Users className="w-5 h-5" />,
-      title: 'セグメント別 LINE配信',
-      body: '「休眠90日超」「初回来店」「VIP」などのセグメントに該当する顧客へ、条件指定で配信できます。',
-      stat: '条件指定配信',
+      n: '03',
+      title: 'ホットペッパーからの流れを、見える化',
+      body: 'ホットペッパー経由でご来店いただいた新規のお客さまのうち、次回ご自身のサロンへ戻ってきてくださった割合を、独自の指標で可視化。他のサービスにはない視点で、じっくりと改善を重ねていけます。',
     },
     {
-      icon: <FileText className="w-5 h-5" />,
-      title: '薬剤履歴カルテ',
-      body: 'カラー剤のブランド・比率、アレルギー、ダメージレベル 1〜5 を記録。スタッフ間の引き継ぎに活用できます。',
-      stat: '薬剤履歴管理',
+      n: '04',
+      title: '薬剤履歴カルテと、指名の管理',
+      body: 'カラー剤のブランド・比率・日付、アレルギー、ダメージレベルを一元管理。Director / Top / Stylist / Junior / Assistant の5階層と、指名料の設定にも対応します。',
     },
     {
-      icon: <UserCheck className="w-5 h-5" />,
-      title: '指名・スタイリスト階層',
-      body: 'Director / Top / Stylist / Junior / Assistant の5階層と、指名料の設定・自動計算に対応します。',
-      stat: '5階層対応',
+      n: '05',
+      title: 'セグメント別の、やさしい配信',
+      body: '休眠されているお客さま、LINE のお友だち、初回ご来店のお客さま。セグメントに応じて、ちょうどよいタイミングで、ちょうどよい内容のご連絡をお届けできます。',
     },
     {
-      icon: <Palette className="w-5 h-5" />,
+      n: '06',
       title: 'スタイルギャラリー',
-      body: 'ヘアスタイルの写真を公開予約ページに掲載。お客様が「このスタイルで予約」から直接来店予約できます。',
-      stat: 'LINE直結',
+      body: 'サロンさまが撮影された作品を、ひとつの場所に。お客さまは気になったスタイルから、そのままご予約いただけるように設計しています。',
     },
   ];
 
   return (
-    <section id="features" className="section-alt py-20 md:py-28">
-      <div className="max-w-6xl mx-auto px-5 md:px-6">
-        <div className="max-w-2xl mb-12 md:mb-14">
-          <div className="eyebrow mb-4">Features</div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight">
-            美容室の業務を、<br className="md:hidden" />1つに集約。
+    <section id="features" className="bg-white">
+      <div className="max-w-5xl mx-auto px-5 md:px-8 py-24 md:py-32">
+        <div className="text-center mb-16 md:mb-20">
+          <div className="eyebrow mb-6">FEATURES</div>
+          <h2 className="display-serif text-[28px] md:text-[44px] leading-[1.5] md:leading-[1.4]">
+            HairSalonLink で<br className="md:hidden" />できること
           </h2>
-          <p className="mt-5 text-stone-600 leading-relaxed">
-            予約管理・LINE配信・カルテ・指名計算・分析まで。バラバラのツールを行き来する必要はもうありません。
-          </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="space-y-16 md:space-y-20">
           {features.map((f) => (
-            <div key={f.title} className="card-soft flex flex-col">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-10 h-10 rounded-lg brand-light-bg brand-text flex items-center justify-center">
-                  {f.icon}
+            <div key={f.n} className="grid md:grid-cols-12 gap-6 md:gap-10 items-start">
+              <div className="md:col-span-3">
+                <div className="display-serif text-[40px] md:text-[56px] leading-none text-[#3d2b2e]/85">
+                  {f.n}
                 </div>
-                <span className="text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
-                  {f.stat}
-                </span>
               </div>
-              <h3 className="font-bold text-base text-stone-900 mb-2">{f.title}</h3>
-              <p className="text-sm text-stone-600 leading-relaxed">{f.body}</p>
+              <div className="md:col-span-9">
+                <h3 className="display-serif text-[20px] md:text-[26px] leading-[1.5] mb-4">
+                  {f.title}
+                </h3>
+                <p className="text-[14px] md:text-[15px] leading-[2.05] text-[#4a3f3b]">
+                  {f.body}
+                </p>
+              </div>
             </div>
           ))}
         </div>
@@ -437,144 +243,48 @@ function Features() {
 }
 
 /* ────────────────────────────────────────────────────────── */
-/*  Product Preview                                           */
+/*  Why — simplified value proposition                        */
 /* ────────────────────────────────────────────────────────── */
 
-function ProductPreview() {
-  return (
-    <section className="py-20 md:py-28 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-5 md:px-6">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div>
-            <div className="eyebrow mb-4">Dashboard</div>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.25]">
-              売上・HPB移行率・離反リスクを、<br className="hidden md:block" />1画面に。
-            </h2>
-            <p className="mt-6 text-stone-600 leading-relaxed">
-              経営の数字を、管理画面を開いたその場で確認できます。エクセル集計や手書き管理から離れるためのダッシュボードです。全機能をログイン不要で体験できるデモサロンも公開しています。
-            </p>
-
-            <ul className="mt-7 space-y-3">
-              {[
-                '30日間の売上・予約数の自動集計',
-                'HPB→自社移行率の独自KPI',
-                '休眠顧客の自動検知とLINE配信連携',
-                '100名のサンプル顧客で動作を確認可能',
-              ].map((t) => (
-                <li key={t} className="flex items-start gap-2.5 text-sm text-stone-700">
-                  <Check className="w-4 h-4 brand-text mt-0.5 flex-shrink-0" strokeWidth={3} />
-                  <span>{t}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-8">
-              <Link href="/book/hair-salon-demo" className="btn-cta-ghost">
-                デモサロンの予約画面を見る
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-
-          <div className="relative">
-            <div className="absolute -inset-4 brand-light-bg rounded-3xl -rotate-1" aria-hidden />
-            <div className="relative bg-white rounded-2xl shadow-xl border border-stone-200 p-5 md:p-6">
-              <div className="flex items-center justify-between mb-5">
-                <div>
-                  <div className="text-xs text-stone-500">ダッシュボード</div>
-                  <div className="text-sm font-bold text-stone-900">Hair Salon NORTH TOKYO</div>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-2 h-2 rounded-full bg-emerald-400" />
-                  <span className="text-[10px] text-stone-500">稼働中</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3 mb-5">
-                <PreviewKpi label="今月売上" value="¥1,842,500" trend="+18.2% vs 前月" />
-                <PreviewKpi label="HPB→自社移行" value="57%" trend="+9pt 今月" />
-                <PreviewKpi label="LINE友だち" value="412名" trend="+28 今週" />
-                <PreviewKpi label="離反リスク" value="14名" trend="要フォロー" alert />
-              </div>
-
-              <div className="border border-stone-100 rounded-lg p-3">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-semibold text-stone-700">売上 (直近30日)</span>
-                  <span className="text-[10px] text-emerald-600 font-semibold">+18.2%</span>
-                </div>
-                <div className="flex items-end gap-1 h-16">
-                  {[42, 55, 48, 62, 58, 70, 65, 78, 72, 85, 80, 92, 88, 95].map((h, i) => (
-                    <div key={i} className="flex-1 rounded-t brand-bg" style={{ height: `${h}%`, opacity: 0.4 + (i / 14) * 0.6 }} />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function PreviewKpi({ label, value, trend, alert }: { label: string; value: string; trend: string; alert?: boolean }) {
-  return (
-    <div className="rounded-lg border border-stone-100 bg-stone-50/60 p-3">
-      <div className="text-[10px] text-stone-500 font-medium">{label}</div>
-      <div className="text-base font-bold text-stone-900 metric mt-1">{value}</div>
-      <div className={`text-[10px] font-semibold mt-0.5 ${alert ? 'text-amber-600' : 'text-emerald-600'}`}>{trend}</div>
-    </div>
-  );
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  Comparison                                                */
-/* ────────────────────────────────────────────────────────── */
-
-function Comparison() {
+function Why() {
   const points = [
-    { title: '初期費用 ¥0', body: '契約金・導入支援費用はいただきません。登録後すぐにご利用開始いただけます。' },
-    { title: '契約期間の縛りなし', body: '月単位で解約が可能です。解約時もCSVでの顧客データエクスポートに対応します。' },
-    { title: '美容室特化の設計', body: '指名料の5階層・薬剤履歴カルテ・HPB→自社移行率追跡など、美容室の業務に最適化した機能を搭載。' },
+    { label: '初期費用 ¥0', body: '契約金・導入支援費用はいただきません。ご登録後、すぐにはじめていただけます。' },
+    { label: '契約期間の縛りなし', body: '月単位で解約していただけます。解約時は顧客データを CSV でエクスポートできます。' },
+    { label: '美容室特化の設計', body: '指名料の5階層、薬剤カルテ、HPB移行率追跡など、美容室の現場に合わせて設計しています。' },
   ];
 
   return (
-    <section className="section-alt py-20 md:py-28">
-      <div className="max-w-5xl mx-auto px-5 md:px-6">
-        <div className="text-center max-w-2xl mx-auto mb-12 md:mb-14">
-          <div className="eyebrow mb-4">Why HairSalonLink</div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.25]">
-            <span className="inline-block">美容室管理SaaSの中で、</span>
-            <span className="inline-block">はじめやすい位置に。</span>
+    <section className="section-alt">
+      <div className="max-w-4xl mx-auto px-5 md:px-8 py-24 md:py-32">
+        <div className="text-center mb-14">
+          <div className="eyebrow mb-6">WHY HAIRSALONLINK</div>
+          <h2 className="display-serif text-[28px] md:text-[42px] leading-[1.5] md:leading-[1.4]">
+            はじめやすさを、<br className="md:hidden" />
+            いちばんに考えて。
           </h2>
-          <p className="mt-4 text-stone-600 text-sm leading-relaxed">
-            月額料金だけでなく、初期費用・契約期間・美容室特化機能の有無も、導入判断の大切な要素です。
-          </p>
         </div>
 
-        {/* Value prop card */}
-        <div className="max-w-3xl mx-auto bg-white border border-stone-200 rounded-2xl p-7 md:p-10 shadow-[0_24px_48px_-24px_rgba(30,58,138,0.15)]">
-          <div className="flex items-baseline gap-3 justify-center mb-2">
-            <span className="text-5xl md:text-6xl font-bold brand-text metric">¥4,980</span>
-            <span className="text-sm text-stone-500">/月 (税別)</span>
+        <div className="bg-white border border-[#ece3d7] py-12 px-8 md:px-14">
+          <div className="text-center mb-12">
+            <div className="display-serif text-[48px] md:text-[72px] leading-none text-[#1f1b1e]">
+              ¥4,980
+            </div>
+            <div className="text-[11px] tracking-[0.2em] uppercase text-[#6b5d57] mt-3">
+              Standard Plan — 月額（税別）
+            </div>
           </div>
-          <div className="text-center text-xs text-stone-500 mb-8">Standardプラン / 初期費用¥0 / 契約期間の縛りなし</div>
-
-          <div className="grid md:grid-cols-3 gap-5">
+          <div className="h-px bg-[#ece3d7] mb-10" />
+          <div className="grid md:grid-cols-3 gap-10 md:gap-8">
             {points.map((p) => (
-              <div key={p.title} className="text-center">
-                <div className="inline-flex w-10 h-10 rounded-full brand-light-bg brand-text items-center justify-center mb-3">
-                  <Check className="w-4 h-4" strokeWidth={3} />
+              <div key={p.label} className="text-center md:text-left">
+                <div className="display-serif text-[16px] md:text-[18px] mb-3 text-[#1f1b1e]">
+                  {p.label}
                 </div>
-                <div className="font-bold text-sm text-stone-900 mb-1.5">{p.title}</div>
-                <p className="text-xs text-stone-600 leading-relaxed">{p.body}</p>
+                <p className="text-[13px] leading-[2] text-[#6b5d57]">{p.body}</p>
               </div>
             ))}
           </div>
         </div>
-
-        <p className="mt-8 text-center text-[11px] text-stone-400 leading-relaxed max-w-2xl mx-auto">
-          ※ 他社サービスの料金・機能は各社公式サイトにてご確認ください。市場調査の結果は随時更新しています。
-        </p>
       </div>
     </section>
   );
@@ -590,7 +300,7 @@ function Pricing() {
       name: 'Free',
       price: '¥0',
       desc: 'まずは機能確認',
-      target: '個人オーナー / 試験導入',
+      target: '個人オーナーさま / お試し用',
       seats: '1席',
       reservations: '月50件まで',
       features: ['顧客 30名まで', '基本カルテ', 'LINE予約URL'],
@@ -599,7 +309,7 @@ function Pricing() {
       name: 'Standard',
       price: '¥4,980',
       desc: '個人〜小規模サロン',
-      target: 'オーナー1名＋スタッフ1〜2名',
+      target: 'オーナー1名 + スタッフ1〜2名',
       seats: '1〜3席',
       reservations: '無制限',
       features: ['顧客 500名', 'LINE連携・配信', '薬剤カルテ', '指名管理', 'HPB移行追跡', 'セグメント分析'],
@@ -612,60 +322,67 @@ function Pricing() {
       target: 'スタッフ5名以上の拠点',
       seats: '4席〜',
       reservations: '無制限',
-      features: ['顧客無制限', 'AI離反予測', 'スタイルギャラリー', '複数スタッフ管理', '優先サポート', '導入支援込み'],
+      features: ['顧客無制限', 'AI離反予測', 'スタイルギャラリー', '複数スタッフ管理', '初期設定サポート'],
     },
   ];
 
   return (
-    <section id="pricing" className="py-20 md:py-28">
-      <div className="max-w-6xl mx-auto px-5 md:px-6">
-        <div className="text-center max-w-2xl mx-auto mb-12 md:mb-14">
-          <div className="eyebrow mb-4">Pricing</div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.25]">
-            <span className="inline-block">席数で選ぶ、</span>
-            <span className="inline-block">シンプルな3プラン</span>
+    <section id="pricing" className="bg-white border-y border-[#ece3d7]">
+      <div className="max-w-6xl mx-auto px-5 md:px-8 py-24 md:py-32">
+        <div className="text-center mb-16 md:mb-20">
+          <div className="eyebrow mb-6">PRICING</div>
+          <h2 className="display-serif text-[28px] md:text-[44px] leading-[1.5] md:leading-[1.4]">
+            席数で選ぶ、<br className="md:hidden" />
+            シンプルな3プラン
           </h2>
-          <p className="mt-4 text-stone-600">初期費用¥0 / いつでも解約可能 / 契約期間の縛りなし</p>
+          <p className="mt-6 text-[13px] text-[#6b5d57] tracking-wide">
+            初期費用 ¥0 / いつでも解約可能 / 契約期間の縛りなし
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-5 md:gap-6">
+        <div className="grid md:grid-cols-3 gap-6">
           {plans.map((p) => (
             <div
               key={p.name}
-              className={`relative rounded-2xl p-7 ${
+              className={`relative p-10 md:p-11 ${
                 p.recommended
-                  ? 'bg-white border-2 brand-border shadow-[0_24px_48px_-20px_rgba(30,58,138,0.25)]'
-                  : 'bg-white border border-stone-200'
+                  ? 'bg-[#fbf7f1] border border-[#3d2b2e]'
+                  : 'bg-white border border-[#ece3d7]'
               }`}
             >
               {p.recommended && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                  <span className="inline-block brand-bg text-white text-[11px] font-bold px-3.5 py-1.5 rounded-full shadow-md whitespace-nowrap">
-                    もっとも選ばれています
+                <div className="absolute top-0 left-0 right-0 -translate-y-1/2 flex justify-center">
+                  <span className="brand-bg text-white text-[10px] font-semibold tracking-[0.2em] uppercase px-4 py-1.5">
+                    Recommended
                   </span>
                 </div>
               )}
 
-              <div className="mb-5">
-                <h3 className="text-xl font-bold text-stone-900">{p.name}</h3>
-                <p className="text-xs text-stone-500 mt-1">{p.desc}</p>
+              <div className="text-center mb-6">
+                <div className="display-serif text-[22px] text-[#1f1b1e]">{p.name}</div>
+                <p className="text-[11px] text-[#6b5d57] mt-1 tracking-wide">{p.desc}</p>
               </div>
 
-              <div className="flex items-baseline gap-1 mb-2">
-                <span className="text-4xl font-bold text-stone-900 metric">{p.price}</span>
-                <span className="text-xs text-stone-500">/月 (税別)</span>
+              <div className="text-center mb-8">
+                <div className="flex items-baseline justify-center gap-1">
+                  <span className="display-serif text-[40px] text-[#1f1b1e]">{p.price}</span>
+                  <span className="text-[11px] text-[#6b5d57]">/月 (税別)</span>
+                </div>
+                <div className="mt-3 text-[11px] text-[#6b5d57]">
+                  席数 <span className="text-[#1f1b1e]">{p.seats}</span>
+                  <span className="mx-2 text-[#d8cec3]">/</span>
+                  予約 <span className="text-[#1f1b1e]">{p.reservations}</span>
+                </div>
               </div>
 
-              <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-stone-500 mb-5 pb-5 border-b border-stone-100">
-                <span>席数 <span className="text-stone-900 font-semibold">{p.seats}</span></span>
-                <span>予約 <span className="text-stone-900 font-semibold">{p.reservations}</span></span>
-              </div>
-              <div className="text-[11px] text-stone-500 mb-4">対象: {p.target}</div>
+              <div className="h-px bg-[#ece3d7] mb-6" />
 
-              <ul className="space-y-2.5 mb-7">
+              <div className="text-[11px] text-[#6b5d57] mb-5 text-center">対象: {p.target}</div>
+
+              <ul className="space-y-3 mb-9">
                 {p.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2 text-sm text-stone-700">
-                    <Check className="w-4 h-4 brand-text mt-0.5 flex-shrink-0" strokeWidth={3} />
+                  <li key={f} className="flex items-start gap-2.5 text-[13px] text-[#4a3f3b]">
+                    <Check className="w-3.5 h-3.5 brand-text mt-1 flex-shrink-0" strokeWidth={2.5} />
                     <span>{f}</span>
                   </li>
                 ))}
@@ -673,14 +390,13 @@ function Pricing() {
 
               <Link
                 href="/register"
-                className={`w-full inline-flex items-center justify-center gap-1.5 py-3 rounded-lg font-semibold text-sm transition ${
+                className={`w-full inline-flex items-center justify-center gap-1.5 py-3.5 text-[12px] font-medium tracking-[0.1em] transition ${
                   p.recommended
                     ? 'brand-bg text-white hover:opacity-90'
-                    : 'border border-stone-300 text-stone-900 hover:bg-stone-50'
+                    : 'border border-[#d8cec3] text-[#1f1b1e] hover:border-[#3d2b2e]'
                 }`}
               >
-                {p.name}で始める
-                <ArrowRight className="w-3.5 h-3.5" />
+                このプランで始める
               </Link>
             </div>
           ))}
@@ -697,37 +413,39 @@ function Pricing() {
 function Faq() {
   const faqs = [
     {
-      q: '既存のお客様データは移行できますか？',
-      a: 'はい。HotPepper Beauty のCSVエクスポートをそのまま取り込めます。顧客情報と過去の予約履歴を自動で結合し、数分で移行が完了します。電話番号の重複も自動で名寄せされます。',
+      q: '既存のお客さまデータは移行できますか？',
+      a: 'はい。ホットペッパービューティー の CSV エクスポートを、そのままお取り込みいただけます。顧客情報と過去のご予約履歴を自動で結合し、電話番号の重複も名寄せして、数分で移行を完了します。',
     },
     {
       q: '最低契約期間はありますか？',
-      a: 'ありません。月単位での解約が可能で、解約後30日間はデータのCSVダウンロードに対応します。契約期間の縛りや違約金は一切ありません。',
+      a: 'ありません。月単位で解約していただけます。解約時から 30日間は、顧客データの CSV ダウンロードにも対応します。契約期間の縛りや違約金はございません。',
     },
     {
-      q: 'スタッフへの教育は大変ですか？',
-      a: '予約管理とお客様カルテを中心に、アイコンベースのシンプルな管理画面です。LINEを普段お使いのスタッフの方であれば、特別な研修や専任担当者を置かずに運用を開始していただけます。',
+      q: 'スタッフさまへの教育は大変ですか？',
+      a: '予約管理とお客さまカルテを中心に、アイコンベースのシンプルな管理画面です。LINE を普段お使いのスタッフさまであれば、特別な研修や専任担当者を置かずに、運用をはじめていただけます。',
     },
     {
-      q: 'LINE公式アカウントは別途必要ですか？',
-      a: 'はい、LINE公式アカウント（Messaging API）の作成が別途必要です。料金・無料配信通数は LINE 側の規定に準じますので、詳細は LINE for Business の公式情報をご確認ください。HairSalonLink 側は、設定画面で Channel ID / Access Token を入力するだけで接続完了します。',
+      q: 'LINE 公式アカウントは別途必要ですか？',
+      a: 'はい、LINE 公式アカウント（Messaging API）のご用意が別途必要です。料金・無料配信通数の詳細は LINE for Business の公式情報をご確認ください。HairSalonLink 側は、設定画面で Channel ID / Access Token を入力いただくだけで接続完了します。',
     },
     {
       q: 'サポート体制を教えてください',
-      a: 'メールでのお問い合わせを承ります（support@hairsalonlink.demo）。Proプランでは初期設定のサポートも含まれます。',
+      a: 'メールでのお問い合わせを承ります（support@hairsalonlink.demo）。Pro プランでは、初期設定のサポートも含まれます。',
     },
     {
-      q: '支払い方法は？',
-      a: 'Stripe経由のクレジットカード月額決済です。初回登録時にカード情報を入力し、以降は自動更新。領収書はメールで自動発行されます。',
+      q: 'お支払い方法は？',
+      a: 'Stripe によるクレジットカードの月額決済です。初回ご登録時にカード情報をご入力いただき、以降は自動更新。領収書はメールで自動発行いたします。',
     },
   ];
 
   return (
-    <section id="faq" className="section-alt py-20 md:py-28">
-      <div className="max-w-3xl mx-auto px-5 md:px-6">
-        <div className="mb-10 md:mb-12">
-          <div className="eyebrow mb-4">FAQ</div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight">よくあるご質問</h2>
+    <section id="faq" className="section-alt">
+      <div className="max-w-3xl mx-auto px-5 md:px-8 py-24 md:py-32">
+        <div className="text-center mb-14">
+          <div className="eyebrow mb-6">FAQ</div>
+          <h2 className="display-serif text-[28px] md:text-[42px] leading-[1.5] md:leading-[1.4]">
+            よくあるご質問
+          </h2>
         </div>
 
         <div>
@@ -739,8 +457,12 @@ function Faq() {
           ))}
         </div>
 
-        <div className="mt-10 text-center text-sm text-stone-600">
-          他にご不明点がある方は <a href="mailto:support@hairsalonlink.demo" className="brand-text font-semibold underline">support@hairsalonlink.demo</a> までお気軽にどうぞ。
+        <div className="mt-14 text-center text-[13px] text-[#6b5d57]">
+          ほかにご不明な点がございましたら、{' '}
+          <a href="mailto:support@hairsalonlink.demo" className="brand-text font-semibold underline underline-offset-4">
+            support@hairsalonlink.demo
+          </a>
+          {' '}までお気軽にお問い合わせください。
         </div>
       </div>
     </section>
@@ -748,41 +470,35 @@ function Faq() {
 }
 
 /* ────────────────────────────────────────────────────────── */
-/*  Final CTA                                                 */
+/*  Final CTA — warm espresso                                 */
 /* ────────────────────────────────────────────────────────── */
 
 function FinalCta() {
   return (
-    <section className="cta-dark relative overflow-hidden">
-      <div className="absolute inset-0 cta-dark-grid opacity-60" aria-hidden />
-      <div className="relative max-w-4xl mx-auto px-5 md:px-6 py-20 md:py-28 text-center">
-        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-3.5 py-1.5 text-[11px] font-semibold text-white/90 mb-6">
-          <Sparkles className="w-3 h-3" />
-          初期費用¥0 / 契約期間の縛りなし
+    <section className="cta-dark">
+      <div className="max-w-3xl mx-auto px-5 md:px-8 py-24 md:py-32 text-center">
+        <div className="text-[10px] tracking-[0.3em] uppercase text-white/60 mb-8">
+          GET STARTED
         </div>
-        <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.2] text-white">
-          広告費を削るのに、<br />
-          明日を待つ理由はありません。
+        <h2 className="display-serif text-[30px] md:text-[48px] leading-[1.5] md:leading-[1.4] text-white">
+          サロンさまの毎日を、<br />
+          もう少しだけ、やさしく。
         </h2>
-        <p className="mt-6 text-white/70 text-base leading-relaxed max-w-xl mx-auto">
-          今日登録して、今日から顧客データを蓄積。ホットペッパーを続けるか、止めるかの判断材料は、数字で出せます。
+        <p className="mt-8 text-[14px] md:text-[15px] leading-[2] text-white/75">
+          はじめての方も、どうぞお気軽にご登録ください。<br className="hidden md:block" />
+          ご登録は数分、契約期間の縛りもございません。
         </p>
 
-        <div className="mt-10 flex flex-col sm:flex-row justify-center gap-3">
-          <Link href="/register" className="btn-cta-light justify-center">
-            無料で始める
-            <ArrowRight className="w-4 h-4" />
+        <div className="mt-12 flex flex-col sm:flex-row gap-3 justify-center items-center">
+          <Link href="/register" className="btn-cta-light">
+            新規ご登録（月額 ¥4,980）
           </Link>
           <Link
             href="/book/hair-salon-demo"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-white/90 border border-white/20 hover:bg-white/10 transition"
+            className="inline-flex items-center justify-center gap-2 px-7 py-[15px] text-[14px] font-medium tracking-[0.08em] text-white/90 border border-white/25 hover:bg-white/5 transition"
           >
-            デモを触る
+            サンプル店舗を見る
           </Link>
-        </div>
-
-        <div className="mt-8 text-xs text-white/50">
-          クレジットカード登録なしで機能を確認できます
         </div>
       </div>
     </section>
@@ -795,56 +511,58 @@ function FinalCta() {
 
 function Footer() {
   return (
-    <footer className="bg-stone-950 text-stone-400 text-sm">
-      <div className="max-w-6xl mx-auto px-5 md:px-6 py-14">
+    <footer className="bg-[#1f1b1e] text-[#9b8d87] text-sm">
+      <div className="max-w-6xl mx-auto px-5 md:px-8 py-16">
         <div className="grid md:grid-cols-4 gap-10">
           <div className="md:col-span-1">
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-xl brand-bg flex items-center justify-center">
-                <Scissors className="w-4 h-4 text-white" strokeWidth={2.2} />
+            <div className="flex items-center gap-2.5 mb-5">
+              <div className="w-8 h-8 rounded-sm brand-bg flex items-center justify-center border border-white/10">
+                <Scissors className="w-3.5 h-3.5 text-white" strokeWidth={2} />
               </div>
               <div>
-                <div className="font-bold text-white tracking-tight">HairSalonLink</div>
-                <div className="text-[10px] text-stone-500">for Hair Salons</div>
+                <div className="font-semibold text-white tracking-tight text-[14px]">HairSalonLink</div>
+                <div className="text-[9px] tracking-[0.18em] uppercase text-[#7a6e68]">for Hair Salons</div>
               </div>
             </div>
-            <p className="text-xs leading-relaxed text-stone-500">
-              美容室の自社集客を、すべての個人店に。
+            <p className="text-[11px] leading-[1.9] text-[#7a6e68]">
+              美容室のオーナーさまのための、<br />
+              自社集客のためのサービスです。
             </p>
           </div>
 
           <div>
-            <div className="text-xs font-semibold text-white mb-4">Product</div>
-            <ul className="space-y-2.5 text-xs">
-              <li><Link href="#features" className="hover:text-white transition">機能</Link></li>
+            <div className="text-[10px] tracking-[0.2em] uppercase text-white mb-5">Product</div>
+            <ul className="space-y-3 text-[12px]">
+              <li><Link href="#about" className="hover:text-white transition">サービスについて</Link></li>
+              <li><Link href="#features" className="hover:text-white transition">できること</Link></li>
               <li><Link href="#pricing" className="hover:text-white transition">料金</Link></li>
-              <li><Link href="/book/hair-salon-demo" className="hover:text-white transition">デモ画面</Link></li>
-              <li><Link href="#faq" className="hover:text-white transition">FAQ</Link></li>
+              <li><Link href="/book/hair-salon-demo" className="hover:text-white transition">サンプル店舗</Link></li>
+              <li><Link href="#faq" className="hover:text-white transition">よくあるご質問</Link></li>
             </ul>
           </div>
 
           <div>
-            <div className="text-xs font-semibold text-white mb-4">Account</div>
-            <ul className="space-y-2.5 text-xs">
+            <div className="text-[10px] tracking-[0.2em] uppercase text-white mb-5">Account</div>
+            <ul className="space-y-3 text-[12px]">
               <li><Link href="/login" className="hover:text-white transition">ログイン</Link></li>
-              <li><Link href="/register" className="hover:text-white transition">新規登録</Link></li>
+              <li><Link href="/register" className="hover:text-white transition">新規ご登録</Link></li>
               <li><a href="mailto:support@hairsalonlink.demo" className="hover:text-white transition">お問い合わせ</a></li>
             </ul>
           </div>
 
           <div>
-            <div className="text-xs font-semibold text-white mb-4">Legal</div>
-            <ul className="space-y-2.5 text-xs">
-              <li><span className="text-stone-600">利用規約</span></li>
-              <li><span className="text-stone-600">プライバシーポリシー</span></li>
-              <li><span className="text-stone-600">特定商取引法に基づく表記</span></li>
+            <div className="text-[10px] tracking-[0.2em] uppercase text-white mb-5">Legal</div>
+            <ul className="space-y-3 text-[12px] text-[#5a514c]">
+              <li>利用規約</li>
+              <li>プライバシーポリシー</li>
+              <li>特定商取引法に基づく表記</li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-stone-800 flex flex-col md:flex-row items-center justify-between gap-3 text-[11px] text-stone-500">
+        <div className="mt-14 pt-6 border-t border-[#2e2629] flex flex-col md:flex-row items-center justify-between gap-3 text-[10px] text-[#5a514c] tracking-wider">
           <div>© 2026 HairSalonLink. All rights reserved.</div>
-          <div>Made for small hair salons in Japan</div>
+          <div>Made for small hair salons in Japan.</div>
         </div>
       </div>
     </footer>
