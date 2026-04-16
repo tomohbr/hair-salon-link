@@ -414,14 +414,14 @@ function Pricing() {
               </ul>
 
               <Link
-                href="/register"
+                href={`/register?plan=${p.name.toLowerCase()}`}
                 className={`w-full inline-flex items-center justify-center gap-1.5 py-3.5 text-[12px] font-medium tracking-[0.1em] transition ${
                   p.recommended
                     ? 'brand-bg text-[#0c0a09] hover:opacity-90'
                     : 'border border-[#3a302a] text-[#ebe1cf] hover:border-[#c9a96e]/70'
                 }`}
               >
-                このプランで始める
+                {p.name === 'Free' ? '無料で始める' : 'このプランで始める'}
               </Link>
             </div>
           ))}

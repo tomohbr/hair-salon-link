@@ -35,14 +35,14 @@ export async function POST(req: NextRequest) {
     let slug = slugify(salonName) + '-' + Math.random().toString(36).slice(2, 6);
 
     const passwordHash = await hashPassword(password);
-    const selectedPlan: PlanId = plan === 'pro' ? 'pro' : 'standard';
+    const selectedPlan = plan === 'pro' ? 'pro' : plan === 'free' ? 'free' : 'standard';
 
     const salon = await prisma.salon.create({
       data: {
         slug,
         name: salonName,
         ownerEmail: email,
-        status: 'pending_payment',
+        status: selectedPlan === 'free' ? 'active' : 'pending_payment',
         plan: selectedPlan,
         users: {
           create: {
@@ -56,6 +56,15 @@ export async function POST(req: NextRequest) {
     });
 
     const origin = req.nextUrl.origin;
+
+    // Free プラン: 決済不要で即アクティベート
+    if (selectedPlan === 'free') {
+      return NextResponse.json({
+        ok: true,
+        mode: 'free',
+        redirectUrl: `/register/success?salon=${salon.id}&free=1`,
+      });
+    }
 
     if (isDemoMode) {
       // デモモード: 決済をスキップして直接 active 化

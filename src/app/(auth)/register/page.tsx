@@ -1,14 +1,31 @@
 'use client';
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircle2 } from 'lucide-react';
 
-export default function RegisterPage() {
+function getInitialPlan(params: URLSearchParams | null): 'free' | 'standard' | 'pro' {
+  const p = params?.get('plan');
+  if (p === 'free') return 'free';
+  if (p === 'pro') return 'pro';
+  return 'standard';
+}
+
+export default function RegisterPageWrapper() {
+  return (
+    <Suspense fallback={<div className="w-full max-w-4xl p-8 text-center text-stone-500">読み込み中...</div>}>
+      <RegisterPage />
+    </Suspense>
+  );
+}
+
+function RegisterPage() {
+  const searchParams = useSearchParams();
   const [salonName, setSalonName] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [plan, setPlan] = useState<'standard' | 'pro'>('standard');
+  const [plan, setPlan] = useState<'free' | 'standard' | 'pro'>(getInitialPlan(searchParams));
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -70,18 +87,21 @@ export default function RegisterPage() {
 
             <div>
               <label className="block text-xs font-medium text-stone-700 mb-2">プラン選択</label>
-              <div className="grid grid-cols-2 gap-2">
-                <PlanPicker label="Standard" price="¥4,980" selected={plan === 'standard'} onClick={() => setPlan('standard')} />
-                <PlanPicker label="Pro" price="¥9,980" selected={plan === 'pro'} onClick={() => setPlan('pro')} />
+              <div className="grid grid-cols-3 gap-2">
+                <PlanPicker label="Free" price="¥0" sub="顧客30名 / 月50予約" selected={plan === 'free'} onClick={() => setPlan('free')} />
+                <PlanPicker label="Standard" price="¥4,980" sub="顧客500名 / 1〜5席" selected={plan === 'standard'} onClick={() => setPlan('standard')} />
+                <PlanPicker label="Pro" price="¥9,980" sub="顧客無制限 / 複数拠点" selected={plan === 'pro'} onClick={() => setPlan('pro')} />
               </div>
             </div>
 
             <button type="submit" disabled={loading} className="btn-brand w-full justify-center py-2.5">
-              {loading ? '処理中...' : '決済画面へ進む →'}
+              {loading ? '処理中...' : plan === 'free' ? '無料で始める →' : '決済画面へ進む →'}
             </button>
 
             <p className="text-[11px] text-stone-500 text-center">
-              ご登録には決済が必要です。次画面で Stripe のセキュアな決済ページに移動します。
+              {plan === 'free'
+                ? 'Free プランはカード登録不要で、すぐにご利用いただけます。'
+                : 'ご登録後、Stripe のセキュアな決済ページへ移動します。'}
             </p>
           </form>
 
@@ -117,7 +137,7 @@ export default function RegisterPage() {
   );
 }
 
-function PlanPicker({ label, price, selected, onClick }: { label: string; price: string; selected: boolean; onClick: () => void }) {
+function PlanPicker({ label, price, sub, selected, onClick }: { label: string; price: string; sub?: string; selected: boolean; onClick: () => void }) {
   return (
     <button
       type="button"
@@ -126,7 +146,8 @@ function PlanPicker({ label, price, selected, onClick }: { label: string; price:
     >
       <div className="font-semibold text-sm">{label}</div>
       <div className={`text-lg font-bold mt-1 ${selected ? 'brand-text' : 'text-stone-700'}`}>{price}</div>
-      <div className="text-[10px] text-stone-500">/月(税別)</div>
+      <div className="text-[10px] text-stone-500">{price === '¥0' ? '' : '/月(税別)'}</div>
+      {sub && <div className="text-[9px] text-stone-500 mt-1">{sub}</div>}
     </button>
   );
 }
