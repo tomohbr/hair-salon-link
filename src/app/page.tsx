@@ -158,10 +158,10 @@ function Gallery() {
     <section className="section-alt">
       <div className="max-w-6xl mx-auto px-5 md:px-8 py-24 md:py-32">
         <div className="text-center mb-16 md:mb-20">
-          <div className="eyebrow mb-6">AT THE CHAIR</div>
+          <div className="eyebrow mb-6">STYLE</div>
           <h2 className="display-serif text-[28px] md:text-[44px] leading-[1.5] md:leading-[1.4]">
-            誰かの朝が、<br />
-            変わる場所。
+            一人ひとりの髪に、<br />
+            一人ひとりの施術を。
           </h2>
         </div>
 
