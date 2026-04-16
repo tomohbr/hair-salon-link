@@ -1,9 +1,22 @@
 import { getCurrentSalon, computeSalonKpis } from '@/lib/salonData';
 import { prisma } from '@/lib/db';
 import { yen, pct, sourceLabel } from '@/lib/utils/format';
+import { canAccessFeature } from '@/lib/planLimits';
 
 export default async function AnalyticsPage() {
   const { salon } = await getCurrentSalon();
+
+  // プランチェック: standard, pro のみ
+  if (!canAccessFeature(salon.plan, 'analytics')) {
+    return (
+      <div className="text-center py-20">
+        <h1 className="text-2xl font-bold text-stone-900 mb-2">プランのアップグレードが必要です</h1>
+        <p className="text-stone-600 mb-6">分析機能は Standard / Pro プランでご利用いただけます。</p>
+        <a href="/settings" className="btn-brand">設定画面でプラン変更</a>
+      </div>
+    );
+  }
+
   const kpi = await computeSalonKpis(salon.id);
   const customers = await prisma.customer.findMany({ where: { salonId: salon.id } });
 

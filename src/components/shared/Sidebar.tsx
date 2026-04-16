@@ -1,18 +1,19 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, CalendarDays, Users, ListOrdered, Ticket, MessageSquare, Image as ImageIcon, BarChart3, Settings, Sparkles, LogOut } from 'lucide-react';
+import { LayoutDashboard, CalendarDays, Users, ListOrdered, Ticket, MessageSquare, Image as ImageIcon, BarChart3, Settings, Scissors, LogOut, Lock } from 'lucide-react';
 
+// 各ナビ項目に必要なプランを定義
 const allNav = [
-  { href: '/dashboard', label: 'ダッシュボード', icon: LayoutDashboard, roles: ['admin', 'staff'] },
-  { href: '/reservations', label: '予約', icon: CalendarDays, roles: ['admin', 'staff'] },
-  { href: '/customers', label: '顧客', icon: Users, roles: ['admin', 'staff'] },
-  { href: '/menus', label: 'メニュー', icon: ListOrdered, roles: ['admin', 'staff'] },
-  { href: '/coupons', label: 'クーポン', icon: Ticket, roles: ['admin'] },
-  { href: '/messages', label: 'メッセージ配信', icon: MessageSquare, roles: ['admin'] },
-  { href: '/designs', label: 'スタイルギャラリー', icon: ImageIcon, roles: ['admin'] },
-  { href: '/analytics', label: '分析', icon: BarChart3, roles: ['admin'] },
-  { href: '/settings', label: '設定', icon: Settings, roles: ['admin'] },
+  { href: '/dashboard', label: 'ダッシュボード', icon: LayoutDashboard, roles: ['admin', 'staff'], plans: ['free', 'standard', 'pro'] },
+  { href: '/reservations', label: '予約', icon: CalendarDays, roles: ['admin', 'staff'], plans: ['free', 'standard', 'pro'] },
+  { href: '/customers', label: '顧客', icon: Users, roles: ['admin', 'staff'], plans: ['free', 'standard', 'pro'] },
+  { href: '/menus', label: 'メニュー', icon: ListOrdered, roles: ['admin', 'staff'], plans: ['free', 'standard', 'pro'] },
+  { href: '/coupons', label: 'クーポン', icon: Ticket, roles: ['admin'], plans: ['standard', 'pro'] },
+  { href: '/messages', label: 'メッセージ配信', icon: MessageSquare, roles: ['admin'], plans: ['standard', 'pro'] },
+  { href: '/designs', label: 'スタイルギャラリー', icon: ImageIcon, roles: ['admin'], plans: ['pro'] },
+  { href: '/analytics', label: '分析', icon: BarChart3, roles: ['admin'], plans: ['standard', 'pro'] },
+  { href: '/settings', label: '設定', icon: Settings, roles: ['admin'], plans: ['free', 'standard', 'pro'] },
 ];
 
 export default function Sidebar({ userName, userRole, salonName, plan }: { userName: string; userRole: string; salonName: string; plan: string }) {
@@ -24,7 +25,7 @@ export default function Sidebar({ userName, userRole, salonName, plan }: { userN
       <div className="p-5 border-b border-stone-200">
         <div className="flex items-center gap-2">
           <div className="w-9 h-9 rounded-lg brand-bg flex items-center justify-center">
-            <Sparkles className="w-5 h-5 text-white" />
+            <Scissors className="w-5 h-5 text-white" />
           </div>
           <div>
             <div className="font-bold text-stone-900">HairSalonLink</div>
@@ -36,6 +37,22 @@ export default function Sidebar({ userName, userRole, salonName, plan }: { userN
         {nav.map((item) => {
           const active = path === item.href || (item.href !== '/dashboard' && path?.startsWith(item.href));
           const Icon = item.icon;
+          const locked = !item.plans.includes(plan);
+
+          if (locked) {
+            return (
+              <div
+                key={item.href}
+                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-stone-400 cursor-not-allowed"
+                title={`${plan}プランではご利用いただけません`}
+              >
+                <Icon className="w-4 h-4" />
+                <span className="flex-1">{item.label}</span>
+                <Lock className="w-3 h-3 text-stone-300" />
+              </div>
+            );
+          }
+
           return (
             <Link
               key={item.href}

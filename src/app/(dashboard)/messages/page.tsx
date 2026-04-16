@@ -1,9 +1,21 @@
 import { getSalonData } from '@/lib/salonData';
 import { fmtDate, pct } from '@/lib/utils/format';
 import { MessageSquare, Send } from 'lucide-react';
+import { canAccessFeature } from '@/lib/planLimits';
 
 export default async function MessagesPage() {
-  const { messages, customers } = await getSalonData();
+  const { salon, messages, customers } = await getSalonData();
+  // プランチェック: standard, pro のみ
+  if (!canAccessFeature(salon.plan, 'messages')) {
+    return (
+      <div className="text-center py-20">
+        <div className="text-6xl mb-4">🔒</div>
+        <h1 className="text-2xl font-bold text-stone-900 mb-2">プランのアップグレードが必要です</h1>
+        <p className="text-stone-600 mb-6">この機能は Standard/Pro プランでご利用いただけます。</p>
+        <a href="/settings" className="btn-brand">設定画面でプラン変更</a>
+      </div>
+    );
+  }
   const lineFriends = customers.filter(c => c.isLineFriend).length;
   const today = new Date();
   const dormant = customers.filter(c => {

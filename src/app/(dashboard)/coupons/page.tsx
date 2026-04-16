@@ -1,9 +1,21 @@
 import { getSalonData } from '@/lib/salonData';
 import { yen, fmtDate } from '@/lib/utils/format';
 import { Ticket, Users, Calendar } from 'lucide-react';
+import { canAccessFeature } from '@/lib/planLimits';
 
 export default async function CouponsPage() {
-  const { coupons } = await getSalonData();
+  const { salon, coupons } = await getSalonData();
+  // プランチェック: standard, pro のみ
+  if (!canAccessFeature(salon.plan, 'coupons')) {
+    return (
+      <div className="text-center py-20">
+        <div className="text-6xl mb-4">🔒</div>
+        <h1 className="text-2xl font-bold text-stone-900 mb-2">プランのアップグレードが必要です</h1>
+        <p className="text-stone-600 mb-6">この機能は Standard/Pro プランでご利用いただけます。</p>
+        <a href="/settings" className="btn-brand">設定画面でプラン変更</a>
+      </div>
+    );
+  }
 
   const segmentLabel = (s: string) => ({ all: '全顧客', new: '新規顧客', dormant: '休眠顧客', line_friend: 'LINE友だち', vip: 'VIP顧客' }[s] || s);
 

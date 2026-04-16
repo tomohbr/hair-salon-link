@@ -1,8 +1,20 @@
 import { getSalonData } from '@/lib/salonData';
 import { Heart, Sparkles } from 'lucide-react';
+import { canAccessFeature } from '@/lib/planLimits';
 
 export default async function DesignsPage() {
-  const { designs, staff } = await getSalonData();
+  const { salon, designs, staff } = await getSalonData();
+  // プランチェック: pro のみ
+  if (!canAccessFeature(salon.plan, 'designs')) {
+    return (
+      <div className="text-center py-20">
+        <div className="text-6xl mb-4">🔒</div>
+        <h1 className="text-2xl font-bold text-stone-900 mb-2">プランのアップグレードが必要です</h1>
+        <p className="text-stone-600 mb-6">この機能は Pro プランでご利用いただけます。</p>
+        <a href="/settings" className="btn-brand">設定画面でプラン変更</a>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

@@ -7,6 +7,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { getAvailableSlots } from '@/lib/availability';
+import { checkCustomerLimit, checkReservationLimit } from '@/lib/planLimits';
 
 export async function POST(req: NextRequest) {
   try {
@@ -34,6 +35,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'この時間枠は既に埋まっています' }, { status: 409 });
     }
 
+    // プラン制限チェック
+    const resErr = await checkReservationLimit(salon.id, salon.plan);
+    if (resErr) return NextResponse.json({ error: resErr }, { status: 403 });
+
     // 既存顧客を検索（電話 or メール）、無ければ作成
     let customer = null;
     if (phone || email) {
@@ -46,6 +51,8 @@ export async function POST(req: NextRequest) {
     }
     const validSource = ['line', 'web', 'hotpepper', 'phone', 'walk_in'].includes(source) ? source : 'web';
     if (!customer) {
+      const custErr = await checkCustomerLimit(salon.id, salon.plan);
+      if (custErr) return NextResponse.json({ error: custErr }, { status: 403 });
       customer = await prisma.customer.create({
         data: {
           salonId: salon.id,

@@ -14,6 +14,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { requireRole } from '@/lib/auth';
 import { getAvailableSlots } from '@/lib/availability';
+import { checkCustomerLimit, checkReservationLimit } from '@/lib/planLimits';
 
 export async function POST(req: NextRequest) {
   try {
@@ -38,6 +39,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'この時間枠は既に予約が入っています', slots }, { status: 409 });
     }
 
+    const salon = await prisma.salon.findUnique({ where: { id: session.salonId } });
+    if (!salon) return NextResponse.json({ error: 'salon not found' }, { status: 404 });
+
+    // プラン制限チェック
+    const resErr = await checkReservationLimit(salon.id, salon.plan);
+    if (resErr) return NextResponse.json({ error: resErr }, { status: 403 });
+
     const validSource = ['line', 'web', 'hotpepper', 'phone', 'walk_in', 'manual'].includes(source) ? source : 'manual';
 
     // 顧客検索 or 新規
@@ -45,6 +53,8 @@ export async function POST(req: NextRequest) {
       ? await prisma.customer.findFirst({ where: { salonId: session.salonId, phone } })
       : null;
     if (!customer) {
+      const custErr = await checkCustomerLimit(salon.id, salon.plan);
+      if (custErr) return NextResponse.json({ error: custErr }, { status: 403 });
       customer = await prisma.customer.create({
         data: {
           salonId: session.salonId,
