@@ -131,36 +131,62 @@ function About() {
 /* ────────────────────────────────────────────────────────── */
 
 function Gallery() {
-  const quotes = [
-    { label: 'CUT', caption: '似合うを、かたちに。' },
-    { label: 'COLOR', caption: '個性を、ひと押しで。' },
-    { label: 'PERM', caption: '毎朝の手間を、引き算。' },
-    { label: 'CARE', caption: '髪は、時間をかけて。' },
+  const cards = [
+    {
+      label: 'CUT',
+      caption: '似合うを、かたちに。',
+      img: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=900&q=80&auto=format&fit=crop',
+    },
+    {
+      label: 'COLOR',
+      caption: '個性を、ひと押しで。',
+      img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=900&q=80&auto=format&fit=crop',
+    },
+    {
+      label: 'PERM',
+      caption: '毎朝の手間を、引き算。',
+      img: 'https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=900&q=80&auto=format&fit=crop',
+    },
+    {
+      label: 'CARE',
+      caption: '髪は、時間をかけて。',
+      img: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=900&q=80&auto=format&fit=crop',
+    },
   ];
 
   return (
     <section className="section-alt">
       <div className="max-w-6xl mx-auto px-5 md:px-8 py-24 md:py-32">
         <div className="text-center mb-16 md:mb-20">
-          <div className="eyebrow mb-6">ON OUR DESK</div>
-          <h2 className="display-serif text-[26px] md:text-[40px] leading-[1.6] md:leading-[1.5]">
-            道具は、<br />
-            技術の邪魔をしない。
+          <div className="eyebrow mb-6">AT THE CHAIR</div>
+          <h2 className="display-serif text-[28px] md:text-[44px] leading-[1.5] md:leading-[1.4]">
+            誰かの朝が、<br />
+            変わる場所。
           </h2>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {quotes.map((q) => (
+          {cards.map((c) => (
             <div
-              key={q.label}
-              className="aspect-[3/4] bg-[#120e0c] border border-[#2a2320] p-5 md:p-6 flex flex-col justify-between hover:border-[#3a302a] transition"
+              key={c.label}
+              className="relative aspect-[3/4] overflow-hidden border border-[#2a2320] group"
             >
-              <div className="text-[10px] tracking-[0.28em] text-[#8a7f6e] uppercase">
-                {q.label}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={c.img}
+                alt={c.label}
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover grayscale-[40%] brightness-75 group-hover:grayscale-0 group-hover:brightness-90 transition duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0c0a09] via-[#0c0a09]/55 to-[#0c0a09]/10" />
+              <div className="relative h-full p-5 md:p-6 flex flex-col justify-between">
+                <div className="text-[10px] tracking-[0.3em] text-[#c9a96e] uppercase">
+                  {c.label}
+                </div>
+                <p className="display-serif text-[15px] md:text-[17px] leading-[1.9] text-[#ebe1cf] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                  {c.caption}
+                </p>
               </div>
-              <p className="display-serif text-[15px] md:text-[17px] leading-[1.9] text-[#ebe1cf]">
-                {q.caption}
-              </p>
             </div>
           ))}
         </div>
