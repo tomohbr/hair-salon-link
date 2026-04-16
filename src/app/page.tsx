@@ -77,7 +77,7 @@ function Hero() {
 
         <div className="mt-12 flex flex-col sm:flex-row gap-3 justify-center items-center">
           <Link href="/register" className="btn-cta">
-            HAIRSALONLINK を始める
+            HairSalonLink を始める
           </Link>
           <Link href="/login" className="btn-cta-ghost">
             ログイン
@@ -113,12 +113,12 @@ function About() {
           <p>
             技術は確かだ。お客さまも、覚えていてくれる。
             それでも、毎月の広告費と、紙のカルテと、オーナー個人のLINEの返信が、小さな店を少しずつ削っていく。
-            広告への依存から、少しずつ離れていくための地図が、そろそろ必要だと思う。
+            広告への依存から、少しずつ離れていくための地図が要る。
           </p>
           <p>
             HairSalonLink は、その削られる部分だけを、静かに引き受けるためのツール。
             予約、薬剤カルテ、指名料、LINE配信、そしてHPB経由の新規客が自社リピートに変わった割合——
-            技術の邪魔をせず、店の経営だけを支える設計にしています。
+            経営の裏側だけを静かに整える、そういう設計にしています。
           </p>
         </div>
       </div>
@@ -224,12 +224,12 @@ function Features() {
     {
       n: '05',
       title: '配信は、撃ちすぎない。',
-      body: '「休眠90日超」「VIP」「初回来店」など、条件に合う顧客だけにLINE配信する。無駄打ちは、顧客を疲れさせる。',
+      body: '「休眠90日超」「VIP」「初回来店」など、条件に合う顧客だけにLINE配信する。必要な人に、必要なタイミングだけ届く。',
     },
     {
       n: '06',
       title: 'スタイルは、そのまま予約に。',
-      body: '撮影した作品を並べておくと、お客さまは気になったスタイルから、そのまま予約に進める。ギャラリーと予約は、地続きであるべきだ。',
+      body: '撮影した作品を並べておくと、お客さまは気になったスタイルから、そのまま予約に進める。ギャラリーと予約が、地続きになっている。',
     },
   ];
 
@@ -237,9 +237,9 @@ function Features() {
     <section id="features" className="bg-[#120e0c]">
       <div className="max-w-5xl mx-auto px-5 md:px-8 py-24 md:py-32">
         <div className="text-center mb-16 md:mb-20">
-          <div className="eyebrow mb-6">TOOLS</div>
+          <div className="eyebrow mb-6">FEATURES</div>
           <h2 className="display-serif text-[28px] md:text-[44px] leading-[1.5] md:leading-[1.4]">
-            道具について。
+            HairSalonLink で、<br className="md:hidden" />できること。
           </h2>
         </div>
 
@@ -285,7 +285,7 @@ function Why() {
           <div className="eyebrow mb-6">THREE THINGS</div>
           <h2 className="display-serif text-[28px] md:text-[42px] leading-[1.5] md:leading-[1.4]">
             始めるときに、<br />
-            邪魔になるものを、外す。
+            ハードルを、下げる。
           </h2>
         </div>
 
@@ -333,8 +333,8 @@ function Pricing() {
     {
       name: 'Standard',
       price: '¥4,980',
-      desc: '1〜5席の店舗',
-      target: '1〜5席の店舗',
+      desc: '個人〜小規模サロン',
+      target: 'オーナー + スタッフ1〜4名',
       seats: '1〜5席',
       reservations: '無制限',
       features: ['顧客 500名', 'LINE連携・配信', '薬剤カルテ', '指名管理', 'HPB移行追跡', 'セグメント分析'],
@@ -509,12 +509,12 @@ function FinalCta() {
         </h2>
         <p className="mt-8 text-[14px] md:text-[15px] leading-[2] text-[#8a7f6e]">
           ホットペッパーは、今日もはたらいてくれる。<br className="hidden md:block" />
-          けれど、次の常連を誰が連れてくるかは、自分で決めたい。
+          けれど、次の常連を連れてくるのは、広告ではなく、あなたの店そのものだ。
         </p>
 
         <div className="mt-12 flex flex-col sm:flex-row gap-3 justify-center items-center">
           <Link href="/register" className="btn-cta-gold">
-            HAIRSALONLINK を始める
+            HairSalonLink を始める
           </Link>
           <Link
             href="/book/hair-salon-demo"
