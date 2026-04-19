@@ -1,0 +1,44 @@
+{
+  "name": "HairSalonLink — 美容室向け顧客管理SaaS",
+  "short_name": "HairSalonLink",
+  "description": "小規模美容室のための、月額¥4,980から始める顧客管理ツール。",
+  "start_url": "/dashboard",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0c0a09",
+  "theme_color": "#1F5F80",
+  "lang": "ja",
+  "categories": ["business", "productivity"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "ダッシュボード",
+      "url": "/dashboard",
+      "short_name": "ダッシュボード"
+    },
+    {
+      "name": "予約",
+      "url": "/reservations",
+      "short_name": "予約"
+    },
+    {
+      "name": "顧客",
+      "url": "/customers",
+      "short_name": "顧客"
+    }
+  ]
+}
