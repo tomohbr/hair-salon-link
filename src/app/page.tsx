@@ -455,7 +455,7 @@ function Faq() {
     },
     {
       q: 'サポート体制を教えてください',
-      a: 'メールで受け付けます（support@hairsalonlink.demo）。Proプランでは初期設定のサポートも含まれます。',
+      a: 'メールで受け付けます（shibahara.724@gmail.com）。Proプランでは初期設定のサポートも含まれます。',
     },
     {
       q: 'お支払い方法は？',
@@ -484,8 +484,8 @@ function Faq() {
 
         <div className="mt-14 text-center text-[13px] text-[#8a7f6e]">
           ほかにご不明な点は、{' '}
-          <a href="mailto:support@hairsalonlink.demo" className="brand-text font-semibold underline underline-offset-4">
-            support@hairsalonlink.demo
+          <a href="mailto:shibahara.724@gmail.com" className="brand-text font-semibold underline underline-offset-4">
+            shibahara.724@gmail.com
           </a>
           {' '} までどうぞ。
         </div>
@@ -569,7 +569,7 @@ function Footer() {
             <ul className="space-y-3 text-[12px]">
               <li><Link href="/login" className="hover:text-white transition">ログイン</Link></li>
               <li><Link href="/register" className="hover:text-white transition">新規ご登録</Link></li>
-              <li><a href="mailto:support@hairsalonlink.demo" className="hover:text-white transition">お問い合わせ</a></li>
+              <li><a href="mailto:shibahara.724@gmail.com" className="hover:text-white transition">お問い合わせ</a></li>
             </ul>
           </div>
 
