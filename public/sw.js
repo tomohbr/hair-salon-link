@@ -1,10 +1,12 @@
 // HairSalonLink Service Worker
 // Strategy:
-// - Static assets (icons, manifest): cache-first
-// - App shell (HTML pages): network-first with cache fallback
-// - API calls: network-only (never cache, always fresh)
+// - Static assets (icons, manifest, _next/static): cache-first
+// - HTML pages: NETWORK-ONLY (never cache to avoid stale auth pages)
+// - API calls: NETWORK-ONLY (always fresh)
+//
+// v2: Removed HTML caching to fix auth-protected page redirect issues.
 
-const CACHE = "hsl-v1";
+const CACHE = "hsl-v2";
 const PRECACHE = [
   "/manifest.webmanifest",
   "/icon-192.png",
@@ -58,15 +60,9 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // App shell (HTML): network-first, fallback to cache
+  // HTML pages: NEVER cache. Always go to network.
+  // This avoids serving stale auth-protected pages (e.g. /account redirecting to /login).
   if (req.mode === "navigate" || req.headers.get("accept")?.includes("text/html")) {
-    event.respondWith(
-      fetch(req).then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE).then((c) => c.put(req, copy));
-        return res;
-      }).catch(() => caches.match(req).then((c) => c || caches.match("/")))
-    );
-    return;
+    return; // browser handles fetch normally with cookies
   }
 });
