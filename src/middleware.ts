@@ -8,6 +8,28 @@ function getSecret() {
   return new TextEncoder().encode(secret);
 }
 
+/**
+ * Railway 等のリバースプロキシ環境では req.url が内部の localhost を指すため、
+ * 外部から見える正しい URL でリダイレクトを構築する。
+ */
+function externalRedirect(req: NextRequest, path: string): NextResponse {
+  const envUrl = process.env.NEXT_PUBLIC_APP_URL;
+  if (envUrl) {
+    return NextResponse.redirect(`${envUrl.replace(/\/$/, '')}${path}`);
+  }
+  const fwdHost = req.headers.get('x-forwarded-host');
+  const fwdProto = req.headers.get('x-forwarded-proto') || 'https';
+  if (fwdHost) {
+    return NextResponse.redirect(`${fwdProto}://${fwdHost}${path}`);
+  }
+  const host = req.headers.get('host');
+  if (host) {
+    const proto = req.nextUrl.protocol.replace(':', '');
+    return NextResponse.redirect(`${proto}://${host}${path}`);
+  }
+  return NextResponse.redirect(new URL(path, req.url));
+}
+
 const protectedPaths = [
   '/dashboard',
   '/reservations',
@@ -22,7 +44,6 @@ const protectedPaths = [
   '/account',
 ];
 
-// /account は全ロール (admin/staff/superadmin) でアクセス可
 const staffAllowed = ['/dashboard', '/reservations', '/customers', '/menus', '/account'];
 const superadminOnly = ['/superadmin'];
 
@@ -33,26 +54,24 @@ export async function middleware(req: NextRequest) {
 
   const token = req.cookies.get(COOKIE_NAME)?.value;
   if (!token) {
-    return NextResponse.redirect(new URL('/login', req.url));
+    return externalRedirect(req, '/login');
   }
   try {
     const { payload } = await jwtVerify(token, getSecret());
     const role = payload.role as string;
 
-    // superadmin 専用
     if (superadminOnly.some((p) => pathname.startsWith(p)) && role !== 'superadmin') {
-      return NextResponse.redirect(new URL('/dashboard', req.url));
+      return externalRedirect(req, '/dashboard');
     }
-    // staff は限定ページのみ
     if (role === 'staff') {
       const allowed = staffAllowed.some((p) => pathname.startsWith(p));
       if (!allowed) {
-        return NextResponse.redirect(new URL('/dashboard', req.url));
+        return externalRedirect(req, '/dashboard');
       }
     }
     return NextResponse.next();
   } catch {
-    return NextResponse.redirect(new URL('/login', req.url));
+    return externalRedirect(req, '/login');
   }
 }
 

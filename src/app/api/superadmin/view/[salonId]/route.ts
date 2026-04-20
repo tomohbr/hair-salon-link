@@ -1,10 +1,9 @@
 // SuperAdmin: 指定店舗のビューモードに入る
 // GET /api/superadmin/view/[salonId] → cookie をセットして /dashboard にリダイレクト
-//
-// シンプルな GET エンドポイントで Server Action のクッキー問題を回避。
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
+import { buildRedirectUrl } from '@/lib/baseUrl';
 
 const VIEW_COOKIE = 'hsl_superadmin_view_salon';
 
@@ -14,20 +13,20 @@ export async function GET(
 ) {
   const session = await getSession();
   if (!session || session.role !== 'superadmin') {
-    return NextResponse.redirect(new URL('/login', req.url));
+    return NextResponse.redirect(buildRedirectUrl(req, '/login'));
   }
 
   const { salonId } = await params;
   if (!salonId) {
-    return NextResponse.redirect(new URL('/superadmin', req.url));
+    return NextResponse.redirect(buildRedirectUrl(req, '/superadmin'));
   }
 
-  const res = NextResponse.redirect(new URL('/dashboard', req.url));
+  const res = NextResponse.redirect(buildRedirectUrl(req, '/dashboard'));
   res.cookies.set(VIEW_COOKIE, salonId, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
-    maxAge: 60 * 60 * 8, // 8時間
+    maxAge: 60 * 60 * 8,
     path: '/',
   });
   return res;
