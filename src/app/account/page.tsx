@@ -27,9 +27,11 @@ export default async function AccountPage() {
           <Link href={backHref} className="text-sm text-stone-600 hover:text-stone-900">
             ← {user.role === 'superadmin' ? 'SuperAdmin' : 'ダッシュボード'} へ戻る
           </Link>
-          <Link href="/api/auth/logout" className="text-xs text-stone-500 hover:text-stone-900">
-            ログアウト
-          </Link>
+          <form action="/api/auth/logout" method="POST" className="inline">
+            <button type="submit" className="text-xs text-stone-500 hover:text-stone-900">
+              ログアウト
+            </button>
+          </form>
         </div>
       </header>
 

@@ -45,7 +45,9 @@ export default async function SuperAdminPage() {
           <div className="flex items-center gap-3">
             <a href="/debug" className="btn-ghost text-sm">🔍 診断</a>
             <Link href="/account" className="btn-ghost text-sm">アカウント設定</Link>
-            <Link href="/api/auth/logout" className="btn-ghost text-sm">ログアウト</Link>
+            <form action="/api/auth/logout" method="POST" className="inline">
+              <button type="submit" className="btn-ghost text-sm">ログアウト</button>
+            </form>
           </div>
         </div>
       </header>

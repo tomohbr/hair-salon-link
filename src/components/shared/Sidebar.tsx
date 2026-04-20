@@ -84,9 +84,11 @@ export default function Sidebar({ userName, userRole, salonName, plan }: { userN
         <Link href="/account" className="w-full btn-ghost text-xs justify-center hover:text-stone-900">
           アカウント設定
         </Link>
-        <Link href="/api/auth/logout" className="w-full btn-ghost text-xs justify-center">
-          <LogOut className="w-3 h-3" />ログアウト
-        </Link>
+        <form action="/api/auth/logout" method="POST" className="w-full">
+          <button type="submit" className="w-full btn-ghost text-xs justify-center">
+            <LogOut className="w-3 h-3" />ログアウト
+          </button>
+        </form>
       </div>
     </aside>
   );
