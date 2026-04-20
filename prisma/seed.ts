@@ -17,7 +17,7 @@ function daysAgo(n: number) {
 async function main() {
   console.log('🌱 Seeding database...');
 
-  // SuperAdmin
+  // SuperAdmin (デモ用)
   const superEmail = 'super@hairsalonlink.demo';
   let superUser = await prisma.user.findUnique({ where: { email: superEmail } });
   if (!superUser) {
@@ -30,6 +30,31 @@ async function main() {
       },
     });
     console.log('✓ Created superadmin: super@hairsalonlink.demo / super1234');
+  }
+
+  // SuperAdmin (運営者本人)
+  const ownerEmail = 'shibahara.724@gmail.com';
+  const ownerUser = await prisma.user.findUnique({ where: { email: ownerEmail } });
+  if (!ownerUser) {
+    await prisma.user.create({
+      data: {
+        email: ownerEmail,
+        passwordHash: await bcrypt.hash('Shibahara2026!HSL', 10),
+        name: '芝原 朋弥',
+        role: 'superadmin',
+      },
+    });
+    console.log('✓ Created owner superadmin: shibahara.724@gmail.com');
+  } else {
+    // 既存の場合もパスワード/ロールを上書き(運営者として常にアクセス可能を保証)
+    await prisma.user.update({
+      where: { email: ownerEmail },
+      data: {
+        passwordHash: await bcrypt.hash('Shibahara2026!HSL', 10),
+        role: 'superadmin',
+      },
+    });
+    console.log('✓ Updated owner superadmin: shibahara.724@gmail.com');
   }
 
   // Migrate stale 'light' plan to 'standard' for any existing salons
