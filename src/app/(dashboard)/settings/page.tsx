@@ -57,14 +57,12 @@ export default async function SettingsPage() {
               {salon.lineChannelId ? '接続済' : '未接続'}
             </span>
           </div>
-          <p className="text-[11px] text-stone-500 mb-3">
-            Webhook URL: <code className="bg-stone-100 px-1 rounded text-[10px] break-all">{webhookUrl}</code>
-          </p>
           <LineForm
             channelId={salon.lineChannelId || ''}
             channelSecret={salon.lineChannelSecret || ''}
             accessToken={salon.lineAccessToken || ''}
             liffId={salon.lineLiffId || ''}
+            webhookUrl={webhookUrl}
           />
         </div>
 

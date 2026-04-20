@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { prisma } from '@/lib/db';
 import { getCurrentSalon } from '@/lib/salonData';
+import { testConnection } from '@/lib/line/client';
 
 /** 店舗の基本情報を更新 */
 export async function saveSalonInfoAction(
@@ -56,6 +57,44 @@ export async function saveLineSettingsAction(
     });
     revalidatePath('/settings');
     return { ok: true, message: 'LINE 連携設定を保存しました' };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : 'エラーが発生しました' };
+  }
+}
+
+/** 保存された LINE 認証情報で実際に LINE API を叩いて接続確認する */
+export async function testLineConnectionAction(
+  _prev: { ok?: boolean; error?: string; message?: string } | null,
+  _formData: FormData,
+): Promise<{ ok?: boolean; error?: string; message?: string }> {
+  try {
+    const { salon } = await getCurrentSalon();
+    if (!salon.lineAccessToken) {
+      return { error: 'Channel Access Token が未保存です。先に保存してください。' };
+    }
+    const result = await testConnection({
+      accessToken: salon.lineAccessToken,
+      channelSecret: salon.lineChannelSecret,
+    });
+    if (!result.ok) {
+      return { error: result.message || `エラー (status ${result.status})` };
+    }
+    // LINE の /bot/info は basicId・displayName などを返すのでメッセージに反映
+    let label = '認証 OK';
+    if (result.body) {
+      try {
+        const info = JSON.parse(result.body) as { displayName?: string; basicId?: string; userId?: string };
+        label = `${info.displayName || '不明'} (${info.basicId || ''}) と接続できました`;
+        // ついでに bot userId を保存しておくと webhook の逆引きが即成立
+        if (info.userId && info.userId !== salon.lineBotUserId) {
+          await prisma.salon.update({
+            where: { id: salon.id },
+            data: { lineBotUserId: info.userId },
+          });
+        }
+      } catch { /* ignore */ }
+    }
+    return { ok: true, message: label };
   } catch (err) {
     return { error: err instanceof Error ? err.message : 'エラーが発生しました' };
   }
