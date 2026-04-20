@@ -1,38 +1,10 @@
 'use client';
-import { useState } from 'react';
+import { useActionState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { loginAction } from './login-action';
 
 export default function LoginPage() {
-  const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  async function onSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
-    try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error || 'ログインに失敗しました');
-        setLoading(false);
-        return;
-      }
-      router.push(data.redirectUrl || '/dashboard');
-      router.refresh();
-    } catch {
-      setError('通信エラー');
-      setLoading(false);
-    }
-  }
+  const [state, formAction, isPending] = useActionState(loginAction, null);
 
   return (
     <div className="w-full max-w-md">
@@ -40,21 +12,21 @@ export default function LoginPage() {
         <h1 className="text-2xl font-bold text-stone-900 mb-1">ログイン</h1>
         <p className="text-sm text-stone-500 mb-6">HairSalonLink にログインします</p>
 
-        {error && (
+        {state?.error && (
           <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-sm text-red-700">
-            {error}
+            {state.error}
           </div>
         )}
 
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form action={formAction} className="space-y-4">
           <div>
             <label className="block text-xs font-medium text-stone-700 mb-1">メールアドレス</label>
             <input
               type="email"
+              name="email"
               required
+              autoComplete="email"
               className="input"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               placeholder="owner@example.com"
             />
           </div>
@@ -62,15 +34,15 @@ export default function LoginPage() {
             <label className="block text-xs font-medium text-stone-700 mb-1">パスワード</label>
             <input
               type="password"
+              name="password"
               required
+              autoComplete="current-password"
               className="input"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
             />
           </div>
-          <button type="submit" disabled={loading} className="btn-brand w-full justify-center py-2.5">
-            {loading ? 'ログイン中...' : 'ログイン'}
+          <button type="submit" disabled={isPending} className="btn-brand w-full justify-center py-2.5">
+            {isPending ? 'ログイン中...' : 'ログイン'}
           </button>
         </form>
 
