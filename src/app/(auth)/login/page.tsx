@@ -1,10 +1,15 @@
-'use client';
-import { useActionState } from 'react';
+// ログインページ - Server Action を使わず、通常フォーム POST で /api/auth/login へ
 import Link from 'next/link';
-import { loginAction } from './login-action';
 
-export default function LoginPage() {
-  const [state, formAction, isPending] = useActionState(loginAction, null);
+export const dynamic = 'force-dynamic';
+
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
+  const sp = await searchParams;
+  const error = sp?.error;
 
   return (
     <div className="w-full max-w-md">
@@ -12,13 +17,13 @@ export default function LoginPage() {
         <h1 className="text-2xl font-bold text-stone-900 mb-1">ログイン</h1>
         <p className="text-sm text-stone-500 mb-6">HairSalonLink にログインします</p>
 
-        {state?.error && (
+        {error && (
           <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-sm text-red-700">
-            {state.error}
+            {error}
           </div>
         )}
 
-        <form action={formAction} className="space-y-4">
+        <form action="/api/auth/login" method="POST" className="space-y-4">
           <div>
             <label className="block text-xs font-medium text-stone-700 mb-1">メールアドレス</label>
             <input
@@ -41,8 +46,8 @@ export default function LoginPage() {
               placeholder="••••••••"
             />
           </div>
-          <button type="submit" disabled={isPending} className="btn-brand w-full justify-center py-2.5">
-            {isPending ? 'ログイン中...' : 'ログイン'}
+          <button type="submit" className="btn-brand w-full justify-center py-2.5">
+            ログイン
           </button>
         </form>
 
