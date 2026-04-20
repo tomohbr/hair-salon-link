@@ -1,8 +1,15 @@
 import { getSalonData } from '@/lib/salonData';
-import { Store, MessageCircle, CreditCard, Users } from 'lucide-react';
+import { Store, MessageCircle, CreditCard, Users, Link as LinkIcon } from 'lucide-react';
+import SalonInfoForm from './SalonInfoForm';
+import LineForm from './LineForm';
 
 export default async function SettingsPage() {
   const { salon, staff } = await getSalonData();
+
+  // 公開URL
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://hair-salon-link-production.up.railway.app';
+  const bookingUrl = `${baseUrl}/book/${salon.slug}`;
+  const webhookUrl = `${baseUrl}/api/line/webhook`;
 
   return (
     <div className="space-y-6">
@@ -11,36 +18,57 @@ export default async function SettingsPage() {
         <p className="text-sm text-stone-500 mt-1">店舗情報・LINE連携・プラン管理</p>
       </div>
 
+      {/* 公開URL情報 */}
+      <div className="card-box brand-light-bg">
+        <div className="flex items-center gap-2 mb-3">
+          <LinkIcon className="w-5 h-5 brand-text" />
+          <h2 className="font-semibold text-stone-900">公開予約URL</h2>
+        </div>
+        <p className="text-xs text-stone-600 mb-2">このURLをお客様にLINE・SNS・メールでご共有ください。</p>
+        <div className="flex gap-2 items-center">
+          <input readOnly value={bookingUrl} className="input flex-1 text-xs font-mono" />
+          <a href={bookingUrl} target="_blank" rel="noopener" className="btn-brand text-xs whitespace-nowrap">
+            プレビュー
+          </a>
+        </div>
+      </div>
+
       <div className="grid grid-cols-2 gap-6">
+        {/* 店舗情報 (編集可能) */}
         <div className="card-box">
           <div className="flex items-center gap-2 mb-4">
             <Store className="w-5 h-5 brand-text" />
             <h2 className="font-semibold text-stone-900">店舗情報</h2>
           </div>
-          <div className="space-y-3">
-            <Field label="店舗名" value={salon.name} />
-            <Field label="住所" value={salon.address || '—'} />
-            <Field label="電話番号" value={salon.phone || '—'} />
-            <Field label="予約ページURL" value={`/book/${salon.slug}`} />
-          </div>
+          <SalonInfoForm
+            initialName={salon.name}
+            initialAddress={salon.address || ''}
+            initialPhone={salon.phone || ''}
+            initialDescription={salon.description || ''}
+          />
         </div>
 
+        {/* LINE 連携 (編集可能) */}
         <div className="card-box">
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-1">
             <MessageCircle className="w-5 h-5 text-emerald-500" />
-            <h2 className="font-semibold text-stone-900">LINE連携</h2>
+            <h2 className="font-semibold text-stone-900">LINE 連携</h2>
             <span className={`badge ${salon.lineChannelId ? 'badge-green' : 'badge-gray'} ml-auto`}>
               {salon.lineChannelId ? '接続済' : '未接続'}
             </span>
           </div>
-          <div className="space-y-3">
-            <Field label="Channel ID" value={salon.lineChannelId || '未設定'} />
-            <Field label="Channel Secret" value={salon.lineChannelSecret ? '••••••••' : '未設定'} />
-            <Field label="Access Token" value={salon.lineAccessToken ? '••••••••' : '未設定'} />
-            <Field label="LIFF ID" value={salon.lineLiffId || '未設定'} />
-          </div>
+          <p className="text-[11px] text-stone-500 mb-3">
+            Webhook URL: <code className="bg-stone-100 px-1 rounded text-[10px] break-all">{webhookUrl}</code>
+          </p>
+          <LineForm
+            channelId={salon.lineChannelId || ''}
+            channelSecret={salon.lineChannelSecret || ''}
+            accessToken={salon.lineAccessToken || ''}
+            liffId={salon.lineLiffId || ''}
+          />
         </div>
 
+        {/* プラン */}
         <div className="card-box">
           <div className="flex items-center gap-2 mb-4">
             <CreditCard className="w-5 h-5 text-blue-500" />
@@ -53,6 +81,7 @@ export default async function SettingsPage() {
           </div>
         </div>
 
+        {/* スタッフ */}
         <div className="card-box">
           <div className="flex items-center gap-2 mb-4">
             <Users className="w-5 h-5 text-purple-500" />
@@ -77,15 +106,6 @@ export default async function SettingsPage() {
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-function Field({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <div className="text-xs text-stone-500">{label}</div>
-      <div className="text-sm font-medium text-stone-900 mt-0.5">{value}</div>
     </div>
   );
 }
