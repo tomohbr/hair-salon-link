@@ -225,9 +225,9 @@ body { background: var(--bg-base); color: var(--text); }
   -webkit-text-fill-color: #1c1917; /* Safari autofill 対策 */
 }
 .input::placeholder {
-  color: #d6d3d1; /* stone-300, 入力文字(黒)と明確に差をつける */
+  color: #d6d3d1; /* stone-300: 入力文字(#1c1917 黒)と明確な差 */
   opacity: 1;
-  font-style: italic;
+  /* italic は付けない（シンプルに薄いグレーだけでサンプルと分かるようにする） */
 }
 .input:focus {
   outline: 2px solid var(--brand);
