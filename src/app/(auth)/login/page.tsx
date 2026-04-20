@@ -1,6 +1,5 @@
 // ログインページ - Server Action を使わず、通常フォーム POST で /api/auth/login へ
 import Link from 'next/link';
-import { cookies, headers } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,23 +11,8 @@ export default async function LoginPage({
   const sp = await searchParams;
   const error = sp?.error;
 
-  // 診断: 現在ブラウザが送ってくる cookie 名の一覧を表示
-  const cookieStore = await cookies();
-  const hdrs = await headers();
-  const cookieNames = cookieStore.getAll().map((c) => c.name);
-  const hasSession = cookieNames.includes('hairsalonlink_session');
-
   return (
     <div className="w-full max-w-md">
-      <div className="mb-3 p-3 rounded-lg bg-blue-50 border border-blue-200 text-xs text-blue-900 font-mono">
-        <div><b>🔍 診断:</b> ブラウザが送信した cookie</div>
-        <div>件数: <b>{cookieNames.length}</b></div>
-        <div>名前: [{cookieNames.join(', ') || '(なし)'}]</div>
-        <div>hairsalonlink_session: <b>{hasSession ? '✅ あり' : '❌ なし'}</b></div>
-        <div className="mt-1 text-[10px] text-blue-700">
-          Host: {hdrs.get('host')} / Proto: {hdrs.get('x-forwarded-proto')}
-        </div>
-      </div>
       <div className="card-box">
         <h1 className="text-2xl font-bold text-stone-900 mb-1">ログイン</h1>
         <p className="text-sm text-stone-500 mb-6">HairSalonLink にログインします</p>
