@@ -5,7 +5,6 @@ import { Sparkles, Building2, Users, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import PasswordChangeForm from './PasswordChangeForm';
-import { enterSalonView } from './view-actions';
 
 export default async function SuperAdminPage() {
   try {
@@ -99,11 +98,12 @@ export default async function SuperAdminPage() {
                     <td className="py-3 text-right">{s._count.reservations}</td>
                     <td className="py-3 text-stone-500 text-xs">{fmtDate(s.createdAt)}</td>
                     <td className="py-3 text-center">
-                      <form action={enterSalonView.bind(null, s.id)}>
-                        <button type="submit" className="text-xs text-brand-text underline hover:opacity-70 brand-text">
-                          店舗を見る →
-                        </button>
-                      </form>
+                      <a
+                        href={`/api/superadmin/view/${s.id}`}
+                        className="text-xs underline hover:opacity-70 brand-text inline-block"
+                      >
+                        店舗を見る →
+                      </a>
                     </td>
                   </tr>
                 ))
