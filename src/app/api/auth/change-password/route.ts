@@ -7,12 +7,23 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
-import { requireSession, hashPassword, verifyPassword } from '@/lib/auth';
+import { getSession, hashPassword, verifyPassword } from '@/lib/auth';
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await requireSession();
-    const { currentPassword, newPassword } = await req.json();
+    // セッション確認 (throw せず明示的にチェックして 401 を返す)
+    const session = await getSession();
+    if (!session) {
+      return NextResponse.json({ error: 'ログイン情報が見つかりません。再ログインしてください。' }, { status: 401 });
+    }
+
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: 'リクエストの形式が正しくありません' }, { status: 400 });
+    }
+    const { currentPassword, newPassword } = body || {};
 
     if (!currentPassword || !newPassword) {
       return NextResponse.json({ error: '現在のパスワードと新しいパスワードを入力してください' }, { status: 400 });
@@ -42,7 +53,12 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ ok: true, message: 'パスワードを変更しました' });
   } catch (err) {
+    // 詳細メッセージをレスポンスに含める (デバッグ用、本番でも一時的に表示)
+    const msg = err instanceof Error ? err.message : String(err);
     console.error('change-password error:', err);
-    return NextResponse.json({ error: 'サーバーエラーが発生しました' }, { status: 500 });
+    return NextResponse.json(
+      { error: `サーバーエラー: ${msg}` },
+      { status: 500 }
+    );
   }
 }
