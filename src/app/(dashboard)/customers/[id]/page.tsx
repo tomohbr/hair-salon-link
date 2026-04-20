@@ -30,8 +30,8 @@ export default async function CustomerDetailPage({ params }: { params: Promise<{
         <ArrowLeft className="w-4 h-4" /> 顧客一覧に戻る
       </Link>
 
-      <div className="grid grid-cols-3 gap-6">
-        <div className="col-span-1 space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="md:col-span-1 space-y-4">
           <div className="card-box">
             <div className="w-20 h-20 rounded-full brand-light-bg flex items-center justify-center text-3xl brand-text font-bold mb-4">
               {customer.name.charAt(0)}
@@ -63,8 +63,8 @@ export default async function CustomerDetailPage({ params }: { params: Promise<{
           )}
         </div>
 
-        <div className="col-span-2 space-y-4">
-          <div className="grid grid-cols-3 gap-3">
+        <div className="md:col-span-2 space-y-4">
+          <div className="grid grid-cols-3 gap-2 md:gap-3">
             <Stat label="来店回数" value={`${customer.visitCount}回`} />
             <Stat label="累計売上" value={yen(customer.totalSpent)} />
             <Stat label="平均単価" value={yen(avgSpend)} />

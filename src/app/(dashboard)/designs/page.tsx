@@ -43,7 +43,7 @@ export default async function DesignsPage() {
           <p className="text-sm text-stone-500">デザインがまだ登録されていません。</p>
         </div>
       ) : (
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {designs.map(d => (
             <div key={d.id} className="card-box p-3 hover:shadow-md transition-shadow">
               <div className="aspect-square rounded-lg bg-gradient-to-br from-pink-100 via-purple-100 to-amber-100 flex items-center justify-center mb-3">

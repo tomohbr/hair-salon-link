@@ -60,7 +60,7 @@ export default async function AnalyticsPage() {
             <div className="text-xs text-stone-500">HPB流入 {kpi.hpbCustomers}名中</div>
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-3 mt-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
           <MetricBox label="HPB新規来店数" value={`${kpi.hpbCustomers}名`} />
           <MetricBox label="LINE登録率" value={pct(kpi.lineRate)} />
           <MetricBox label="リピート率" value={pct(kpi.repeatRate)} />
@@ -87,7 +87,8 @@ export default async function AnalyticsPage() {
       {segmentStats.length > 0 && (
         <div className="card-box">
           <h2 className="font-semibold text-stone-900 mb-4">顧客セグメント別 LTV分析</h2>
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto -mx-5 px-5">
+          <table className="w-full text-sm min-w-[480px]">
             <thead>
               <tr className="text-left text-xs text-stone-500 border-b border-stone-200">
                 <th className="py-2">セグメント</th>
@@ -109,6 +110,7 @@ export default async function AnalyticsPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
 

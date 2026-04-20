@@ -33,7 +33,7 @@ export default async function SettingsPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* 店舗情報 (編集可能) */}
         <div className="card-box">
           <div className="flex items-center gap-2 mb-4">

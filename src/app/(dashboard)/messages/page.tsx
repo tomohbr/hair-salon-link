@@ -36,7 +36,7 @@ export default async function MessagesPage() {
 
       <div className="card-box">
         <h2 className="font-semibold text-stone-900 mb-4">おすすめセグメント配信</h2>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <SegmentCard icon="🔔" label="休眠復帰" count={dormant.length} desc="90日以上来店なし" cta="復帰クーポンを送る" />
           <SegmentCard icon="💎" label="VIP層" count={customers.filter(c => c.tags.includes('vip')).length} desc="累計売上上位" cta="新作案内を送る" />
           <SegmentCard icon="🎉" label="新規→2回目誘導" count={customers.filter(c => c.visitCount === 1 && c.isLineFriend).length} desc="初回来店のみ" cta="2回目特典を送る" />

@@ -30,8 +30,8 @@ export default async function CustomersPage() {
             顧客がまだ登録されていません。最初の顧客を追加しましょう。
           </p>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+          <div className="overflow-x-auto -mx-5 px-5">
+            <table className="w-full text-sm min-w-[640px]">
               <thead>
                 <tr className="text-left text-xs text-stone-500 border-b border-stone-200">
                   <th className="py-3 px-2">顧客名</th>

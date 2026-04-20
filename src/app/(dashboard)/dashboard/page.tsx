@@ -21,22 +21,22 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-baseline justify-between">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
         <div>
-          <h1 className="text-2xl font-bold text-stone-900">ダッシュボード</h1>
-          <p className="text-sm text-stone-500 mt-1">{salon.name}</p>
+          <h1 className="text-xl md:text-2xl font-bold text-stone-900">ダッシュボード</h1>
+          <p className="text-xs md:text-sm text-stone-500 mt-1">{salon.name}</p>
         </div>
         <div className="text-xs text-stone-500">本日 {new Date().toLocaleDateString('ja-JP')}</div>
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         <KpiCard label="今月の売上" value={yen(kpi.revenueThis)} delta={kpi.revenueDelta} sub={`施術 ${kpi.completedCount}件`} icon={<TrendingUp className="w-5 h-5" />} />
         <KpiCard label="顧客数" value={`${kpi.totalCustomers}名`} sub={`LINE登録 ${kpi.lineCustomers}名 (${pct(kpi.lineRate)})`} icon={<Users className="w-5 h-5" />} />
         <KpiCard label="HPB→自社移行率" value={pct(kpi.hpbMigrationRate)} sub={`HPB流入 ${kpi.hpbCustomers}名中`} icon={<TrendingUp className="w-5 h-5" />} highlight />
         <KpiCard label="リピート率" value={pct(kpi.repeatRate)} sub={`予約残 ${kpi.upcomingRes}件`} icon={<Calendar className="w-5 h-5" />} />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="card-box">
           <div className="flex items-center gap-2 mb-3">
             <AlertTriangle className="w-4 h-4 text-amber-500" />
@@ -57,8 +57,8 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
-        <div className="card-box col-span-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="card-box md:col-span-2">
           <h3 className="font-semibold text-stone-900 mb-4">流入元別 売上構成</h3>
           <div className="space-y-3">
             {Object.entries(kpi.sourceRevenue).sort((a, b) => b[1] - a[1]).map(([src, amount]) => {

@@ -43,7 +43,7 @@ export default async function ReservationsPage({ searchParams }: { searchParams:
       </div>
 
       {/* チャネル別サマリー */}
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <ChannelCard label="ホットペッパー" count={sourceCounts.hotpepper} color="yellow" icon="🔥" />
         <ChannelCard label="LINE" count={sourceCounts.line} color="green" icon="💬" />
         <ChannelCard label="自社HP" count={sourceCounts.web} color="blue" icon="🌐" />

@@ -28,7 +28,7 @@ export default async function MenusPage() {
         Object.entries(byCategory).map(([cat, ms]) => (
           <div key={cat}>
             <h2 className="text-sm font-semibold text-stone-600 mb-3 uppercase tracking-wider">{cat}</h2>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {ms.map(m => (
                 <div key={m.id} className="card-box hover:border-pink-300 transition-colors cursor-pointer">
                   <div className="flex items-start justify-between mb-2">

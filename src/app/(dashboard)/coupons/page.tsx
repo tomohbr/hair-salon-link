@@ -34,7 +34,7 @@ export default async function CouponsPage() {
           <p className="text-sm text-stone-500">クーポンがまだ作成されていません。</p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {coupons.map(c => (
             <div key={c.id} className="card-box border-l-4" style={{ borderLeftColor: '#1e3a8a' }}>
               <div className="flex items-start justify-between mb-2">
