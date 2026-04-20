@@ -35,7 +35,7 @@ export async function loginAction(
     email: user.email,
     name: user.name,
     role: user.role as Role,
-    salonId: user.salonId || undefined,
+    salonId: user.salonId,
   });
 
   // ロール別の遷移先
