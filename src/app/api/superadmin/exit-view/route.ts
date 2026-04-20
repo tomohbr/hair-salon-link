@@ -15,5 +15,9 @@ export async function GET(req: NextRequest) {
     maxAge: 0,
     path: '/',
   });
+  // Fastly/CDN が 307 リダイレクトをキャッシュしないよう明示
+  res.headers.set('Cache-Control', 'private, no-cache, no-store, max-age=0, must-revalidate');
+  res.headers.set('Pragma', 'no-cache');
+  res.headers.set('Expires', '0');
   return res;
 }

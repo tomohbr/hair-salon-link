@@ -12,22 +12,31 @@ function getSecret() {
  * Railway 等のリバースプロキシ環境では req.url が内部の localhost を指すため、
  * 外部から見える正しい URL でリダイレクトを構築する。
  */
+function withNoCache(res: NextResponse): NextResponse {
+  // Fastly/Railway CDN が 307 リダイレクトをキャッシュして
+  // 認証済みユーザーに未認証向けのリダイレクトを返すのを防ぐ
+  res.headers.set('Cache-Control', 'private, no-cache, no-store, max-age=0, must-revalidate');
+  res.headers.set('Pragma', 'no-cache');
+  res.headers.set('Expires', '0');
+  return res;
+}
+
 function externalRedirect(req: NextRequest, path: string): NextResponse {
   const envUrl = process.env.NEXT_PUBLIC_APP_URL;
   if (envUrl) {
-    return NextResponse.redirect(`${envUrl.replace(/\/$/, '')}${path}`);
+    return withNoCache(NextResponse.redirect(`${envUrl.replace(/\/$/, '')}${path}`));
   }
   const fwdHost = req.headers.get('x-forwarded-host');
   const fwdProto = req.headers.get('x-forwarded-proto') || 'https';
   if (fwdHost) {
-    return NextResponse.redirect(`${fwdProto}://${fwdHost}${path}`);
+    return withNoCache(NextResponse.redirect(`${fwdProto}://${fwdHost}${path}`));
   }
   const host = req.headers.get('host');
   if (host) {
     const proto = req.nextUrl.protocol.replace(':', '');
-    return NextResponse.redirect(`${proto}://${host}${path}`);
+    return withNoCache(NextResponse.redirect(`${proto}://${host}${path}`));
   }
-  return NextResponse.redirect(new URL(path, req.url));
+  return withNoCache(NextResponse.redirect(new URL(path, req.url)));
 }
 
 const protectedPaths = [
@@ -69,7 +78,8 @@ export async function middleware(req: NextRequest) {
         return externalRedirect(req, '/dashboard');
       }
     }
-    return NextResponse.next();
+    // 認証済みレスポンスも CDN にキャッシュされないよう明示
+    return withNoCache(NextResponse.next());
   } catch {
     return externalRedirect(req, '/login');
   }

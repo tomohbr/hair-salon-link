@@ -29,5 +29,9 @@ export async function GET(
     maxAge: 60 * 60 * 8,
     path: '/',
   });
+  // CDN キャッシュ防止（認証セッションに紐づくリダイレクトのため）
+  res.headers.set('Cache-Control', 'private, no-cache, no-store, max-age=0, must-revalidate');
+  res.headers.set('Pragma', 'no-cache');
+  res.headers.set('Expires', '0');
   return res;
 }
