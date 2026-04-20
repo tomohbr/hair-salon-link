@@ -1,23 +1,36 @@
 // 現在ログイン中のユーザーの店舗データを取得
 import { prisma } from './db';
 import { getSession } from './auth';
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+
+const VIEW_COOKIE = 'hsl_superadmin_view_salon';
 
 export async function getCurrentSalon() {
   const session = await getSession();
   if (!session) redirect('/login');
-  if (session.role === 'superadmin') redirect('/superadmin');
-  if (!session.salonId) redirect('/login');
 
-  const salon = await prisma.salon.findUnique({
-    where: { id: session.salonId },
-  });
+  // SuperAdmin の場合: ビューモードのクッキーがあればそのサロンを表示。なければ /superadmin へ
+  if (session.role === 'superadmin') {
+    const cookieStore = await cookies();
+    const viewSalonId = cookieStore.get(VIEW_COOKIE)?.value;
+    if (viewSalonId) {
+      const salon = await prisma.salon.findUnique({ where: { id: viewSalonId } });
+      if (salon) {
+        return { salon, session, isSuperadminView: true };
+      }
+    }
+    redirect('/superadmin');
+  }
+
+  if (!session.salonId) redirect('/login');
+  const salon = await prisma.salon.findUnique({ where: { id: session.salonId } });
   if (!salon) redirect('/login');
-  return { salon, session };
+  return { salon, session, isSuperadminView: false };
 }
 
 export async function getSalonData() {
-  const { salon, session } = await getCurrentSalon();
+  const { salon, session, isSuperadminView } = await getCurrentSalon();
 
   const [staff, customers, menus, reservations, treatments, coupons, messages, designs] = await Promise.all([
     prisma.staff.findMany({ where: { salonId: salon.id }, orderBy: { sortOrder: 'asc' } }),
@@ -30,12 +43,12 @@ export async function getSalonData() {
     prisma.hairStyle.findMany({ where: { salonId: salon.id }, orderBy: { createdAt: 'desc' } }),
   ]);
 
-  return { salon, session, staff, customers, menus, reservations, treatments, coupons, messages, designs };
+  return { salon, session, isSuperadminView, staff, customers, menus, reservations, treatments, coupons, messages, designs };
 }
 
 export type SalonData = Awaited<ReturnType<typeof getSalonData>>;
 
-// パブリック予約ページ用（認証なし、slug で店舗取得）
+// パブリック予約ページ用(認証なし、slug で店舗取得)
 export async function getPublicSalonBySlug(slug: string) {
   const salon = await prisma.salon.findUnique({
     where: { slug },
@@ -50,7 +63,7 @@ export async function getPublicSalonBySlug(slug: string) {
   return salon;
 }
 
-// KPI計算（DB版）
+// KPI計算 (DB版)
 export async function computeSalonKpis(salonId: string) {
   const [customers, reservations] = await Promise.all([
     prisma.customer.findMany({ where: { salonId } }),
