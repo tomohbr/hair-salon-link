@@ -3,38 +3,31 @@
 import { useEffect } from 'react';
 
 /**
- * Registers the service worker on the client and forces update checks.
- * - Registers /sw.js (with no-cache header so browser always fetches latest)
- * - Calls reg.update() on every page load to detect new SW versions immediately
- * - When a new SW takes control, reload the page once to clear stale state
+ * NOTE: PWA registration is currently DISABLED to fix navigation issues caused by
+ * stale Service Worker caches. This component instead actively unregisters any
+ * existing SW and clears all caches on every page load — guaranteeing all users
+ * end up in a clean, no-SW state.
+ *
+ * Once the password change feature is verified working for all users, we can
+ * re-enable PWA with the v3 SW design.
  */
 export default function PWARegister() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     if (!('serviceWorker' in navigator)) return;
 
-    let reloaded = false;
-    const onControllerChange = () => {
-      if (reloaded) return;
-      reloaded = true;
-      // Avoid infinite reload loops by guarding against redundant reloads
-      window.location.reload();
-    };
-    navigator.serviceWorker.addEventListener('controllerchange', onControllerChange);
-
-    navigator.serviceWorker
-      .register('/sw.js', { scope: '/' })
-      .then((reg) => {
-        // Force a check for new SW version on every load
-        reg.update().catch(() => {});
-      })
-      .catch(() => {
-        // Silent fail
-      });
-
-    return () => {
-      navigator.serviceWorker.removeEventListener('controllerchange', onControllerChange);
-    };
+    (async () => {
+      try {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        for (const r of regs) await r.unregister();
+        if (typeof caches !== 'undefined') {
+          const keys = await caches.keys();
+          for (const k of keys) await caches.delete(k);
+        }
+      } catch {
+        // silent
+      }
+    })();
   }, []);
   return null;
 }
