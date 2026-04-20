@@ -11,6 +11,7 @@ export default function LandingPage() {
       <Features />
       <Why />
       <Pricing />
+      <HomepageOption />
       <Faq />
       <FinalCta />
       <Footer />
@@ -39,6 +40,7 @@ function Header() {
           <Link href="#about" className="hover:text-[#ebe1cf] transition">サービスについて</Link>
           <Link href="#features" className="hover:text-[#ebe1cf] transition">できること</Link>
           <Link href="#pricing" className="hover:text-[#ebe1cf] transition">料金</Link>
+          <Link href="#homepage" className="hover:text-[#ebe1cf] transition">HP制作</Link>
           <Link href="#faq" className="hover:text-[#ebe1cf] transition">FAQ</Link>
           <Link href="/login" className="hover:text-[#ebe1cf] transition">ログイン</Link>
         </nav>
@@ -425,6 +427,167 @@ function Pricing() {
               </Link>
             </div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  Homepage Creation Option                                  */
+/* ────────────────────────────────────────────────────────── */
+
+function HomepageOption() {
+  const competitors = [
+    { label: '地域の Web 制作会社', price: '¥300,000〜¥800,000' },
+    { label: '個人フリーランス', price: '¥100,000〜¥300,000' },
+    { label: 'クラウドソーシング', price: '¥30,000〜¥80,000' },
+  ];
+
+  const plans = [
+    {
+      name: 'シンプル HP',
+      price: '¥19,800',
+      priceNote: '買い切り',
+      desc: '最短で「ネットに出せる状態」をつくる',
+      features: [
+        'LP 1ページ構成',
+        '店舗紹介 / メニュー / 料金表',
+        '予約ボタン（HairSalonLink 連携）',
+        'Google Map / 営業時間埋め込み',
+        'スマホ完全対応',
+      ],
+    },
+    {
+      name: 'スタンダード HP',
+      price: '¥49,800',
+      priceNote: '買い切り',
+      desc: 'デザインと掲載量でしっかり集客',
+      features: [
+        '3ページ構成（トップ / スタイル集 / アクセス）',
+        'お問い合わせフォーム',
+        'スタッフ紹介ページ',
+        '写真差し替え無制限',
+        '細かいデザイン調整込み',
+      ],
+      recommended: true,
+    },
+  ];
+
+  return (
+    <section id="homepage" className="bg-[#0c0a09]">
+      <div className="max-w-6xl mx-auto px-5 md:px-8 py-24 md:py-32">
+        <div className="text-center mb-16 md:mb-20">
+          <div className="eyebrow mb-6">OPTIONAL — HOMEPAGE</div>
+          <h2 className="display-serif text-[28px] md:text-[44px] leading-[1.5] md:leading-[1.4]">
+            ホームページも、<br />
+            まとめてお任せください。
+          </h2>
+          <p className="mt-6 text-[13px] md:text-[14px] text-[#8a7f6e] tracking-wide leading-relaxed">
+            「HP がない / 古いまま放置」のオーナー様へ。<br />
+            予約システムを自社開発しているからこそ出せる、圧倒的な価格で制作いたします。
+          </p>
+        </div>
+
+        {/* 相場比較 */}
+        <div className="mb-16 md:mb-20">
+          <div className="text-center mb-8">
+            <div className="text-[11px] text-[#8a7f6e] tracking-[0.2em] uppercase">他社で作ると</div>
+          </div>
+          <div className="max-w-2xl mx-auto space-y-2">
+            {competitors.map((c) => (
+              <div
+                key={c.label}
+                className="flex items-center justify-between px-6 py-4 bg-[#120e0c] border border-[#2a2320]"
+              >
+                <span className="text-[13px] text-[#b5a98f]">{c.label}</span>
+                <span className="display-serif text-[16px] md:text-[18px] text-[#8a7f6e]">{c.price}</span>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-10">
+            <div className="inline-block text-[#c9a96e] text-[18px]">↓</div>
+          </div>
+        </div>
+
+        {/* プラン */}
+        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {plans.map((p) => (
+            <div
+              key={p.name}
+              className={`relative p-10 md:p-11 ${
+                p.recommended
+                  ? 'bg-[#1c1715] border border-[#c9a96e]/70 shadow-[0_32px_64px_-24px_rgba(201,169,110,0.15)]'
+                  : 'bg-[#120e0c] border border-[#2a2320]'
+              }`}
+            >
+              {p.recommended && (
+                <div className="absolute top-0 left-0 right-0 -translate-y-1/2 flex justify-center">
+                  <span className="brand-bg text-[#0c0a09] text-[10px] font-semibold tracking-[0.2em] uppercase px-4 py-1.5">
+                    Recommended
+                  </span>
+                </div>
+              )}
+
+              <div className="text-center mb-6">
+                <div className="display-serif text-[22px] text-[#ebe1cf]">{p.name}</div>
+                <p className="text-[11px] text-[#8a7f6e] mt-1 tracking-wide">{p.desc}</p>
+              </div>
+
+              <div className="text-center mb-8">
+                <div className="flex items-baseline justify-center gap-1">
+                  <span className="display-serif text-[40px] text-[#ebe1cf]">{p.price}</span>
+                  <span className="text-[11px] text-[#8a7f6e]">{p.priceNote}</span>
+                </div>
+              </div>
+
+              <div className="h-px bg-[#2a2320] mb-6" />
+
+              <ul className="space-y-3 mb-9">
+                {p.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2.5 text-[13px] text-[#b5a98f]">
+                    <Check className="w-3.5 h-3.5 brand-text mt-1 flex-shrink-0" strokeWidth={2.5} />
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href="mailto:shibahara.724@gmail.com?subject=HP制作の相談&body=HairSalonLink%20のHP制作について相談したいです。%0A%0A店舗名：%0Aご希望プラン：%0Aご希望内容：%0A"
+                className={`w-full inline-flex items-center justify-center gap-1.5 py-3.5 text-[12px] font-medium tracking-[0.1em] transition ${
+                  p.recommended
+                    ? 'brand-bg text-[#0c0a09] hover:opacity-90'
+                    : 'border border-[#3a302a] text-[#ebe1cf] hover:border-[#c9a96e]/70'
+                }`}
+              >
+                このプランで相談する
+              </a>
+            </div>
+          ))}
+        </div>
+
+        {/* なぜ安いか */}
+        <div className="mt-16 md:mt-20 max-w-3xl mx-auto">
+          <div className="text-center mb-8">
+            <div className="eyebrow">なぜ、この価格で出せるのか</div>
+          </div>
+          <div className="grid md:grid-cols-3 gap-4">
+            {[
+              { t: '01', h: '予約システムと一体', d: '予約フォーム・LINE連携を自社開発しているため、外注先との連携コストがゼロ。' },
+              { t: '02', h: '美容室専用テンプレ', d: '業種を絞ることで、制作工程をほぼ流し込み化。1時間で完成する基盤を持っています。' },
+              { t: '03', h: '契約者様限定オプション', d: 'HairSalonLink ご契約オーナー様のみのため、新規営業コストがかからず価格に還元できます。' },
+            ].map((i) => (
+              <div key={i.t} className="p-6 bg-[#120e0c] border border-[#2a2320]">
+                <div className="text-[#c9a96e] text-[11px] tracking-[0.2em] mb-3">{i.t}</div>
+                <div className="display-serif text-[16px] text-[#ebe1cf] mb-2">{i.h}</div>
+                <p className="text-[12px] text-[#8a7f6e] leading-relaxed">{i.d}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-8 text-center text-[11px] text-[#6b5f52] tracking-wide leading-relaxed">
+            ※ 独自ドメイン（例: your-salon.com）ご希望の場合は別途 ¥9,800 で取得・設定代行も承ります。<br />
+            ※ 制作はご契約プラン内の特典ではなく、別途有料オプションとなります。
+          </p>
         </div>
       </div>
     </section>
