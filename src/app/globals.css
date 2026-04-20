@@ -190,7 +190,14 @@ body { background: var(--bg-base); color: var(--text); }
 .app-light textarea,
 .app-light input:not(.input) {
   color: #1c1917;
-  -webkit-text-fill-color: #1c1917;
+  /* -webkit-text-fill-color は placeholder まで塗るため指定しない */
+}
+.app-light select::placeholder,
+.app-light textarea::placeholder,
+.app-light input:not(.input)::placeholder {
+  color: #d6d3d1;
+  -webkit-text-fill-color: #d6d3d1;
+  opacity: 1;
 }
 
 .btn-ghost {
@@ -216,25 +223,32 @@ body { background: var(--bg-base); color: var(--text); }
 .input {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #d6d3d1; /* stone-300 少し濃く */
+  border: 1px solid #d6d3d1;
   border-radius: 8px;
   background: white;
-  color: #1c1917; /* 入力文字を黒に固定 */
-  font-size: 15px; /* モバイルで iOS zoom を避けるため 15px 以上 */
+  color: #1c1917; /* 入力文字を黒 */
+  font-size: 15px; /* iOS zoom 防止 */
   line-height: 1.5;
-  -webkit-text-fill-color: #1c1917; /* Safari autofill 対策 */
+  /* ここで -webkit-text-fill-color を指定すると Safari で placeholder 文字色まで
+     上書きされてしまうため、グローバル指定はしない。autofill 用は下で限定指定。*/
 }
+/* Safari / Chrome のベンダー別プレースホルダー指定 */
 .input::placeholder {
-  color: #d6d3d1; /* stone-300: 入力文字(#1c1917 黒)と明確な差 */
+  color: #d6d3d1; /* stone-300 */
   opacity: 1;
-  /* italic は付けない（シンプルに薄いグレーだけでサンプルと分かるようにする） */
+  -webkit-text-fill-color: #d6d3d1; /* Safari が input の text-fill を継がせるため明示 */
+}
+.input::-webkit-input-placeholder {
+  color: #d6d3d1;
+  -webkit-text-fill-color: #d6d3d1;
+  opacity: 1;
 }
 .input:focus {
   outline: 2px solid var(--brand);
   outline-offset: -1px;
   border-color: transparent;
 }
-/* autofill の黄色背景と白文字を抑制 */
+/* autofill の黄色背景と白文字を抑制（autofill 発生時のみに限定） */
 .input:-webkit-autofill,
 .input:-webkit-autofill:hover,
 .input:-webkit-autofill:focus {
