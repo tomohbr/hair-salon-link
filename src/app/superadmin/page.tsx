@@ -30,7 +30,7 @@ export default async function SuperAdminPage() {
     .reduce((sum, s) => sum + (s.plan === 'pro' ? 9980 : s.plan === 'standard' ? 4980 : 0), 0);
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="app-light min-h-screen bg-stone-50">
       <header className="bg-white border-b border-stone-200 px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">

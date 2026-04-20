@@ -100,7 +100,7 @@ export default function BookingFlow({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white">
+    <div className="app-light min-h-screen bg-gradient-to-b from-stone-50 to-white">
       <div className="max-w-md mx-auto bg-white min-h-screen shadow-xl">
         {/* Header */}
         <div className="brand-bg text-white p-6">

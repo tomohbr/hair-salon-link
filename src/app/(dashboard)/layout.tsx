@@ -4,7 +4,7 @@ import { getCurrentSalon } from '@/lib/salonData';
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { salon, session, isSuperadminView } = await getCurrentSalon();
   return (
-    <div className="flex min-h-screen bg-stone-50">
+    <div className="app-light flex min-h-screen bg-stone-50">
       <Sidebar
         userName={session.name}
         userRole={isSuperadminView ? 'admin' : session.role}
