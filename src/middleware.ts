@@ -19,9 +19,11 @@ const protectedPaths = [
   '/analytics',
   '/settings',
   '/superadmin',
+  '/account',
 ];
 
-const staffAllowed = ['/dashboard', '/reservations', '/customers', '/menus'];
+// /account は全ロール (admin/staff/superadmin) でアクセス可
+const staffAllowed = ['/dashboard', '/reservations', '/customers', '/menus', '/account'];
 const superadminOnly = ['/superadmin'];
 
 export async function middleware(req: NextRequest) {
@@ -66,5 +68,6 @@ export const config = {
     '/analytics/:path*',
     '/settings/:path*',
     '/superadmin/:path*',
+    '/account/:path*',
   ],
 };

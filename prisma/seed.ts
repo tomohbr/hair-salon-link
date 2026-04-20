@@ -33,6 +33,9 @@ async function main() {
   }
 
   // SuperAdmin (運営者本人)
+  // 注意: ユーザーが /account 画面でパスワードを変更できるようになっているため、
+  // 既存ユーザーのパスワードは上書きしない (= seed 実行で変更が失われない)。
+  // ロールだけは superadmin に保つ (誤って格下げしないため)。
   const ownerEmail = 'shibahara.724@gmail.com';
   const ownerUser = await prisma.user.findUnique({ where: { email: ownerEmail } });
   if (!ownerUser) {
@@ -45,16 +48,14 @@ async function main() {
       },
     });
     console.log('✓ Created owner superadmin: shibahara.724@gmail.com');
-  } else {
-    // 既存の場合もパスワード/ロールを上書き(運営者として常にアクセス可能を保証)
+  } else if (ownerUser.role !== 'superadmin') {
     await prisma.user.update({
       where: { email: ownerEmail },
-      data: {
-        passwordHash: await bcrypt.hash('Shibahara2026!HSL', 10),
-        role: 'superadmin',
-      },
+      data: { role: 'superadmin' },
     });
-    console.log('✓ Updated owner superadmin: shibahara.724@gmail.com');
+    console.log('✓ Restored superadmin role for owner');
+  } else {
+    console.log('✓ Owner superadmin already exists, password preserved');
   }
 
   // Migrate stale 'light' plan to 'standard' for any existing salons

@@ -41,7 +41,10 @@ export default async function SuperAdminPage() {
               <div className="text-[10px] text-stone-500">SaaS運営管理画面</div>
             </div>
           </div>
-          <Link href="/api/auth/logout" className="btn-ghost text-sm">ログアウト</Link>
+          <div className="flex items-center gap-3">
+            <Link href="/account" className="btn-ghost text-sm">アカウント設定</Link>
+            <Link href="/api/auth/logout" className="btn-ghost text-sm">ログアウト</Link>
+          </div>
         </div>
       </header>
 
