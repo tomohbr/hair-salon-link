@@ -4,7 +4,7 @@ import { yen, fmtDate } from '@/lib/utils/format';
 import { Sparkles, Building2, Users, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import ChangePasswordForm from '../account/ChangePasswordForm';
+import PasswordChangeForm from './PasswordChangeForm';
 
 export default async function SuperAdminPage() {
   try {
@@ -109,7 +109,7 @@ export default async function SuperAdminPage() {
           <p className="text-xs text-stone-500 mb-4">
             運営者アカウントのパスワードを変更します。変更後はDBに保存され、再デプロイされても保持されます。
           </p>
-          <ChangePasswordForm />
+          <PasswordChangeForm />
         </div>
       </main>
     </div>
