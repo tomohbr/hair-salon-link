@@ -87,7 +87,7 @@ function RegisterPage() {
 
             <div>
               <label className="block text-xs font-medium text-stone-700 mb-2">プラン選択</label>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 <PlanPicker label="Free" price="¥0" sub="顧客30名 / 月50予約" selected={plan === 'free'} onClick={() => setPlan('free')} />
                 <PlanPicker label="Standard" price="¥4,980" sub="顧客500名 / 1〜5席" selected={plan === 'standard'} onClick={() => setPlan('standard')} />
                 <PlanPicker label="Pro" price="¥9,980" sub="顧客無制限 / 複数拠点" selected={plan === 'pro'} onClick={() => setPlan('pro')} />

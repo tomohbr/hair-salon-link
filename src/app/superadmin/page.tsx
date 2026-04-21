@@ -55,7 +55,7 @@ export default async function SuperAdminPage() {
         <h1 className="text-2xl font-bold text-stone-900">全店舗管理</h1>
 
         {/* KPI */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           <KpiCard icon={<Building2 />} label="総店舗数" value={`${totalSalons}`} />
           <KpiCard icon={<TrendingUp />} label="稼働店舗" value={`${activeSalons}`} sub={`待機 ${pendingSalons}`} />
           <KpiCard icon={<Users />} label="MRR" value={yen(mrr)} sub="月間定期収益" highlight />
@@ -65,7 +65,8 @@ export default async function SuperAdminPage() {
         {/* 店舗一覧 */}
         <div className="card-box">
           <h2 className="font-semibold text-stone-900 mb-4">店舗一覧</h2>
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto -mx-5 px-5">
+          <table className="w-full text-sm min-w-[720px]">
             <thead>
               <tr className="text-left text-xs text-stone-500 border-b border-stone-200">
                 <th className="py-2">店舗名</th>
@@ -123,6 +124,7 @@ export default async function SuperAdminPage() {
               )}
             </tbody>
           </table>
+          </div>
         </div>
 
         {/* パスワード変更 (運営者本人のアカウント) */}
