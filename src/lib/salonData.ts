@@ -49,6 +49,7 @@ export async function getSalonData() {
 export type SalonData = Awaited<ReturnType<typeof getSalonData>>;
 
 // パブリック予約ページ用(認証なし、slug で店舗取得)
+// 明示的に suspended でない限り公開（Free プラン新規登録直後 or 決済待機中も見られるように）
 export async function getPublicSalonBySlug(slug: string) {
   const salon = await prisma.salon.findUnique({
     where: { slug },
@@ -59,7 +60,8 @@ export async function getPublicSalonBySlug(slug: string) {
       staff: { where: { isActive: true } },
     },
   });
-  if (!salon || salon.status !== 'active') return null;
+  if (!salon) return null;
+  if (salon.status === 'suspended') return null;
   return salon;
 }
 

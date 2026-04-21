@@ -571,36 +571,43 @@ function numBadge(slide, x, y, num, color = BRAND, size = 0.36) {
     color: INK, fontFace: FONT_JP_SERIF, margin: 0,
   });
 
-  s.addText('この工程をやらないと、営業員の LINE アカウントが消えた瞬間にお客様の LINE OA が使えなくなる。必ず実施。', {
+  s.addText('この工程をやらないと、営業員の LINE アカウントが消えた瞬間にお客様の LINE OA が使えなくなる。契約後7日以内に必ず実施。', {
     x: 0.6, y: 1.55, w: 8.8, h: 0.5, fontSize: 11, italic: true,
     color: ACCENT_RED, fontFace: FONT_JP, margin: 0,
+  });
+  s.addText('💡 ポイント：登録メールアドレスは変更可能。「設定 → アカウント → メールアドレス変更」から旧アドレス（営業員）→ 新アドレス（オーナー）に差し替える。', {
+    x: 0.6, y: 1.83, w: 8.8, h: 0.3, fontSize: 10,
+    color: BRAND_DEEP, fontFace: FONT_JP, margin: 0,
   });
 
   const tasks = [
     {
       title: 'LINE 公式アカウント側',
       items: [
-        'Manager → 設定 → 権限 → オーナーの LINE ID を「管理者」で招待',
-        'オーナー側で承認後、営業員の権限を「担当者」→ 最終的に削除',
+        '① manager.line.biz → 設定 → アカウント → メールアドレス「変更」 → オーナー本人メールに差替え',
+        '② 設定 → 権限 → オーナーの LINE ID を「管理者」で招待',
+        '③ 承認後、営業員の権限を「担当者」→ 最終的に削除',
       ],
     },
     {
       title: 'LINE Developers Console 側',
       items: [
-        'プロバイダー → Admin タブ → Add → オーナーのメール',
-        '招待メール承認後、営業員の権限を削除',
+        '① プロバイダー → Admin タブ → Add → オーナーのメール',
+        '② 招待メール承認後、営業員の権限を削除',
+        '③ 開発者アカウント側のメアドも必要に応じて変更',
       ],
     },
     {
       title: 'HairSalonLink 側',
       items: [
-        '設定代行で営業員アカウントを作っていた場合はオーナーへ譲渡',
-        'パスワードリセットリンクをオーナーに送付 → オーナーが新規パスワード設定',
+        '① アカウント設定 → メールアドレス「変更」ボタンでオーナーメアドに差替え',
+        '② 「パスワード変更」でオーナーに新パスワードを設定してもらう',
+        '③ 管理者権限をオーナー単独に',
       ],
     },
   ];
 
-  const cardY = 2.2;
+  const cardY = 2.25;
   const cardH = 2.9;
   tasks.forEach((t, i) => {
     const x = 0.6 + i * 2.95;
@@ -614,19 +621,19 @@ function numBadge(slide, x, y, num, color = BRAND, size = 0.36) {
       fill: { color: BRAND }, line: { color: BRAND, width: 0 },
     });
     s.addText(t.title, {
-      x: x + 0.2, y: cardY + 0.2, w: 2.4, h: 0.45, fontSize: 13, bold: true,
+      x: x + 0.2, y: cardY + 0.2, w: 2.4, h: 0.4, fontSize: 13, bold: true,
       color: INK, fontFace: FONT_JP_B, margin: 0,
     });
     const itemsText = t.items.map((item, idx) => ({
-      text: `・${item}`,
+      text: item,
       options: {
-        fontSize: 10.5, color: INK_MUTED, fontFace: FONT_JP,
+        fontSize: 9.5, color: INK_MUTED, fontFace: FONT_JP,
         breakLine: idx < t.items.length - 1,
       },
     }));
     s.addText(itemsText, {
-      x: x + 0.2, y: cardY + 0.85, w: 2.4, h: cardH - 1.0,
-      lineSpacingMultiple: 1.5, margin: 0,
+      x: x + 0.2, y: cardY + 0.75, w: 2.4, h: cardH - 0.85,
+      lineSpacingMultiple: 1.35, margin: 0,
     });
   });
 }

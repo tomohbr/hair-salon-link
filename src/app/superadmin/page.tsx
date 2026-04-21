@@ -100,12 +100,23 @@ export default async function SuperAdminPage() {
                     <td className="py-3 text-right">{s._count.reservations}</td>
                     <td className="py-3 text-stone-500 text-xs">{fmtDate(s.createdAt)}</td>
                     <td className="py-3 text-center">
-                      <a
-                        href={`/api/superadmin/view/${s.id}`}
-                        className="text-xs underline hover:opacity-70 brand-text inline-block"
-                      >
-                        店舗を見る →
-                      </a>
+                      <div className="flex items-center justify-center gap-3">
+                        <a
+                          href={`/book/${s.slug}`}
+                          target="_blank"
+                          rel="noopener"
+                          className="text-xs underline hover:opacity-70 text-stone-600 inline-block"
+                          title={`/book/${s.slug}`}
+                        >
+                          予約URL
+                        </a>
+                        <a
+                          href={`/api/superadmin/view/${s.id}`}
+                          className="text-xs underline hover:opacity-70 brand-text inline-block"
+                        >
+                          店舗を見る →
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 ))
