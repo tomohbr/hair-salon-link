@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 import ChangePasswordForm from './ChangePasswordForm';
+import { EmailEditor, NameEditor } from './ProfileForms';
 
 export default async function AccountPage() {
   const session = await getSession();
@@ -44,13 +45,13 @@ export default async function AccountPage() {
         <section className="card-box">
           <h2 className="font-semibold text-stone-900 mb-4">プロフィール</h2>
           <dl className="space-y-3 text-sm">
-            <div className="flex justify-between border-b border-stone-100 pb-2">
-              <dt className="text-stone-500">名前</dt>
-              <dd className="font-medium text-stone-900">{user.name}</dd>
+            <div className="border-b border-stone-100 pb-3">
+              <dt className="text-stone-500 mb-1">名前</dt>
+              <dd><NameEditor currentName={user.name} /></dd>
             </div>
-            <div className="flex justify-between border-b border-stone-100 pb-2">
-              <dt className="text-stone-500">メールアドレス</dt>
-              <dd className="font-medium text-stone-900">{user.email}</dd>
+            <div className="border-b border-stone-100 pb-3">
+              <dt className="text-stone-500 mb-1">メールアドレス</dt>
+              <dd><EmailEditor currentEmail={user.email} /></dd>
             </div>
             <div className="flex justify-between border-b border-stone-100 pb-2">
               <dt className="text-stone-500">ロール</dt>
