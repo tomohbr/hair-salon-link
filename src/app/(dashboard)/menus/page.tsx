@@ -2,6 +2,7 @@ import { getSalonData } from '@/lib/salonData';
 import { yen } from '@/lib/utils/format';
 import { Clock } from 'lucide-react';
 import ImportExportBar from '@/components/shared/ImportExportBar';
+import NewMenuButton from './NewMenuButton';
 
 export default async function MenusPage() {
   const { menus } = await getSalonData();
@@ -26,7 +27,7 @@ export default async function MenusPage() {
             templateHeaders={['メニュー名', 'カテゴリ', '料金', '所要時間', '説明', '公開']}
             templateFilename="menus_template.csv"
           />
-          <button className="btn-brand">+ 新規</button>
+          <NewMenuButton categories={Array.from(new Set(menus.map(m => m.category)))} />
         </div>
       </div>
 

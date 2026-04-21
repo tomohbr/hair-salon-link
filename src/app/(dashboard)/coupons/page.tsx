@@ -3,6 +3,7 @@ import { yen, fmtDate } from '@/lib/utils/format';
 import { Ticket, Users, Calendar } from 'lucide-react';
 import { canAccessFeature } from '@/lib/planLimits';
 import ImportExportBar from '@/components/shared/ImportExportBar';
+import NewCouponButton from './NewCouponButton';
 
 export default async function CouponsPage() {
   const { salon, coupons } = await getSalonData();
@@ -35,7 +36,7 @@ export default async function CouponsPage() {
             templateHeaders={['クーポン名', '説明', '割引種別', '割引額', '最低金額', '利用上限', '有効期限']}
             templateFilename="coupons_template.csv"
           />
-          <button className="btn-brand">+ 新規</button>
+          <NewCouponButton />
         </div>
       </div>
 

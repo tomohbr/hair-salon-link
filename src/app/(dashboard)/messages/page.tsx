@@ -1,7 +1,8 @@
 import { getSalonData } from '@/lib/salonData';
 import { fmtDate, pct } from '@/lib/utils/format';
-import { MessageSquare, Send } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 import { canAccessFeature } from '@/lib/planLimits';
+import NewBroadcastButton from './NewBroadcastButton';
 
 export default async function MessagesPage() {
   const { salon, messages, customers } = await getSalonData();
@@ -31,15 +32,24 @@ export default async function MessagesPage() {
           <h1 className="text-2xl font-bold text-stone-900">LINEメッセージ配信</h1>
           <p className="text-sm text-stone-500 mt-1">LINE友だち {lineFriends}名</p>
         </div>
-        <button className="btn-brand"><Send className="w-4 h-4" />新規配信</button>
+        <NewBroadcastButton label="新規配信" />
       </div>
 
       <div className="card-box">
         <h2 className="font-semibold text-stone-900 mb-4">おすすめセグメント配信</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <SegmentCard icon="🔔" label="休眠復帰" count={dormant.length} desc="90日以上来店なし" cta="復帰クーポンを送る" />
-          <SegmentCard icon="💎" label="VIP層" count={customers.filter(c => c.tags.includes('vip')).length} desc="累計売上上位" cta="新作案内を送る" />
-          <SegmentCard icon="🎉" label="新規→2回目誘導" count={customers.filter(c => c.visitCount === 1 && c.isLineFriend).length} desc="初回来店のみ" cta="2回目特典を送る" />
+          <SegmentCard
+            icon="🔔" label="休眠復帰" count={dormant.length} desc="90日以上来店なし"
+            preset={{ type: 'segment', segment: 'dormant', title: '休眠復帰キャンペーン', content: 'お久しぶりです🌸 久しぶりのご来店にお使いいただける復帰クーポンをお届けします！' }}
+            cta="復帰クーポンを送る" />
+          <SegmentCard
+            icon="💎" label="VIP層" count={customers.filter(c => c.tags.includes('vip')).length} desc="累計売上上位"
+            preset={{ type: 'segment', segment: 'vip', title: 'VIP限定新作案内', content: '【VIP限定】いつもありがとうございます。秋の新作メニューをご覧ください✨' }}
+            cta="新作案内を送る" />
+          <SegmentCard
+            icon="🎉" label="新規→2回目誘導" count={customers.filter(c => c.visitCount === 1 && c.isLineFriend).length} desc="初回来店のみ"
+            preset={{ type: 'segment', segment: 'new', title: '2回目来店特典', content: '先日はご来店ありがとうございました🌸 2回目のご来店で使える特典をお届けします！' }}
+            cta="2回目特典を送る" />
         </div>
       </div>
 
@@ -76,7 +86,12 @@ export default async function MessagesPage() {
   );
 }
 
-function SegmentCard({ icon, label, count, desc, cta }: { icon: string; label: string; count: number; desc: string; cta: string }) {
+function SegmentCard({
+  icon, label, count, desc, cta, preset,
+}: {
+  icon: string; label: string; count: number; desc: string; cta: string;
+  preset: { type: 'broadcast' | 'segment'; segment: string; title: string; content: string };
+}) {
   return (
     <div className="border border-stone-200 rounded-xl p-4 hover:border-pink-300 transition-colors">
       <div className="flex items-center gap-2 mb-2">
@@ -87,7 +102,7 @@ function SegmentCard({ icon, label, count, desc, cta }: { icon: string; label: s
         </div>
       </div>
       <div className="text-2xl font-bold brand-text mb-2">{count}名</div>
-      <button className="w-full btn-brand text-xs justify-center">{cta}</button>
+      <NewBroadcastButton label={cta} className="w-full btn-brand text-xs justify-center" preset={preset} />
     </div>
   );
 }

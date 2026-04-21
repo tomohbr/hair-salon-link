@@ -3,6 +3,7 @@ import { getSalonData } from '@/lib/salonData';
 import { yen, fmtDate, sourceLabel } from '@/lib/utils/format';
 import { Search } from 'lucide-react';
 import ImportExportBar from '@/components/shared/ImportExportBar';
+import NewCustomerButton from './NewCustomerButton';
 
 export default async function CustomersPage() {
   const { customers } = await getSalonData();
@@ -32,7 +33,7 @@ export default async function CustomersPage() {
           <select className="input max-w-xs">
             <option>すべての流入元</option>
           </select>
-          <button className="btn-brand">+ 新規顧客</button>
+          <NewCustomerButton />
         </div>
 
         {customers.length === 0 ? (

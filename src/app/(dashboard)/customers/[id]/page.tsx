@@ -3,7 +3,8 @@ import { prisma } from '@/lib/db';
 import { yen, fmtDate, sourceLabel } from '@/lib/utils/format';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Phone, Mail, Calendar, MessageCircle } from 'lucide-react';
+import { ArrowLeft, Phone, Mail, Calendar } from 'lucide-react';
+import SendLineButton from './SendLineButton';
 
 export default async function CustomerDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -57,9 +58,7 @@ export default async function CustomerDetailPage({ params }: { params: Promise<{
             </div>
           </div>
           {customer.isLineFriend && (
-            <button className="w-full btn-brand justify-center">
-              <MessageCircle className="w-4 h-4" />LINEメッセージ送信
-            </button>
+            <SendLineButton customerId={customer.id} customerName={customer.name} />
           )}
         </div>
 
