@@ -2,6 +2,7 @@ import { getSalonData } from '@/lib/salonData';
 import { Store, MessageCircle, CreditCard, Users, Link as LinkIcon } from 'lucide-react';
 import SalonInfoForm from './SalonInfoForm';
 import LineForm from './LineForm';
+import SlugFixer from './SlugFixer';
 
 export default async function SettingsPage() {
   const { salon, staff } = await getSalonData();
@@ -31,6 +32,7 @@ export default async function SettingsPage() {
             プレビュー
           </a>
         </div>
+        <SlugFixer currentSlug={salon.slug} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

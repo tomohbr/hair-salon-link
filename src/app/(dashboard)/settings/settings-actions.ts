@@ -62,6 +62,46 @@ export async function saveLineSettingsAction(
   }
 }
 
+/** URL 用スラグを ASCII 安全な値に再生成する */
+function asciiSlug(s: string) {
+  const ascii = s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 40);
+  return ascii || 'salon-' + Math.random().toString(36).slice(2, 10);
+}
+
+/**
+ * 公開予約 URL の slug を ASCII 安全に再生成する。
+ * 日本語などが含まれる壊れたスラグの救済用。実行後、新 URL をお客様に再共有する必要あり。
+ */
+export async function regenerateSlugAction(
+  _prev: { ok?: boolean; error?: string; message?: string } | null,
+  _formData: FormData,
+): Promise<{ ok?: boolean; error?: string; message?: string }> {
+  try {
+    const { salon } = await getCurrentSalon();
+    let candidate = asciiSlug(salon.name) + '-' + Math.random().toString(36).slice(2, 6);
+
+    // 重複チェック & 競合時は再試行
+    for (let i = 0; i < 5; i++) {
+      const exists = await prisma.salon.findUnique({ where: { slug: candidate } });
+      if (!exists) break;
+      candidate = asciiSlug(salon.name) + '-' + Math.random().toString(36).slice(2, 6);
+    }
+
+    await prisma.salon.update({
+      where: { id: salon.id },
+      data: { slug: candidate },
+    });
+    revalidatePath('/settings');
+    return { ok: true, message: `公開URLを更新しました: /book/${candidate}` };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : 'エラーが発生しました' };
+  }
+}
+
 /** 保存された LINE 認証情報で実際に LINE API を叩いて接続確認する */
 export async function testLineConnectionAction(
   _prev: { ok?: boolean; error?: string; message?: string } | null,

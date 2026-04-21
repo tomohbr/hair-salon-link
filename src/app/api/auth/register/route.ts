@@ -8,12 +8,18 @@ import { createCheckoutSession, isDemoMode, type PlanId } from '@/lib/stripe';
 // 2. Admin User を作成
 // 3. Stripe Checkout URL を返す（または demo モードで success へ）
 
+/**
+ * URL に使えるスラグを生成。
+ * - ASCII 英数字・ハイフンのみ許可（日本語が含まれると Next.js ルート／Railway CDN が 500 返すため）
+ * - 日本語のみの店舗名は `salon-<8桁ランダム>` にフォールバック
+ */
 function slugify(s: string) {
-  return s
+  const ascii = s
     .toLowerCase()
-    .replace(/[^a-z0-9ぁ-んァ-ン一-龥]+/g, '-')
+    .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')
-    .slice(0, 40) || 'salon-' + Date.now();
+    .slice(0, 40);
+  return ascii || 'salon-' + Math.random().toString(36).slice(2, 10);
 }
 
 export async function POST(req: NextRequest) {
