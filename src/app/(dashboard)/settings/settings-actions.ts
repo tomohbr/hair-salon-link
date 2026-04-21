@@ -62,6 +62,38 @@ export async function saveLineSettingsAction(
   }
 }
 
+/**
+ * 営業時間・臨時休業日・予約枠設定を保存する
+ * クライアントが JSON.stringify した data を受け取る
+ */
+export async function saveBusinessHoursAction(
+  _prev: { ok?: boolean; error?: string; message?: string } | null,
+  formData: FormData,
+): Promise<{ ok?: boolean; error?: string; message?: string }> {
+  try {
+    const { salon } = await getCurrentSalon();
+    const raw = String(formData.get('data') || '{}');
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      return { error: '営業時間データの読込に失敗しました' };
+    }
+    if (!parsed || typeof parsed !== 'object') {
+      return { error: '営業時間データが不正です' };
+    }
+    await prisma.salon.update({
+      where: { id: salon.id },
+      data: { businessHours: parsed as object },
+    });
+    revalidatePath('/settings');
+    revalidatePath('/reservations');
+    return { ok: true, message: '営業時間を保存しました' };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : 'エラーが発生しました' };
+  }
+}
+
 /** URL 用スラグを ASCII 安全な値に再生成する */
 function asciiSlug(s: string) {
   const ascii = s

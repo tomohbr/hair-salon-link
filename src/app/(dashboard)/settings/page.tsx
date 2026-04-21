@@ -1,11 +1,14 @@
 import { getSalonData } from '@/lib/salonData';
-import { Store, MessageCircle, CreditCard, Users, Link as LinkIcon } from 'lucide-react';
+import { Store, MessageCircle, CreditCard, Users, Link as LinkIcon, Clock } from 'lucide-react';
 import SalonInfoForm from './SalonInfoForm';
 import LineForm from './LineForm';
 import SlugFixer from './SlugFixer';
+import BusinessHoursForm from './BusinessHoursForm';
+import { parseBusinessHours } from '@/lib/availability';
 
 export default async function SettingsPage() {
   const { salon, staff } = await getSalonData();
+  const businessHours = parseBusinessHours(salon.businessHours);
 
   // 公開URL
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://hair-salon-link-production.up.railway.app';
@@ -33,6 +36,18 @@ export default async function SettingsPage() {
           </a>
         </div>
         <SlugFixer currentSlug={salon.slug} />
+      </div>
+
+      {/* 営業時間 */}
+      <div className="card-box">
+        <div className="flex items-center gap-2 mb-1">
+          <Clock className="w-5 h-5 brand-text" />
+          <h2 className="font-semibold text-stone-900">営業時間・定休日</h2>
+        </div>
+        <p className="text-xs text-stone-500 mb-4">
+          ここで設定した時間だけ予約が入ります。HPB / LINE / 自社HP すべての予約枠に即座に反映されます。
+        </p>
+        <BusinessHoursForm initial={businessHours} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
