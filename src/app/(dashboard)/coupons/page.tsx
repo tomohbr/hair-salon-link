@@ -2,6 +2,7 @@ import { getSalonData } from '@/lib/salonData';
 import { yen, fmtDate } from '@/lib/utils/format';
 import { Ticket, Users, Calendar } from 'lucide-react';
 import { canAccessFeature } from '@/lib/planLimits';
+import ImportExportBar from '@/components/shared/ImportExportBar';
 
 export default async function CouponsPage() {
   const { salon, coupons } = await getSalonData();
@@ -21,12 +22,21 @@ export default async function CouponsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-stone-900">クーポン管理</h1>
           <p className="text-sm text-stone-500 mt-1">稼働中 {coupons.filter(c => c.isActive).length}件</p>
         </div>
-        <button className="btn-brand">+ 新規クーポン</button>
+        <div className="flex items-center gap-2">
+          <ImportExportBar
+            label="クーポン"
+            importUrl="/api/coupons/import"
+            exportUrl="/api/coupons/export"
+            templateHeaders={['クーポン名', '説明', '割引種別', '割引額', '最低金額', '利用上限', '有効期限']}
+            templateFilename="coupons_template.csv"
+          />
+          <button className="btn-brand">+ 新規</button>
+        </div>
       </div>
 
       {coupons.length === 0 ? (

@@ -1,6 +1,7 @@
 import { getSalonData } from '@/lib/salonData';
 import { yen } from '@/lib/utils/format';
 import { Clock } from 'lucide-react';
+import ImportExportBar from '@/components/shared/ImportExportBar';
 
 export default async function MenusPage() {
   const { menus } = await getSalonData();
@@ -12,12 +13,21 @@ export default async function MenusPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-stone-900">メニュー管理</h1>
           <p className="text-sm text-stone-500 mt-1">全 {menus.length}メニュー</p>
         </div>
-        <button className="btn-brand">+ 新規メニュー</button>
+        <div className="flex items-center gap-2">
+          <ImportExportBar
+            label="メニュー"
+            importUrl="/api/menus/import"
+            exportUrl="/api/menus/export"
+            templateHeaders={['メニュー名', 'カテゴリ', '料金', '所要時間', '説明', '公開']}
+            templateFilename="menus_template.csv"
+          />
+          <button className="btn-brand">+ 新規</button>
+        </div>
       </div>
 
       {menus.length === 0 ? (
