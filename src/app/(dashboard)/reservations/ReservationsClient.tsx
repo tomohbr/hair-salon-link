@@ -1,7 +1,7 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Plus, X, ChevronLeft, ChevronRight, Copy, Upload, FileSpreadsheet } from 'lucide-react';
+import { Plus, X, ChevronLeft, ChevronRight, Copy, Upload, FileSpreadsheet, MoreHorizontal, Link as LinkIcon } from 'lucide-react';
 import HpbEmailImportButton from './HpbEmailImportButton';
 
 type DayData = {
@@ -149,39 +149,59 @@ export default function ReservationsClient({
   return (
     <>
       <div className="card-box">
-        {/* ツールバー */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <button onClick={() => changeWeek(-1)} className="btn-ghost text-xs"><ChevronLeft className="w-4 h-4" /></button>
-            <div className="text-sm font-semibold text-stone-900">
+        {/* ツールバー: モバイルは2段、デスクトップは1段 */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+          {/* 週ナビゲーション */}
+          <div className="flex items-center justify-between md:justify-start gap-1.5">
+            <button
+              onClick={() => changeWeek(-1)}
+              aria-label="前の週"
+              className="w-8 h-8 rounded-md hover:bg-stone-100 flex items-center justify-center text-stone-600"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <div className="text-[13px] font-semibold text-stone-900 tabular-nums px-1">
               {week[0]?.date.slice(5).replace('-', '/')} 〜 {week[6]?.date.slice(5).replace('-', '/')}
             </div>
-            <button onClick={() => changeWeek(1)} className="btn-ghost text-xs"><ChevronRight className="w-4 h-4" /></button>
-            <button onClick={() => router.push('/reservations')} className="btn-ghost text-xs ml-2">今週</button>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="relative group">
-              <button className="btn-ghost text-xs"><Copy className="w-3 h-3" />予約URLを共有</button>
-              <div className="absolute right-0 top-full mt-1 w-56 bg-white border border-stone-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
-                <button onClick={() => copyBookUrl('')} className="w-full text-left px-3 py-2 text-xs hover:bg-stone-50">🌐 自社HP予約URL</button>
-                <button onClick={() => copyBookUrl('line')} className="w-full text-left px-3 py-2 text-xs hover:bg-stone-50">💬 LINE用予約URL (LIFF)</button>
-              </div>
-            </div>
-            <HpbEmailImportButton />
-            <button onClick={() => setShowImport(true)} className="btn-ghost text-xs border border-amber-300 bg-amber-50 text-amber-900">
-              <FileSpreadsheet className="w-3 h-3" />HPB CSV取込
+            <button
+              onClick={() => changeWeek(1)}
+              aria-label="次の週"
+              className="w-8 h-8 rounded-md hover:bg-stone-100 flex items-center justify-center text-stone-600"
+            >
+              <ChevronRight className="w-4 h-4" />
             </button>
-            <button onClick={() => setShowAdd(true)} className="btn-brand text-xs">
-              <Plus className="w-3 h-3" />予約を追加
+            <button
+              onClick={() => router.push('/reservations')}
+              className="ml-1 px-2.5 py-1.5 text-[12px] rounded-md hover:bg-stone-100 text-stone-600 font-medium"
+            >
+              今週
+            </button>
+          </div>
+
+          {/* アクション */}
+          <div className="flex items-center gap-2">
+            <MoreActionsMenu
+              onShareWeb={() => copyBookUrl('')}
+              onShareLine={() => copyBookUrl('line')}
+              onOpenCsvImport={() => setShowImport(true)}
+            />
+            <HpbEmailImportButton />
+            <button
+              onClick={() => setShowAdd(true)}
+              className="btn-brand text-xs px-3 py-2 flex-shrink-0"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              <span className="hidden xs:inline">予約を</span>追加
             </button>
           </div>
         </div>
 
-        <div className="text-[10px] text-stone-500 mb-2 flex items-center gap-3">
-          <span className="flex items-center gap-1"><span className="w-3 h-3 bg-amber-200 border border-amber-400 rounded"></span>ホットペッパー</span>
-          <span className="flex items-center gap-1"><span className="w-3 h-3 bg-emerald-200 border border-emerald-400 rounded"></span>LINE</span>
-          <span className="flex items-center gap-1"><span className="w-3 h-3 bg-blue-200 border border-blue-400 rounded"></span>自社HP</span>
-          <span className="flex items-center gap-1"><span className="w-3 h-3 bg-stone-200 border border-stone-400 rounded"></span>電話/手動</span>
+        {/* 流入元凡例: モバイルで wrap */}
+        <div className="text-[10px] text-stone-500 mb-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 bg-amber-200 border border-amber-400 rounded-sm"></span>ホットペッパー</span>
+          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 bg-emerald-200 border border-emerald-400 rounded-sm"></span>LINE</span>
+          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 bg-blue-200 border border-blue-400 rounded-sm"></span>自社HP</span>
+          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 bg-stone-200 border border-stone-400 rounded-sm"></span>電話/手動</span>
         </div>
 
         {/* 週カレンダー */}
@@ -423,5 +443,81 @@ function SourceBtn({ label, active, onClick }: { label: string; active: boolean;
     >
       {label}
     </button>
+  );
+}
+
+/** 補助アクション (URL共有 / CSV取込) をまとめた 「⋯」メニュー */
+function MoreActionsMenu({
+  onShareWeb, onShareLine, onOpenCsvImport,
+}: {
+  onShareWeb: () => void;
+  onShareLine: () => void;
+  onOpenCsvImport: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', handler);
+    document.addEventListener('keydown', esc);
+    return () => {
+      document.removeEventListener('mousedown', handler);
+      document.removeEventListener('keydown', esc);
+    };
+  }, [open]);
+
+  function pick(fn: () => void) { fn(); setOpen(false); }
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-label="その他のアクション"
+        className="w-9 h-9 rounded-md border border-stone-200 bg-white hover:bg-stone-50 flex items-center justify-center text-stone-600 transition-colors"
+      >
+        <MoreHorizontal className="w-4 h-4" />
+      </button>
+      {open && (
+        <div
+          role="menu"
+          className="absolute right-0 top-full mt-1.5 w-56 bg-white border border-stone-200 rounded-lg z-20 overflow-hidden"
+          style={{ boxShadow: 'var(--shadow-lg)' }}
+        >
+          <div className="px-3 py-2 text-[10px] font-semibold tracking-wider text-stone-400 uppercase border-b border-stone-100">
+            予約 URL
+          </div>
+          <button
+            onClick={() => pick(onShareWeb)}
+            className="w-full text-left px-3 py-2.5 text-[13px] text-stone-700 hover:bg-stone-50 flex items-center gap-2"
+          >
+            <LinkIcon className="w-3.5 h-3.5 text-stone-400" />
+            自社HP 予約URL をコピー
+          </button>
+          <button
+            onClick={() => pick(onShareLine)}
+            className="w-full text-left px-3 py-2.5 text-[13px] text-stone-700 hover:bg-stone-50 flex items-center gap-2"
+          >
+            <LinkIcon className="w-3.5 h-3.5 text-stone-400" />
+            LINE 用 URL をコピー
+          </button>
+          <div className="px-3 py-2 text-[10px] font-semibold tracking-wider text-stone-400 uppercase border-t border-stone-100">
+            取込
+          </div>
+          <button
+            onClick={() => pick(onOpenCsvImport)}
+            className="w-full text-left px-3 py-2.5 text-[13px] text-stone-700 hover:bg-stone-50 flex items-center gap-2"
+          >
+            <FileSpreadsheet className="w-3.5 h-3.5 text-stone-400" />
+            HPB CSV 取込
+          </button>
+        </div>
+      )}
+    </div>
   );
 }

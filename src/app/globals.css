@@ -2,6 +2,11 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* xs ブレークポイント追加 (480px〜) — モバイル小画面対応 */
+@theme {
+  --breakpoint-xs: 480px;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -356,9 +361,12 @@ body { background: var(--bg-base); color: var(--text); }
   color: var(--fg);
   border: 1px solid var(--line);
   border-radius: var(--r-lg);
-  padding: 20px;
+  padding: 16px;
   box-shadow: var(--shadow-xs);
   transition: box-shadow var(--dur-med) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+@media (min-width: 768px) {
+  .card-box { padding: 20px; }
 }
 .card-box:hover { box-shadow: var(--shadow-sm); }
 
@@ -495,6 +503,41 @@ body { background: var(--bg-base); color: var(--text); }
 .sparkline { width: 100%; height: 32px; overflow: visible; }
 .sparkline path { fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .sparkline .sparkline-fill { fill: var(--accent); opacity: 0.08; stroke: none; }
+
+/* Modal bottom-sheet pattern on mobile.
+   Child can opt-in via <div class="modal-sheet"> to become a bottom sheet on
+   narrow screens while remaining a centered dialog on desktop. */
+.modal-sheet {
+  /* Sheets from the bottom on mobile */
+  max-height: 92vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+@media (max-width: 640px) {
+  .modal-sheet-bg {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+  .modal-sheet {
+    border-radius: 16px 16px 0 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    padding: 20px 16px calc(20px + env(safe-area-inset-bottom)) !important;
+    animation: sheetUp 280ms var(--ease-out);
+  }
+  @keyframes sheetUp {
+    from { transform: translateY(16%); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+}
+
+/* Thumb-friendly tap target on mobile */
+@media (max-width: 640px) {
+  .btn-brand, .btn-ghost, .btn-outline {
+    min-height: 42px;
+    font-size: 14px;
+  }
+}
 
 /* ================================
    Landing Page — Utilities

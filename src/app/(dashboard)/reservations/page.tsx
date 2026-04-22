@@ -88,39 +88,46 @@ export default async function ReservationsPage({ searchParams }: { searchParams:
                     {rows.map((r) => (
                       <div
                         key={r.id}
-                        className="flex flex-wrap items-center gap-3 p-3 bg-stone-50 rounded-lg"
+                        className="p-3 bg-white rounded-lg border border-stone-100 hover:border-stone-200 transition-colors"
                       >
-                        <div className="text-sm font-mono font-semibold w-20 flex-shrink-0">
-                          {r.startTime}–{r.endTime}
-                        </div>
-                        <div className="flex-1 min-w-[140px]">
-                          <div className="font-medium text-sm">{r.customer?.name || '—'}</div>
-                          <div className="text-xs text-stone-500 truncate">
-                            {r.menuName}
-                            {r.menuPrice ? ` · ¥${r.menuPrice.toLocaleString()}` : ''}
+                        <div className="flex items-start gap-3">
+                          <div className="text-[13px] font-mono font-semibold text-stone-900 tabular-nums flex-shrink-0 min-w-[72px]">
+                            {r.startTime}<span className="text-stone-400 mx-0.5">–</span>{r.endTime}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-2">
+                              <div className="min-w-0 flex-1">
+                                <div className="font-medium text-[13.5px] text-stone-900 truncate">
+                                  {r.customer?.name || '—'}
+                                </div>
+                                <div className="text-[11.5px] text-stone-500 mt-0.5 truncate">
+                                  {r.menuName}
+                                  {r.menuPrice ? ` · ¥${r.menuPrice.toLocaleString()}` : ''}
+                                </div>
+                              </div>
+                              <span
+                                className={`badge flex-shrink-0 ${
+                                  r.source === 'line' ? 'badge-green'
+                                  : r.source === 'hotpepper' ? 'badge-yellow'
+                                  : r.source === 'web' ? 'badge-blue'
+                                  : 'badge-gray'
+                                }`}
+                              >
+                                {sourceLabel(r.source)}
+                              </span>
+                            </div>
+                            <div className="mt-2 flex items-center justify-end">
+                              <PaymentButton
+                                reservationId={r.id}
+                                customerName={r.customer?.name ?? null}
+                                menuName={r.menuName}
+                                menuPrice={r.menuPrice}
+                                status={r.status}
+                                paymentMethod={r.paymentMethod}
+                              />
+                            </div>
                           </div>
                         </div>
-                        <span
-                          className={`badge ${
-                            r.source === 'line'
-                              ? 'badge-green'
-                              : r.source === 'hotpepper'
-                              ? 'badge-yellow'
-                              : r.source === 'web'
-                              ? 'badge-blue'
-                              : 'badge-gray'
-                          }`}
-                        >
-                          {sourceLabel(r.source)}
-                        </span>
-                        <PaymentButton
-                          reservationId={r.id}
-                          customerName={r.customer?.name ?? null}
-                          menuName={r.menuName}
-                          menuPrice={r.menuPrice}
-                          status={r.status}
-                          paymentMethod={r.paymentMethod}
-                        />
                       </div>
                     ))}
                   </div>

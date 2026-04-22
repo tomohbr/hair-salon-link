@@ -25,8 +25,8 @@ export default function SendLineButton({ customerId, customerName }: { customerI
         <MessageCircle className="w-4 h-4" />LINEメッセージ送信
       </button>
       {open && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4" onClick={() => setOpen(false)}>
-          <div className="bg-white rounded-xl p-5 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4 modal-sheet-bg" onClick={() => setOpen(false)}>
+          <div className="modal-sheet bg-white rounded-xl p-5 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-stone-900">LINE メッセージ送信</h2>
               <button onClick={() => setOpen(false)} className="text-stone-400 hover:text-stone-700"><X className="w-5 h-5" /></button>

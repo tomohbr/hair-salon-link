@@ -289,7 +289,7 @@ function TransactionModal({ tx, onClose }: { tx: { kind: TxType; product: Produc
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4" onClick={onClose}>
-      <div className="bg-white rounded-xl p-5 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-sheet bg-white rounded-xl p-5 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-bold text-stone-900 inline-flex items-center gap-2">
             {icons[kind]}

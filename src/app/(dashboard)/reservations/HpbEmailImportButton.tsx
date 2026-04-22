@@ -57,16 +57,17 @@ export default function HpbEmailImportButton() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="btn-ghost text-xs border border-amber-300 bg-amber-50 text-amber-900 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg"
+        className="inline-flex items-center gap-1 px-2.5 py-2 rounded-md text-[12px] font-medium border bg-amber-50 border-amber-300 text-amber-900 hover:bg-amber-100 transition-colors flex-shrink-0"
+        aria-label="HPBメール取込"
       >
         <Mail className="w-3.5 h-3.5" />
-        HPBメール取込
+        <span className="hidden xs:inline">HPB</span>メール
       </button>
 
       {open && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4" onClick={reset}>
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4 modal-sheet-bg" onClick={reset}>
           <div
-            className="bg-white rounded-xl p-5 w-full max-w-2xl max-h-[92vh] overflow-y-auto"
+            className="modal-sheet bg-white rounded-xl p-5 w-full max-w-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">

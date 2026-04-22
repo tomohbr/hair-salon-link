@@ -74,9 +74,9 @@ export default function PaymentButton({
       )}
 
       {open && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4" onClick={() => setOpen(false)}>
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4 modal-sheet-bg" onClick={() => setOpen(false)}>
           <div
-            className="bg-white rounded-xl p-5 w-full max-w-md"
+            className="modal-sheet bg-white rounded-xl p-5 w-full max-w-md"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
