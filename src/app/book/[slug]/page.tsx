@@ -1,6 +1,19 @@
 import { getPublicSalonBySlug } from '@/lib/salonData';
 import { notFound } from 'next/navigation';
+import { headers } from 'next/headers';
 import BookingFlow from './BookingFlow';
+
+/**
+ * 流入元の決定優先順位:
+ *   1. ?source=line (明示指定)
+ *   2. LINE アプリ内ブラウザ (UA に 'Line/' を含む) → line
+ *   3. それ以外 → web (自社HP)
+ */
+function detectSource(spSource: string | undefined, ua: string): 'line' | 'web' | 'hotpepper' {
+  if (spSource === 'line' || spSource === 'web' || spSource === 'hotpepper') return spSource;
+  if (/Line\//.test(ua)) return 'line';
+  return 'web';
+}
 
 export default async function BookPage({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams: Promise<{ source?: string }> }) {
   const { slug } = await params;
@@ -8,10 +21,9 @@ export default async function BookPage({ params, searchParams }: { params: Promi
   const salon = await getPublicSalonBySlug(slug);
   if (!salon) return notFound();
 
-  // source パラメータで流入元を判定
-  // /book/[slug] → 自社HP (web)
-  // /book/[slug]?source=line → LINE経由
-  const source = sp.source === 'line' ? 'line' : 'web';
+  const h = await headers();
+  const ua = h.get('user-agent') || '';
+  const source = detectSource(sp.source, ua);
 
   return (
     <BookingFlow
