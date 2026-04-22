@@ -28,20 +28,46 @@ const PAYMENT_ICONS: Record<string, React.ReactNode> = {
   other: <Wallet className="w-3.5 h-3.5" />,
 };
 
+/**
+ * JST (Asia/Tokyo) ベースで「今日・今月初日・前月初日・前月末日」を YYYY-MM-DD で返す。
+ * Railway サーバが UTC で動いていても、日本のサロンの「営業日」は JST 基準で判定する。
+ */
+function getJstBounds() {
+  const now = new Date();
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Tokyo',
+    year: 'numeric', month: '2-digit', day: '2-digit',
+  }).formatToParts(now);
+  const year = Number(parts.find((p) => p.type === 'year')?.value);
+  const month = Number(parts.find((p) => p.type === 'month')?.value);
+  const day = Number(parts.find((p) => p.type === 'day')?.value);
+
+  const pad = (n: number) => String(n).padStart(2, '0');
+  const todayStr = `${year}-${pad(month)}-${pad(day)}`;
+  const monthStart = `${year}-${pad(month)}-01`;
+  // 前月
+  const pm = month === 1 ? { y: year - 1, m: 12 } : { y: year, m: month - 1 };
+  const prevMonthStart = `${pm.y}-${pad(pm.m)}-01`;
+  // 前月末日 = 今月初日の 1 日前
+  const prevEndDate = new Date(Date.UTC(year, month - 1, 0)).getUTCDate();
+  const prevMonthEnd = `${pm.y}-${pad(pm.m)}-${pad(prevEndDate)}`;
+  return { today: todayStr, monthStart, prevMonthStart, prevMonthEnd, year, month };
+}
+
 export default async function SalesPage() {
   const { salon } = await getCurrentSalon();
 
-  const today = new Date();
-  const monthStart = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().slice(0, 10);
-  const prevMonthStart = new Date(today.getFullYear(), today.getMonth() - 1, 1).toISOString().slice(0, 10);
-  const prevMonthEnd = new Date(today.getFullYear(), today.getMonth(), 0).toISOString().slice(0, 10);
+  const { today: todayStr, monthStart, prevMonthStart, prevMonthEnd, year, month } = getJstBounds();
 
-  // 今月の完了予約
+  // 今月分 — 「完了」状態 もしくは 決済 (paidAt) 済み を含める (取りこぼし防止)
   const thisMonthReservations = await prisma.reservation.findMany({
     where: {
       salonId: salon.id,
-      status: 'completed',
       date: { gte: monthStart },
+      OR: [
+        { status: 'completed' },
+        { paidAt: { not: null } },
+      ],
     },
     orderBy: { date: 'desc' },
     select: {
@@ -49,6 +75,7 @@ export default async function SalesPage() {
       menuName: true, menuPrice: true,
       paidAmount: true, paymentMethod: true,
       retailAmount: true, tip: true, source: true,
+      status: true, paidAt: true,
       customer: { select: { name: true } },
     },
   });
@@ -56,8 +83,11 @@ export default async function SalesPage() {
   const prevMonthReservations = await prisma.reservation.findMany({
     where: {
       salonId: salon.id,
-      status: 'completed',
       date: { gte: prevMonthStart, lte: prevMonthEnd },
+      OR: [
+        { status: 'completed' },
+        { paidAt: { not: null } },
+      ],
     },
     select: {
       paidAmount: true, menuPrice: true, retailAmount: true, tip: true,
@@ -83,23 +113,31 @@ export default async function SalesPage() {
     const key = r.paymentMethod || 'unrecorded';
     byPayment[key] = byPayment[key] || { count: 0, amount: 0 };
     byPayment[key].count++;
-    byPayment[key].amount += (r.paidAmount ?? r.menuPrice ?? 0) + r.retailAmount + r.tip;
+    byPayment[key].amount += (r.paidAmount ?? r.menuPrice ?? 0) + (r.retailAmount ?? 0) + (r.tip ?? 0);
   });
 
-  // 日別（今月）
+  // 日別売上マップ (date → amount)
   const dailyMap: Record<string, number> = {};
   thisMonthReservations.forEach((r) => {
-    dailyMap[r.date] = (dailyMap[r.date] || 0) + (r.paidAmount ?? r.menuPrice ?? 0) + r.retailAmount + r.tip;
+    dailyMap[r.date] = (dailyMap[r.date] || 0) + (r.paidAmount ?? r.menuPrice ?? 0) + (r.retailAmount ?? 0) + (r.tip ?? 0);
   });
-  const dailyArr = Object.entries(dailyMap).sort(([a], [b]) => a.localeCompare(b));
-  const maxDaily = Math.max(1, ...Object.values(dailyMap));
+
+  // 月初〜今日までの全日を埋めて (空日も含めて) グラフのギャップ/ズレを防止
+  const allDaysThisMonth: { date: string; amount: number }[] = [];
+  const todayDate = Number(todayStr.slice(8, 10));
+  for (let d = 1; d <= todayDate; d++) {
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const dateKey = `${year}-${pad(month)}-${pad(d)}`;
+    allDaysThisMonth.push({ date: dateKey, amount: dailyMap[dateKey] || 0 });
+  }
+  const maxDaily = Math.max(1, ...allDaysThisMonth.map((d) => d.amount));
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-xl md:text-2xl font-bold text-stone-900">売上管理</h1>
         <p className="text-xs md:text-sm text-stone-500 mt-1">
-          {today.getFullYear()}年{today.getMonth() + 1}月 · 完了予約のみ集計
+          {year}年{month}月 · 決済済み予約を集計 (JST)
         </p>
       </div>
 
@@ -167,25 +205,79 @@ export default async function SalesPage() {
         )}
       </div>
 
-      {/* 日別推移 */}
+      {/* 日別売上チャート */}
       <div className="card-box">
-        <h2 className="font-semibold text-stone-900 mb-4">日別売上（今月）</h2>
-        {dailyArr.length === 0 ? (
-          <p className="text-sm text-stone-500 text-center py-8">データがありません。</p>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-semibold text-stone-900">日別売上（今月）</h2>
+          <span className="text-[11px] text-stone-500">
+            1日〜{todayDate}日 · 合計 {yen(allDaysThisMonth.reduce((a, d) => a + d.amount, 0))}
+          </span>
+        </div>
+        {allDaysThisMonth.every((d) => d.amount === 0) ? (
+          <p className="text-sm text-stone-500 text-center py-8">今月の売上データはまだありません。</p>
         ) : (
-          <div className="flex items-end gap-1 h-40 md:h-48">
-            {dailyArr.map(([date, amount]) => (
-              <div key={date} className="flex-1 flex flex-col items-center gap-1" title={`${date}: ${yen(amount)}`}>
-                <div
-                  className="w-full brand-bg rounded-t hover:opacity-80"
-                  style={{ height: `${(amount / maxDaily) * 100}%`, minHeight: '2px' }}
-                />
-                <div className="text-[9px] text-stone-400 rotate-45 origin-top-left whitespace-nowrap ml-2">
-                  {date.slice(5)}
-                </div>
-              </div>
-            ))}
-          </div>
+          <>
+            <div className="flex items-end gap-0.5 sm:gap-1 h-32 md:h-40">
+              {allDaysThisMonth.map((d) => {
+                const isToday = d.date === todayStr;
+                const h = d.amount > 0 ? (d.amount / maxDaily) * 100 : 0;
+                return (
+                  <div
+                    key={d.date}
+                    className="flex-1 flex flex-col justify-end items-center min-w-0"
+                    title={`${d.date}: ${yen(d.amount)}`}
+                  >
+                    <div
+                      className={`w-full rounded-t transition-all ${isToday ? '' : 'hover:opacity-80'}`}
+                      style={{
+                        height: d.amount > 0 ? `${h}%` : '3px',
+                        minHeight: d.amount > 0 ? '4px' : '3px',
+                        background: d.amount > 0
+                          ? (isToday ? 'var(--accent)' : 'var(--accent-dark, var(--accent))')
+                          : 'var(--gray-150, #efedeb)',
+                      }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+            {/* 日付ラベル */}
+            <div className="flex gap-0.5 sm:gap-1 mt-1.5">
+              {allDaysThisMonth.map((d, i) => {
+                const day = Number(d.date.slice(8, 10));
+                // モバイルは 5 日ごと、デスクトップは毎日表示
+                const showMobile = day === 1 || day === todayDate || day % 5 === 0;
+                const showDesktop = true;
+                return (
+                  <div key={d.date} className="flex-1 text-center min-w-0">
+                    <span
+                      className={`text-[9px] tabular-nums ${
+                        d.date === todayStr ? 'font-semibold' : 'text-stone-400'
+                      } ${showMobile ? 'inline' : 'hidden'} sm:${showDesktop ? 'inline' : 'hidden'}`}
+                      style={{ color: d.date === todayStr ? 'var(--accent)' : undefined }}
+                    >
+                      {day}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+            {/* 凡例 */}
+            <div className="flex items-center gap-4 mt-3 text-[10px] text-stone-500">
+              <span className="inline-flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-sm" style={{ background: 'var(--accent)' }} />
+                本日
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-sm" style={{ background: 'var(--accent-dark, var(--accent))' }} />
+                売上あり
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-sm" style={{ background: 'var(--gray-150, #efedeb)' }} />
+                売上 0 円
+              </span>
+            </div>
+          </>
         )}
       </div>
 
