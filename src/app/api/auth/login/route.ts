@@ -7,6 +7,7 @@ import { SignJWT } from 'jose';
 import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/db';
 import { buildRedirectUrl } from '@/lib/baseUrl';
+import { rateLimit, RATE_LIMITS, getClientIp } from '@/lib/rateLimit';
 
 const COOKIE_NAME = 'hairsalonlink_session';
 const ALG = 'HS256';
@@ -25,6 +26,18 @@ function withNoCache(res: NextResponse) {
 
 export async function POST(req: NextRequest) {
   try {
+    // レート制限: IP 単位 10 回/分
+    const ip = getClientIp(req.headers);
+    const rl = rateLimit(`login:${ip}`, RATE_LIMITS.login.limit, RATE_LIMITS.login.window);
+    if (!rl.allowed) {
+      const target = new URL(buildRedirectUrl(req, '/login'));
+      target.searchParams.set(
+        'error',
+        `ログイン試行が多すぎます。${Math.ceil(rl.resetIn / 1000)} 秒後にお試しください。`,
+      );
+      return withNoCache(NextResponse.redirect(target.toString(), 303));
+    }
+
     const formData = await req.formData();
     const email = String(formData.get('email') || '').trim().toLowerCase();
     const password = String(formData.get('password') || '');

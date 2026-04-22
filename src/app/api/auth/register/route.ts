@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { hashPassword } from '@/lib/auth';
 import { createCheckoutSession, isDemoMode, type PlanId } from '@/lib/stripe';
+import { rateLimit, RATE_LIMITS, getClientIp } from '@/lib/rateLimit';
 
 // 新規登録 API
 // 1. Salon を status=pending_payment で作成
@@ -24,6 +25,16 @@ function slugify(s: string) {
 
 export async function POST(req: NextRequest) {
   try {
+    // レート制限: IP 単位 5 回/時間
+    const ip = getClientIp(req.headers);
+    const rl = rateLimit(`register:${ip}`, RATE_LIMITS.register.limit, RATE_LIMITS.register.window);
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: `登録試行が多すぎます。${Math.ceil(rl.resetIn / 60000)} 分後にお試しください。` },
+        { status: 429 },
+      );
+    }
+
     const { salonName, email, password, name, plan } = await req.json();
     if (!salonName || !email || !password || !name) {
       return NextResponse.json({ error: '必須項目が不足しています' }, { status: 400 });

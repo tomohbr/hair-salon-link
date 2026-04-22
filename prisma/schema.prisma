@@ -59,6 +59,28 @@ model Salon {
   designs             HairStyle[]
   products            Product[]
   stockTransactions   StockTransaction[]
+  auditLogs           AuditLog[]
+}
+
+// 監査ログ: 重要な変更を追跡する (顧客情報変更・予約作成・削除・支払 etc.)
+// 将来的な証跡・デバッグ・運用監視に必要
+model AuditLog {
+  id         String   @id @default(cuid())
+  salonId    String
+  salon      Salon    @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  actorId    String?  // User.id (null = system / public webhook)
+  actorName  String?  // 冗長に保存 (User 削除後も履歴を失わない)
+  action     String   // e.g. 'customer.create', 'reservation.delete', 'payment.record'
+  targetType String?  // 'customer' | 'reservation' | 'menu' ...
+  targetId   String?
+  diff       Json?    // 変更前/変更後 (必要に応じ)
+  ip         String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+
+  @@index([salonId, createdAt])
+  @@index([action])
+  @@index([targetType, targetId])
 }
 
 // スタイリスト
