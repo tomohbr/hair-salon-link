@@ -52,6 +52,7 @@ export default function ReservationsClient({
   const router = useRouter();
   const [showAdd, setShowAdd] = useState(false);
   const [showImport, setShowImport] = useState(false);
+  const [showHpbEmail, setShowHpbEmail] = useState(false);
   const [csvText, setCsvText] = useState('');
   const [importing, setImporting] = useState(false);
   const [importResult, setImportResult] = useState<{ created: number; duplicates: number; conflicts: number; errors: number; unparseable: number } | null>(null);
@@ -149,51 +150,66 @@ export default function ReservationsClient({
   return (
     <>
       <div className="card-box">
-        {/* ツールバー: モバイルは2段、デスクトップは1段 */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
-          {/* 週ナビゲーション */}
-          <div className="flex items-center justify-between md:justify-start gap-1.5">
+        {/* ツールバー: モバイルは縦2段構成 */}
+        <div className="space-y-3 mb-4">
+          {/* Row 1: 週ナビゲーション (常に1行) */}
+          <div className="flex items-center gap-1.5">
             <button
               onClick={() => changeWeek(-1)}
               aria-label="前の週"
-              className="w-8 h-8 rounded-md hover:bg-stone-100 flex items-center justify-center text-stone-600"
+              className="w-9 h-9 rounded-md hover:bg-stone-100 flex items-center justify-center text-stone-600 flex-shrink-0"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <div className="text-[13px] font-semibold text-stone-900 tabular-nums px-1">
+            <div className="flex-1 text-center text-[13px] font-semibold text-stone-900 tabular-nums truncate">
               {week[0]?.date.slice(5).replace('-', '/')} 〜 {week[6]?.date.slice(5).replace('-', '/')}
             </div>
             <button
               onClick={() => changeWeek(1)}
               aria-label="次の週"
-              className="w-8 h-8 rounded-md hover:bg-stone-100 flex items-center justify-center text-stone-600"
+              className="w-9 h-9 rounded-md hover:bg-stone-100 flex items-center justify-center text-stone-600 flex-shrink-0"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
             <button
               onClick={() => router.push('/reservations')}
-              className="ml-1 px-2.5 py-1.5 text-[12px] rounded-md hover:bg-stone-100 text-stone-600 font-medium"
+              className="ml-1 px-3 h-9 text-[12px] rounded-md hover:bg-stone-100 text-stone-600 font-medium flex-shrink-0"
             >
               今週
             </button>
           </div>
 
-          {/* アクション */}
+          {/* Row 2: アクション (スマホ: primary + ⋯ メニュー / デスクトップ: 横並び) */}
           <div className="flex items-center gap-2">
+            {/* 主要CTA = 予約を追加 (スマホではフル幅) */}
+            <button
+              onClick={() => setShowAdd(true)}
+              className="btn-brand flex-1 sm:flex-none"
+            >
+              <Plus className="w-4 h-4" />
+              予約を追加
+            </button>
+
+            {/* HPBメール取込 (スマホでは hidden → ⋯メニューから) */}
+            <div className="hidden sm:block">
+              <HpbEmailImportButton />
+            </div>
+
+            {/* ⋯ メニュー — 補助アクション全部ここに */}
             <MoreActionsMenu
               onShareWeb={() => copyBookUrl('')}
               onShareLine={() => copyBookUrl('line')}
               onOpenCsvImport={() => setShowImport(true)}
+              onOpenHpbEmail={() => setShowHpbEmail(true)}
             />
-            <HpbEmailImportButton />
-            <button
-              onClick={() => setShowAdd(true)}
-              className="btn-brand text-xs px-3 py-2 flex-shrink-0"
-            >
-              <Plus className="w-3.5 h-3.5" />
-              <span className="hidden xs:inline">予約を</span>追加
-            </button>
           </div>
+
+          {/* モバイル専用: ⋯から開くHPBメール取込モーダル */}
+          <HpbEmailImportButton
+            externalOpen={showHpbEmail}
+            onExternalClose={() => setShowHpbEmail(false)}
+            hideTrigger
+          />
         </div>
 
         {/* 流入元凡例: モバイルで wrap */}
@@ -446,32 +462,62 @@ function SourceBtn({ label, active, onClick }: { label: string; active: boolean;
   );
 }
 
-/** 補助アクション (URL共有 / CSV取込) をまとめた 「⋯」メニュー */
+/** 補助アクションをまとめた「⋯」メニュー (モバイル = ボトムシート / デスクトップ = 左出しドロップダウン) */
 function MoreActionsMenu({
-  onShareWeb, onShareLine, onOpenCsvImport,
+  onShareWeb, onShareLine, onOpenCsvImport, onOpenHpbEmail,
 }: {
   onShareWeb: () => void;
   onShareLine: () => void;
   onOpenCsvImport: () => void;
+  onOpenHpbEmail?: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
-    const handler = (e: MouseEvent) => {
+    if (typeof window !== 'undefined' && window.innerWidth < 640) {
+      document.body.style.overflow = 'hidden';
+      return () => { document.body.style.overflow = ''; };
+    }
+    const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    const click = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     };
-    const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
-    document.addEventListener('mousedown', handler);
     document.addEventListener('keydown', esc);
+    document.addEventListener('mousedown', click);
     return () => {
-      document.removeEventListener('mousedown', handler);
       document.removeEventListener('keydown', esc);
+      document.removeEventListener('mousedown', click);
     };
   }, [open]);
 
   function pick(fn: () => void) { fn(); setOpen(false); }
+
+  const menuItems = (
+    <>
+      <div className="px-3 py-2 text-[10px] font-semibold tracking-wider text-stone-400 uppercase">予約 URL</div>
+      <button onClick={() => pick(onShareWeb)} className="w-full text-left px-3 py-3 text-[14px] text-stone-800 hover:bg-stone-50 flex items-center gap-2.5">
+        <LinkIcon className="w-4 h-4 text-stone-400 flex-shrink-0" />
+        自社HP 予約URL をコピー
+      </button>
+      <button onClick={() => pick(onShareLine)} className="w-full text-left px-3 py-3 text-[14px] text-stone-800 hover:bg-stone-50 flex items-center gap-2.5">
+        <LinkIcon className="w-4 h-4 text-stone-400 flex-shrink-0" />
+        LINE 用 URL をコピー
+      </button>
+      <div className="px-3 py-2 text-[10px] font-semibold tracking-wider text-stone-400 uppercase border-t border-stone-100">取込</div>
+      {onOpenHpbEmail && (
+        <button onClick={() => pick(onOpenHpbEmail)} className="w-full text-left px-3 py-3 text-[14px] text-stone-800 hover:bg-stone-50 flex items-center gap-2.5 sm:hidden">
+          <FileSpreadsheet className="w-4 h-4 text-stone-400 flex-shrink-0" />
+          HPB メール取込
+        </button>
+      )}
+      <button onClick={() => pick(onOpenCsvImport)} className="w-full text-left px-3 py-3 text-[14px] text-stone-800 hover:bg-stone-50 flex items-center gap-2.5">
+        <FileSpreadsheet className="w-4 h-4 text-stone-400 flex-shrink-0" />
+        HPB CSV 取込
+      </button>
+    </>
+  );
 
   return (
     <div className="relative" ref={ref}>
@@ -479,43 +525,51 @@ function MoreActionsMenu({
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label="その他のアクション"
-        className="w-9 h-9 rounded-md border border-stone-200 bg-white hover:bg-stone-50 flex items-center justify-center text-stone-600 transition-colors"
+        aria-expanded={open}
+        className="w-10 h-10 rounded-md border border-stone-200 bg-white hover:bg-stone-50 flex items-center justify-center text-stone-600 transition-colors flex-shrink-0"
       >
         <MoreHorizontal className="w-4 h-4" />
       </button>
+
+      {/* Desktop (sm+): 左側に開くドロップダウン */}
       {open && (
         <div
           role="menu"
-          className="absolute right-0 top-full mt-1.5 w-56 bg-white border border-stone-200 rounded-lg z-20 overflow-hidden"
+          className="hidden sm:block absolute right-0 top-full mt-1.5 w-64 bg-white border border-stone-200 rounded-lg z-20 overflow-hidden"
           style={{ boxShadow: 'var(--shadow-lg)' }}
         >
-          <div className="px-3 py-2 text-[10px] font-semibold tracking-wider text-stone-400 uppercase border-b border-stone-100">
-            予約 URL
+          {menuItems}
+        </div>
+      )}
+
+      {/* Mobile (<sm): ボトムシート */}
+      {open && (
+        <div
+          className="sm:hidden fixed inset-0 z-50 flex items-end"
+          style={{ background: 'rgba(12,10,9,0.45)' }}
+          onClick={() => setOpen(false)}
+        >
+          <div
+            className="w-full bg-white rounded-t-2xl overflow-hidden"
+            style={{
+              paddingBottom: 'env(safe-area-inset-bottom)',
+              animation: 'sheetUp 240ms var(--ease-out)',
+              boxShadow: 'var(--shadow-xl)',
+            }}
+            onClick={(e) => e.stopPropagation()}
+            role="menu"
+          >
+            <div className="py-2">
+              {menuItems}
+            </div>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="w-full py-3.5 text-center text-[14px] text-stone-600 border-t border-stone-100"
+            >
+              キャンセル
+            </button>
           </div>
-          <button
-            onClick={() => pick(onShareWeb)}
-            className="w-full text-left px-3 py-2.5 text-[13px] text-stone-700 hover:bg-stone-50 flex items-center gap-2"
-          >
-            <LinkIcon className="w-3.5 h-3.5 text-stone-400" />
-            自社HP 予約URL をコピー
-          </button>
-          <button
-            onClick={() => pick(onShareLine)}
-            className="w-full text-left px-3 py-2.5 text-[13px] text-stone-700 hover:bg-stone-50 flex items-center gap-2"
-          >
-            <LinkIcon className="w-3.5 h-3.5 text-stone-400" />
-            LINE 用 URL をコピー
-          </button>
-          <div className="px-3 py-2 text-[10px] font-semibold tracking-wider text-stone-400 uppercase border-t border-stone-100">
-            取込
-          </div>
-          <button
-            onClick={() => pick(onOpenCsvImport)}
-            className="w-full text-left px-3 py-2.5 text-[13px] text-stone-700 hover:bg-stone-50 flex items-center gap-2"
-          >
-            <FileSpreadsheet className="w-3.5 h-3.5 text-stone-400" />
-            HPB CSV 取込
-          </button>
         </div>
       )}
     </div>

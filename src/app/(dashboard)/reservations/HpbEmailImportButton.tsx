@@ -9,9 +9,25 @@ type Result = {
   messages: string[];
 };
 
-export default function HpbEmailImportButton() {
+export default function HpbEmailImportButton({
+  externalOpen,
+  onExternalClose,
+  hideTrigger = false,
+}: {
+  externalOpen?: boolean;
+  onExternalClose?: () => void;
+  hideTrigger?: boolean;
+} = {}) {
   const router = useRouter();
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
+  const open = externalOpen ?? internalOpen;
+  const setOpen = (v: boolean) => {
+    if (externalOpen !== undefined) {
+      if (!v && onExternalClose) onExternalClose();
+    } else {
+      setInternalOpen(v);
+    }
+  };
   const [text, setText] = useState('');
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
@@ -54,15 +70,17 @@ export default function HpbEmailImportButton() {
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-1 px-2.5 py-2 rounded-md text-[12px] font-medium border bg-amber-50 border-amber-300 text-amber-900 hover:bg-amber-100 transition-colors flex-shrink-0"
-        aria-label="HPBメール取込"
-      >
-        <Mail className="w-3.5 h-3.5" />
-        <span className="hidden xs:inline">HPB</span>メール
-      </button>
+      {!hideTrigger && (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="inline-flex items-center gap-1 px-2.5 py-2 rounded-md text-[12px] font-medium border bg-amber-50 border-amber-300 text-amber-900 hover:bg-amber-100 transition-colors flex-shrink-0"
+          aria-label="HPBメール取込"
+        >
+          <Mail className="w-3.5 h-3.5" />
+          HPBメール
+        </button>
+      )}
 
       {open && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4 modal-sheet-bg" onClick={reset}>
