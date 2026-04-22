@@ -6,17 +6,17 @@ export const PLAN_LIMITS = {
   free: {
     maxCustomers: 30,
     maxReservationsPerMonth: 50,
-    features: ['dashboard', 'reservations', 'customers', 'menus', 'settings'] as string[],
+    features: ['dashboard', 'reservations', 'customers', 'menus', 'sales', 'settings'] as string[],
   },
   standard: {
     maxCustomers: 500,
     maxReservationsPerMonth: Infinity,
-    features: ['dashboard', 'reservations', 'customers', 'menus', 'coupons', 'messages', 'analytics', 'settings'] as string[],
+    features: ['dashboard', 'reservations', 'customers', 'menus', 'sales', 'inventory', 'coupons', 'messages', 'analytics', 'settings'] as string[],
   },
   pro: {
     maxCustomers: Infinity,
     maxReservationsPerMonth: Infinity,
-    features: ['dashboard', 'reservations', 'customers', 'menus', 'coupons', 'messages', 'designs', 'analytics', 'settings'] as string[],
+    features: ['dashboard', 'reservations', 'customers', 'menus', 'sales', 'inventory', 'coupons', 'messages', 'designs', 'analytics', 'settings'] as string[],
   },
 } as const;
 

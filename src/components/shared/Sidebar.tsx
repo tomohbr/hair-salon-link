@@ -2,6 +2,7 @@ import Link from 'next/link';
 import {
   LayoutDashboard, CalendarDays, Users, ListOrdered, Ticket, MessageSquare,
   Image as ImageIcon, BarChart3, Settings, Scissors, LogOut, Lock,
+  Package, Wallet,
 } from 'lucide-react';
 import SidebarLink from './SidebarLink';
 
@@ -10,6 +11,8 @@ const allNav = [
   { href: '/reservations', label: '予約', icon: CalendarDays, roles: ['admin', 'staff'], plans: ['free', 'standard', 'pro'] },
   { href: '/customers', label: '顧客', icon: Users, roles: ['admin', 'staff'], plans: ['free', 'standard', 'pro'] },
   { href: '/menus', label: 'メニュー', icon: ListOrdered, roles: ['admin', 'staff'], plans: ['free', 'standard', 'pro'] },
+  { href: '/sales', label: '売上', icon: Wallet, roles: ['admin'], plans: ['free', 'standard', 'pro'] },
+  { href: '/inventory', label: '在庫', icon: Package, roles: ['admin', 'staff'], plans: ['standard', 'pro'] },
   { href: '/coupons', label: 'クーポン', icon: Ticket, roles: ['admin'], plans: ['standard', 'pro'] },
   { href: '/messages', label: 'メッセージ配信', icon: MessageSquare, roles: ['admin'], plans: ['standard', 'pro'] },
   { href: '/designs', label: 'スタイルギャラリー', icon: ImageIcon, roles: ['admin'], plans: ['pro'] },
