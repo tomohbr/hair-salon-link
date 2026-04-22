@@ -48,7 +48,7 @@ export default function SeedMariciButton() {
             marici（中西雄大） の HPB データ一括反映
           </h3>
           <p className="text-[12px] text-stone-500 mt-1 leading-relaxed">
-            slug: <code className="bg-stone-100 px-1 rounded">salon-ad76iza2-q47p</code> に、
+            オーナー <code className="bg-stone-100 px-1 rounded">a@gmail.com</code> の店舗に、
             HPB 掲載の全 7 メニューと 6 クーポンを一括登録／更新します。何回押しても重複しません。
           </p>
 

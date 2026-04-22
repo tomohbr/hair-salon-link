@@ -15,7 +15,8 @@ import { prisma } from '@/lib/db';
 import { getSession } from '@/lib/auth';
 import { buildRedirectUrl } from '@/lib/baseUrl';
 
-const TARGET_SLUG = 'salon-ad76iza2-q47p';
+// 中西雄大様のオーナーメール
+const TARGET_OWNER_EMAIL = 'a@gmail.com';
 
 /** HPB 取得済みの実データ (メニュー) */
 const MENUS = [
@@ -44,9 +45,22 @@ async function seed(req: NextRequest) {
     return NextResponse.redirect(buildRedirectUrl(req, '/login?error=SuperAdmin権限が必要です'));
   }
 
-  const salon = await prisma.salon.findUnique({ where: { slug: TARGET_SLUG } });
+  // オーナーメールで店舗を検索（ownerEmail 列 or User.salon リレーション両方試す）
+  let salon = await prisma.salon.findFirst({
+    where: { ownerEmail: TARGET_OWNER_EMAIL },
+  });
   if (!salon) {
-    return NextResponse.json({ error: `salon not found: ${TARGET_SLUG}` }, { status: 404 });
+    const owner = await prisma.user.findUnique({
+      where: { email: TARGET_OWNER_EMAIL },
+      include: { salon: true },
+    });
+    if (owner?.salon) salon = owner.salon;
+  }
+  if (!salon) {
+    return NextResponse.json(
+      { error: `オーナーメール ${TARGET_OWNER_EMAIL} の店舗が見つかりません。先に新規登録してください。` },
+      { status: 404 },
+    );
   }
 
   let menusCreated = 0, menusUpdated = 0;
