@@ -1,8 +1,9 @@
 import { getCurrentSalon } from '@/lib/salonData';
 import { getWeekCalendar } from '@/lib/availability';
 import { prisma } from '@/lib/db';
-import { yen, fmtDate, sourceLabel } from '@/lib/utils/format';
+import { fmtDate, sourceLabel } from '@/lib/utils/format';
 import ReservationsClient from './ReservationsClient';
+import PaymentButton from './PaymentButton';
 
 export default async function ReservationsPage({ searchParams }: { searchParams: Promise<{ week?: string }> }) {
   const sp = await searchParams;
@@ -16,6 +17,15 @@ export default async function ReservationsPage({ searchParams }: { searchParams:
   const weekStart = sp.week || defaultMonday.toISOString().slice(0, 10);
 
   const week = await getWeekCalendar(salon.id, weekStart);
+
+  // 週内の全予約を詳細情報込みで取得（支払い記録UI用）
+  const weekDates = week.map((d) => d.date);
+  const detailed = await prisma.reservation.findMany({
+    where: { salonId: salon.id, date: { in: weekDates } },
+    orderBy: [{ date: 'asc' }, { startTime: 'asc' }],
+    include: { customer: true },
+  });
+
   const menus = await prisma.menu.findMany({
     where: { salonId: salon.id, isActive: true },
     orderBy: { sortOrder: 'asc' },
@@ -57,30 +67,38 @@ export default async function ReservationsPage({ searchParams }: { searchParams:
         weekStart={weekStart}
       />
 
-      {/* 今後の予約一覧（リスト表示） */}
+      {/* 今週の予約一覧（支払い記録ボタン付き） */}
       <div className="card-box">
         <h2 className="font-semibold text-stone-900 mb-4">今週の予約一覧</h2>
-        {week.flatMap((d) => d.reservations).length === 0 ? (
+        {detailed.length === 0 ? (
           <p className="text-sm text-stone-500 py-6 text-center">今週の予約はありません</p>
         ) : (
           <div className="space-y-4">
-            {week.map((d) => {
-              if (d.reservations.length === 0) return null;
+            {weekDates.map((date) => {
+              const rows = detailed.filter((r) => r.date === date);
+              if (rows.length === 0) return null;
+              const dow = week.find((d) => d.date === date)?.dow || '';
               return (
-                <div key={d.date}>
+                <div key={date}>
                   <div className="text-sm font-semibold text-stone-700 mb-2">
-                    <span className="brand-text">{fmtDate(d.date)}</span>
-                    <span className="text-xs text-stone-400 ml-2">({d.dow}) {d.reservations.length}件</span>
+                    <span className="brand-text">{fmtDate(date)}</span>
+                    <span className="text-xs text-stone-400 ml-2">({dow}) {rows.length}件</span>
                   </div>
                   <div className="space-y-2">
-                    {d.reservations.map((r) => (
-                      <div key={r.id} className="flex items-center gap-4 p-3 bg-stone-50 rounded-lg">
-                        <div className="text-sm font-mono font-semibold w-20">
-                          {r.startTime}-{r.endTime}
+                    {rows.map((r) => (
+                      <div
+                        key={r.id}
+                        className="flex flex-wrap items-center gap-3 p-3 bg-stone-50 rounded-lg"
+                      >
+                        <div className="text-sm font-mono font-semibold w-20 flex-shrink-0">
+                          {r.startTime}–{r.endTime}
                         </div>
-                        <div className="flex-1">
-                          <div className="font-medium text-sm">{r.customerName || '—'}</div>
-                          <div className="text-xs text-stone-500">{r.menuName}</div>
+                        <div className="flex-1 min-w-[140px]">
+                          <div className="font-medium text-sm">{r.customer?.name || '—'}</div>
+                          <div className="text-xs text-stone-500 truncate">
+                            {r.menuName}
+                            {r.menuPrice ? ` · ¥${r.menuPrice.toLocaleString()}` : ''}
+                          </div>
                         </div>
                         <span
                           className={`badge ${
@@ -95,6 +113,14 @@ export default async function ReservationsPage({ searchParams }: { searchParams:
                         >
                           {sourceLabel(r.source)}
                         </span>
+                        <PaymentButton
+                          reservationId={r.id}
+                          customerName={r.customer?.name ?? null}
+                          menuName={r.menuName}
+                          menuPrice={r.menuPrice}
+                          status={r.status}
+                          paymentMethod={r.paymentMethod}
+                        />
                       </div>
                     ))}
                   </div>

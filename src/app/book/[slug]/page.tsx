@@ -9,8 +9,9 @@ import BookingFlow from './BookingFlow';
  *   2. LINE アプリ内ブラウザ (UA に 'Line/' を含む) → line
  *   3. それ以外 → web (自社HP)
  */
-function detectSource(spSource: string | undefined, ua: string): 'line' | 'web' | 'hotpepper' {
-  if (spSource === 'line' || spSource === 'web' || spSource === 'hotpepper') return spSource;
+function detectSource(spSource: string | undefined, ua: string): 'line' | 'web' {
+  if (spSource === 'line') return 'line';
+  if (spSource === 'web') return 'web';
   if (/Line\//.test(ua)) return 'line';
   return 'web';
 }
