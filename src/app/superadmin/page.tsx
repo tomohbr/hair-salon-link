@@ -5,6 +5,7 @@ import { Sparkles, Building2, Users, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import PasswordChangeForm from './PasswordChangeForm';
+import SeedMariciButton from './SeedMariciButton';
 
 export default async function SuperAdminPage() {
   try {
@@ -126,6 +127,9 @@ export default async function SuperAdminPage() {
           </table>
           </div>
         </div>
+
+        {/* 一回限りのデータ反映ツール */}
+        <SeedMariciButton />
 
         {/* パスワード変更 (運営者本人のアカウント) */}
         <div className="card-box max-w-xl">
