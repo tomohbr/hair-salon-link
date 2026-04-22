@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Plus, X, ChevronLeft, ChevronRight, Copy, Upload, FileSpreadsheet } from 'lucide-react';
+import HpbEmailImportButton from './HpbEmailImportButton';
 
 type DayData = {
   date: string;
@@ -166,6 +167,7 @@ export default function ReservationsClient({
                 <button onClick={() => copyBookUrl('line')} className="w-full text-left px-3 py-2 text-xs hover:bg-stone-50">💬 LINE用予約URL (LIFF)</button>
               </div>
             </div>
+            <HpbEmailImportButton />
             <button onClick={() => setShowImport(true)} className="btn-ghost text-xs border border-amber-300 bg-amber-50 text-amber-900">
               <FileSpreadsheet className="w-3 h-3" />HPB CSV取込
             </button>

@@ -94,6 +94,32 @@ export async function saveBusinessHoursAction(
   }
 }
 
+/**
+ * HPB メール取込用 Webhook トークンを生成/再生成
+ * 既存トークンは即無効になる
+ */
+export async function rotateHpbInboundTokenAction(
+  _prev: { ok?: boolean; error?: string; message?: string; token?: string } | null,
+  _formData: FormData,
+): Promise<{ ok?: boolean; error?: string; message?: string; token?: string }> {
+  try {
+    const { salon } = await getCurrentSalon();
+    // 32 文字の URL セーフなトークン
+    const bytes = new Uint8Array(24);
+    crypto.getRandomValues(bytes);
+    const token = Array.from(bytes).map((b) => b.toString(16).padStart(2, '0')).join('');
+
+    await prisma.salon.update({
+      where: { id: salon.id },
+      data: { hpbInboundToken: token },
+    });
+    revalidatePath('/settings');
+    return { ok: true, message: 'Webhook トークンを発行しました', token };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : 'エラーが発生しました' };
+  }
+}
+
 /** URL 用スラグを ASCII 安全な値に再生成する */
 function asciiSlug(s: string) {
   const ascii = s

@@ -1,9 +1,10 @@
 import { getSalonData } from '@/lib/salonData';
-import { Store, MessageCircle, CreditCard, Users, Link as LinkIcon, Clock } from 'lucide-react';
+import { Store, MessageCircle, CreditCard, Users, Link as LinkIcon, Clock, Mail } from 'lucide-react';
 import SalonInfoForm from './SalonInfoForm';
 import LineForm from './LineForm';
 import SlugFixer from './SlugFixer';
 import BusinessHoursForm from './BusinessHoursForm';
+import HpbInboundForm from './HpbInboundForm';
 import { parseBusinessHours } from '@/lib/availability';
 
 export default async function SettingsPage() {
@@ -80,6 +81,25 @@ export default async function SettingsPage() {
             accessToken={salon.lineAccessToken || ''}
             liffId={salon.lineLiffId || ''}
             webhookUrl={webhookUrl}
+          />
+        </div>
+
+        {/* HPB メール自動連携 */}
+        <div className="card-box">
+          <div className="flex items-center gap-2 mb-1">
+            <Mail className="w-5 h-5 text-amber-600" />
+            <h2 className="font-semibold text-stone-900">HPB メール自動連携</h2>
+            <span className={`badge ${salon.hpbInboundToken ? 'badge-green' : 'badge-gray'} ml-auto`}>
+              {salon.hpbInboundToken ? '連携可能' : '未設定'}
+            </span>
+          </div>
+          <p className="text-[11px] text-stone-500 mb-3 leading-relaxed">
+            HPB から届く予約メールを転送すると、自動でこちらの予約枠に反映されます。<br />
+            ダブルブッキング防止・リアルタイム連携のための仕組みです。
+          </p>
+          <HpbInboundForm
+            initialToken={salon.hpbInboundToken}
+            baseUrl={baseUrl}
           />
         </div>
 

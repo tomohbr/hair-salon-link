@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#faf7f2" />
+<title>marici（マリーチ）| 熊本・上通のヘアサロン</title>
+<meta name="description" content="熊本・上通の完全予約制ヘアサロン marici。カラー × 髪質改善を得意とする 4 席の小型サロン。熊本県熊本市中央区草葉町。" />
+<meta property="og:title" content="marici | 熊本・上通" />
+<meta property="og:description" content="カラー × 髪質改善で女性に人気のトレンドサロン。" />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&family=Noto+Sans+JP:wght@200;300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #faf7f2;
+  --bg-soft: #f4efe5;
+  --bg-warm: #ede5d5;
+  --bg-dark: #2c2723;
+  --bg-deep: #1f1c19;
+  --ink: #2c2723;
+  --ink-soft: #6b5f52;
+  --ink-faint: #a9a094;
+  --border: #e6dfd2;
+  --border-hover: #c9a96e;
+  --accent: #b8986f;
+  --accent-soft: #e8dcc6;
+  --accent-dark: #8d6b43;
+  --warm: #d4a373;
+  --blush: #e8c4b8;
+  --sage: #c7c8b0;
+  --serif-latin: "Cormorant Garamond", serif;
+  --display: "Fraunces", serif;
+  --sans-latin: "Plus Jakarta Sans", sans-serif;
+  --sans-jp: "Noto Sans JP", sans-serif;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-sm: 0 1px 2px rgba(60,47,32,0.05);
+  --shadow-md: 0 14px 40px -10px rgba(60,47,32,0.10);
+  --shadow-lg: 0 32px 80px -20px rgba(60,47,32,0.15);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--sans-jp); font-weight: 300;
+  font-size: 15px; line-height: 1.9; letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; transition: all 0.35s var(--ease); }
+
+.latin-display { font-family: var(--display); }
+.latin-serif { font-family: var(--serif-latin); }
+.latin-sans { font-family: var(--sans-latin); }
+.eyebrow {
+  font-family: var(--sans-latin); font-weight: 500;
+  font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--accent);
+}
+
+.container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+.container-tight { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+@media (min-width: 768px) { .container, .container-tight { padding: 0 48px; } }
+@media (min-width: 1200px) { .container { padding: 0 56px; } .container-tight { padding: 0 56px; } }
+
+/* NAV */
+header.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: rgba(250,247,242,0);
+  backdrop-filter: blur(0);
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s var(--ease);
+}
+header.nav.scrolled {
+  background: rgba(250,247,242,0.85);
+  backdrop-filter: blur(18px) saturate(1.1);
+  border-bottom-color: var(--border);
+}
+header.nav .nav-inner {
+  max-width: 1400px; margin: 0 auto; padding: 22px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+@media (min-width: 768px) { header.nav .nav-inner { padding: 26px 48px; } }
+
+header.nav .nav-brand .name {
+  font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: 26px; letter-spacing: 0.02em; color: #faf7f2;
+  transition: color 0.3s var(--ease);
+}
+header.nav .nav-brand .sub {
+  font-family: var(--sans-latin); font-size: 10px; letter-spacing: 0.3em;
+  color: rgba(250,247,242,0.7); text-transform: uppercase;
+  transition: color 0.3s var(--ease);
+}
+header.nav.scrolled .nav-brand .name { color: var(--ink); }
+header.nav.scrolled .nav-brand .sub { color: var(--ink-faint); }
+
+.nav-links { display: none; gap: 36px; }
+.nav-links a {
+  font-family: var(--sans-latin); font-size: 11px; letter-spacing: 0.2em;
+  color: rgba(250,247,242,0.85); font-weight: 500;
+  transition: color 0.3s var(--ease);
+}
+header.nav.scrolled .nav-links a { color: var(--ink-soft); }
+.nav-links a:hover { color: var(--accent); }
+@media (min-width: 900px) { .nav-links { display: flex; } }
+
+.nav-cta {
+  font-family: var(--sans-latin); font-size: 11px; letter-spacing: 0.2em; font-weight: 600;
+  background: var(--accent); color: var(--bg); padding: 11px 24px; border-radius: 999px;
+}
+.nav-cta:hover { background: var(--accent-soft); color: var(--ink); transform: translateY(-1px); }
+
+/* HERO with exterior background */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex; align-items: flex-end;
+  padding: 140px 0 80px;
+  overflow: hidden;
+  background-color: #2c2723;
+  background-image:
+    linear-gradient(180deg, rgba(31,28,25,0.35) 0%, rgba(31,28,25,0.15) 30%, rgba(31,28,25,0.88) 95%),
+    linear-gradient(135deg, #8d755a 0%, #4d4438 50%, #2c2723 100%);
+  background-size: cover;
+  background-position: center;
+}
+/* 差替え: .hero { background-image: linear-gradient(rgba(31,28,25,0.35), rgba(31,28,25,0.88)), url('images/exterior.jpg'); } */
+
+.hero-placeholder-note {
+  position: absolute; top: 30%; left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(255,255,255,0.22);
+  font-family: var(--sans-latin); font-size: 11px; letter-spacing: 0.4em;
+  text-transform: uppercase; font-weight: 500;
+  pointer-events: none; z-index: 1;
+  text-align: center;
+  line-height: 1.8;
+}
+
+.hero-inner {
+  position: relative; z-index: 2;
+  color: #faf7f2;
+}
+.hero-tagline {
+  font-family: var(--sans-latin);
+  font-size: 11px; letter-spacing: 0.4em;
+  text-transform: uppercase; color: rgba(232,220,198,0.9);
+  font-weight: 500; margin-bottom: 32px;
+}
+.hero-title {
+  font-family: var(--display); font-weight: 300;
+  font-style: italic;
+  font-size: clamp(80px, 15vw, 220px);
+  line-height: 0.88; letter-spacing: -0.02em;
+  color: #faf7f2;
+}
+.hero-sub-copy {
+  margin-top: 40px;
+  font-family: var(--display); font-weight: 400; font-style: italic;
+  font-size: clamp(20px, 2.6vw, 32px);
+  line-height: 1.45;
+  color: rgba(232,220,198,0.95);
+  max-width: 26ch;
+  letter-spacing: 0.01em;
+}
+.hero-body {
+  margin-top: 28px;
+  font-size: 14.5px;
+  color: rgba(250,247,242,0.8);
+  max-width: 42ch;
+  line-height: 2.2;
+  letter-spacing: 0.04em;
+}
+
+.hero-meta {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 32px;
+  padding: 28px 0;
+  border-top: 1px solid rgba(250,247,242,0.18);
+  border-bottom: 1px solid rgba(250,247,242,0.18);
+  max-width: 560px;
+}
+@media (min-width: 700px) {
+  .hero-meta { grid-template-columns: repeat(4, 1fr); gap: 24px; max-width: none; }
+}
+.hero-meta-item .k {
+  font-family: var(--sans-latin); font-size: 9.5px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: rgba(232,220,198,0.6); font-weight: 500;
+  margin-bottom: 6px;
+}
+.hero-meta-item .v { font-size: 14px; color: #faf7f2; font-weight: 500; letter-spacing: 0.03em; }
+
+.hero-ctas {
+  margin-top: 40px;
+  display: flex; flex-wrap: wrap; gap: 14px;
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 16px 32px;
+  font-family: var(--sans-latin); font-size: 12px;
+  letter-spacing: 0.2em; font-weight: 600;
+  border-radius: 999px;
+  transition: all 0.4s var(--ease);
+}
+.btn-brand { background: var(--accent); color: var(--ink); }
+.btn-brand:hover { background: var(--accent-soft); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.btn-primary { background: var(--bg-dark); color: var(--bg); }
+.btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+.btn-outline-light { border: 1px solid rgba(250,247,242,0.6); color: #faf7f2; }
+.btn-outline-light:hover { background: #faf7f2; color: var(--ink); }
+.btn-ghost { border: 1px solid var(--ink); color: var(--ink); }
+.btn-ghost:hover { background: var(--ink); color: var(--bg); }
+
+/* SECTION COMMON */
+section.chapter { padding: 120px 0; position: relative; }
+@media (min-width: 768px) { section.chapter { padding: 160px 0; } }
+section.chapter.bg-soft { background: var(--bg-soft); }
+section.chapter.bg-warm { background: var(--bg-warm); }
+section.chapter.bg-dark { background: var(--bg-dark); color: var(--bg); }
+
+.chapter-head { margin-bottom: 72px; max-width: 720px; }
+.chapter-head .eyebrow { display: inline-block; margin-bottom: 20px; }
+.chapter-head h2 {
+  font-family: var(--display); font-weight: 300;
+  font-size: clamp(36px, 5.5vw, 68px);
+  line-height: 1.1; letter-spacing: -0.02em; color: var(--ink);
+}
+.chapter-head h2 em { font-style: italic; font-weight: 400; color: var(--accent); }
+.chapter.bg-dark .chapter-head h2 { color: var(--bg); }
+.chapter.bg-dark .chapter-head h2 em { color: var(--accent); }
+.chapter-head p {
+  margin-top: 24px; color: var(--ink-soft);
+  max-width: 52ch; line-height: 2.1; font-size: 14.5px;
+}
+.chapter.bg-dark .chapter-head p { color: rgba(250,247,242,0.7); }
+
+/* CONCEPT */
+.concept-grid {
+  display: grid; grid-template-columns: 1fr; gap: 56px;
+}
+@media (min-width: 900px) {
+  .concept-grid { grid-template-columns: 1fr 1.2fr; gap: 96px; align-items: center; }
+}
+.concept-photo {
+  aspect-ratio: 4/5;
+  border-radius: 16px; overflow: hidden;
+  background: linear-gradient(135deg, #d4c1a4 0%, #8d755a 100%);
+  box-shadow: var(--shadow-md);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.3);
+  font-family: var(--sans-latin); font-size: 10px; letter-spacing: 0.3em;
+  text-transform: uppercase; font-weight: 600;
+  position: relative;
+}
+.concept-body p {
+  font-size: 15px; line-height: 2.3; color: var(--ink);
+  margin-bottom: 28px; letter-spacing: 0.03em;
+}
+.concept-body p strong { color: var(--accent); font-weight: 500; }
+.concept-body .quote {
+  font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(20px, 2.4vw, 28px);
+  color: var(--accent); line-height: 1.5;
+  padding: 28px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin: 32px 0;
+}
+
+/* GALLERY — Magazine Collage */
+.gallery-wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 700px) {
+  .gallery-wrap {
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+    aspect-ratio: 16/8;
+  }
+}
+.gal {
+  position: relative; overflow: hidden; border-radius: 12px;
+  transition: all 0.5s var(--ease);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(60,47,32,0.3);
+  font-family: var(--sans-latin); font-size: 10px; letter-spacing: 0.3em;
+  text-transform: uppercase; font-weight: 600;
+}
+.gal:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.gal.tall { aspect-ratio: 3/4; }
+.gal.sq { aspect-ratio: 1/1; }
+@media (min-width: 700px) { .gal.tall, .gal.sq { aspect-ratio: auto; } }
+.gal.g1 {
+  grid-row: span 2;
+  background: linear-gradient(135deg, #a89078 0%, #6b5f52 60%, #4d4438 100%);
+  color: rgba(255,255,255,0.3);
+}
+.gal.g2 { background: linear-gradient(135deg, #e8dcc6, #d4c1a4); }
+.gal.g3 { background: linear-gradient(135deg, #c7c8b0, #a89078); color: rgba(255,255,255,0.35); }
+.gal.g4 { background: linear-gradient(135deg, #e8c4b8, #d4a373); }
+.gal.g5 { background: linear-gradient(135deg, #6b5f52, #2c2723); color: rgba(255,255,255,0.3); }
+
+/* CRAFT (Specialty Technique) */
+.craft-grid {
+  display: grid; grid-template-columns: 1fr; gap: 24px;
+}
+@media (min-width: 700px) { .craft-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
+@media (min-width: 1100px) { .craft-grid { grid-template-columns: repeat(3, 1fr); gap: 32px; } }
+
+.craft-card {
+  border: 1px solid var(--border); background: var(--bg);
+  border-radius: 14px; overflow: hidden;
+  transition: all 0.5s var(--ease);
+}
+.craft-card:hover { border-color: var(--border-hover); box-shadow: var(--shadow-md); transform: translateY(-4px); }
+.craft-card .ph {
+  aspect-ratio: 4/3;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(60,47,32,0.28);
+  font-family: var(--sans-latin); font-size: 10px; letter-spacing: 0.3em;
+  text-transform: uppercase; font-weight: 600;
+}
+.craft-card .ph.c1 { background: linear-gradient(135deg, var(--blush), var(--accent-soft)); }
+.craft-card .ph.c2 { background: linear-gradient(135deg, var(--accent-soft), var(--warm)); }
+.craft-card .ph.c3 { background: linear-gradient(135deg, var(--sage), var(--bg-soft)); }
+.craft-card .body { padding: 32px; }
+.craft-card .n {
+  font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: 14px; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 12px;
+}
+.craft-card h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: 22px; line-height: 1.4; color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.tagline-box {
+  margin-top: 64px;
+  text-align: center;
+  padding: 48px 40px;
+  background: var(--bg);
+  border: 1px solid var(--border); border-radius: 16px;
+}
+.tagline-box .lbl {
+  font-family: var(--sans-latin); font-size: 10px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 18px; font-weight: 600;
+}
+.tagline-box p {
+  font-family: var(--display); font-weight: 400;
+  font-size: clamp(22px, 3vw, 32px);
+  line-height: 1.5; color: var(--ink);
+}
+.tagline-box p strong { color: var(--accent); font-weight: 500; }
+
+/* MENU */
+.menu-layout {
+  display: grid; grid-template-columns: 1fr; gap: 56px;
+}
+@media (min-width: 900px) {
+  .menu-layout { grid-template-columns: 1fr 1.7fr; gap: 96px; align-items: start; }
+}
+.menu-note-box {
+  padding: 36px; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.menu-note-box h4 {
+  font-family: var(--display); font-weight: 500;
+  font-size: 18px; margin-bottom: 14px; letter-spacing: 0.02em;
+}
+.menu-note-box p {
+  font-size: 13.5px; line-height: 2.1; color: var(--ink-soft);
+}
+.menu-note-box a { color: var(--accent); border-bottom: 1px solid var(--accent); font-weight: 500; }
+
+.menu-table { border-top: 1px solid var(--border); }
+.menu-row {
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 20px; padding: 28px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: baseline;
+  transition: all 0.3s var(--ease);
+}
+.menu-row:hover { background: rgba(244,239,229,0.4); margin: 0 -16px; padding: 28px 16px; border-radius: 8px; }
+.menu-row .mtag {
+  font-family: var(--sans-latin); font-size: 10px; letter-spacing: 0.3em;
+  color: var(--ink-faint); text-transform: uppercase;
+  margin-bottom: 6px; font-weight: 600;
+}
+.menu-row h4 {
+  font-family: var(--display); font-weight: 500;
+  font-size: 20px; line-height: 1.3; color: var(--ink);
+  letter-spacing: -0.005em;
+}
+.menu-row .mprice {
+  font-family: var(--display); font-weight: 400;
+  font-size: clamp(22px, 2.6vw, 28px); color: var(--ink); white-space: nowrap;
+}
+.menu-row .mstrike {
+  display: block; font-size: 12px; color: var(--ink-faint);
+  text-decoration: line-through; margin-top: 2px; letter-spacing: 0.05em;
+  font-family: var(--sans-latin);
+}
+
+.menu-tags-box {
+  margin-top: 40px;
+  padding: 28px 32px;
+  background: var(--bg-soft);
+  border-radius: 14px;
+}
+.menu-tags-box .lbl {
+  font-family: var(--sans-latin); font-size: 10px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 16px; font-weight: 600;
+}
+.menu-tags-box .tags {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.menu-tags-box .tag {
+  padding: 8px 16px; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 999px; font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+/* STYLIST */
+.stylist-card {
+  display: grid; grid-template-columns: 1fr; gap: 32px;
+  padding: 48px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+@media (min-width: 768px) {
+  .stylist-card { grid-template-columns: 240px 1fr; gap: 56px; align-items: center; padding: 64px; }
+}
+.stylist-photo {
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blush), var(--warm));
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.4);
+  font-family: var(--sans-latin); font-size: 10px; letter-spacing: 0.3em;
+  text-transform: uppercase; font-weight: 600;
+  box-shadow: var(--shadow-md);
+}
+.stylist-info .role {
+  font-family: var(--sans-latin); font-size: 10px; letter-spacing: 0.3em;
+  color: var(--accent); text-transform: uppercase; font-weight: 600;
+}
+.stylist-info h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(26px, 3.4vw, 38px); margin: 12px 0 20px;
+  letter-spacing: -0.01em;
+}
+.stylist-info p {
+  color: var(--ink-soft); font-size: 14px; line-height: 2.1;
+  letter-spacing: 0.03em;
+}
+.stylist-info .links {
+  margin-top: 24px;
+  display: flex; flex-wrap: wrap; gap: 16px;
+}
+.stylist-info .links a {
+  font-family: var(--sans-latin); font-size: 11px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600;
+  border-bottom: 1px solid var(--accent); padding-bottom: 2px;
+}
+
+/* VOICE */
+.voice-grid {
+  display: grid; grid-template-columns: 1fr; gap: 24px;
+}
+@media (min-width: 900px) { .voice-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; } }
+.voice-card {
+  padding: 44px 40px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 16px; position: relative;
+  transition: all 0.4s var(--ease);
+}
+.voice-card:hover { box-shadow: var(--shadow-md); border-color: var(--border-hover); transform: translateY(-2px); }
+.voice-card::before {
+  content: '"';
+  font-family: var(--display); font-style: italic; font-weight: 300;
+  font-size: 96px; color: var(--accent); opacity: 0.3;
+  position: absolute; top: 0; left: 24px; line-height: 1;
+}
+.voice-body {
+  font-family: var(--sans-jp); font-weight: 400;
+  font-size: 15px; line-height: 2.1; color: var(--ink);
+  margin: 20px 0 24px; letter-spacing: 0.03em;
+  position: relative;
+}
+.voice-meta {
+  padding-top: 20px; border-top: 1px solid var(--border);
+  font-family: var(--sans-latin); font-size: 11px; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--ink-faint); font-weight: 500;
+}
+
+/* ACCESS (Address + Hours) */
+.access-wrap {
+  display: grid; grid-template-columns: 1fr; gap: 40px;
+}
+@media (min-width: 900px) {
+  .access-wrap { grid-template-columns: 1.2fr 1fr; gap: 72px; align-items: start; }
+}
+.access-photo {
+  aspect-ratio: 4/3;
+  border-radius: 16px; overflow: hidden;
+  background: linear-gradient(135deg, #8d755a 0%, #4d4438 100%);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.3);
+  font-family: var(--sans-latin); font-size: 10px; letter-spacing: 0.3em;
+  text-transform: uppercase; font-weight: 600;
+  box-shadow: var(--shadow-md);
+}
+.access-info { border-top: 1px solid var(--border); }
+.access-info .row {
+  display: grid; grid-template-columns: 8em 1fr;
+  gap: 24px; padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+}
+.access-info dt {
+  font-family: var(--sans-latin); font-size: 11px; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600;
+  padding-top: 4px;
+}
+.access-info dd { font-size: 14px; line-height: 1.9; color: var(--ink); }
+.access-info dd .note { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
+.access-info dd a {
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 1px; font-size: 12.5px;
+  display: inline-block; margin-top: 6px;
+}
+
+.map-box {
+  margin-top: 40px;
+  aspect-ratio: 16/6;
+  border-radius: 16px; overflow: hidden;
+  background: linear-gradient(135deg, #c7c8b0 0%, #a89078 100%);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.4);
+  font-family: var(--sans-latin); font-size: 11px; letter-spacing: 0.3em;
+  text-transform: uppercase; font-weight: 600;
+}
+
+/* INSTAGRAM */
+.ig-wrap {
+  display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center;
+}
+@media (min-width: 900px) { .ig-wrap { grid-template-columns: 1fr 1fr; gap: 96px; } }
+.ig-frame {
+  max-width: 420px; margin: 0 auto; width: 100%;
+  border-radius: 16px; overflow: hidden;
+  background: var(--bg-soft); border: 1px solid var(--border);
+}
+.instagram-media { margin: 0 !important; border-radius: 0 !important; min-width: 100% !important; border: 0 !important; }
+
+/* BOOKING */
+.bk-cta {
+  display: block; padding: 56px 48px;
+  background: var(--bg-dark); color: var(--bg); border-radius: 20px;
+  transition: all 0.5s var(--ease);
+  position: relative; overflow: hidden;
+}
+.bk-cta::after {
+  content: ''; position: absolute; top: 0; right: -30%; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(184,152,111,0.15), transparent);
+  transform: skewX(-20deg); transition: right 1s var(--ease);
+}
+.bk-cta:hover { background: var(--accent); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.bk-cta:hover::after { right: 130%; }
+.bk-cta .tag {
+  font-family: var(--sans-latin); font-size: 11px; letter-spacing: 0.3em;
+  text-transform: uppercase; opacity: 0.7; margin-bottom: 14px; font-weight: 600;
+}
+.bk-cta h3 {
+  font-family: var(--display); font-weight: 400;
+  font-size: clamp(26px, 3vw, 36px); line-height: 1.2;
+  margin-bottom: 14px; letter-spacing: -0.01em;
+}
+.bk-cta p { font-size: 14px; opacity: 0.7; line-height: 1.8; }
+.bk-cta .arr {
+  position: absolute; top: 48px; right: 48px;
+  font-family: var(--display); font-size: 44px; font-style: italic;
+  transition: transform 0.4s var(--ease);
+}
+.bk-cta:hover .arr { transform: translateX(8px); }
+.bk-sub-grid {
+  margin-top: 20px;
+  display: grid; grid-template-columns: 1fr; gap: 16px;
+}
+@media (min-width: 700px) { .bk-sub-grid { grid-template-columns: repeat(3, 1fr); } }
+.bk-sub {
+  padding: 32px; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 14px; transition: all 0.3s var(--ease);
+}
+.bk-sub:hover { border-color: var(--border-hover); box-shadow: var(--shadow-sm); transform: translateY(-2px); }
+.bk-sub .tag {
+  font-family: var(--sans-latin); font-size: 10px; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 10px; font-weight: 600;
+}
+.bk-sub h4 { font-family: var(--display); font-weight: 500; font-size: 18px; line-height: 1.3; margin-bottom: 6px; }
+.bk-sub p { font-size: 13px; color: var(--ink-soft); }
+
+/* FOOTER */
+footer { background: var(--bg-deep); color: var(--bg); padding: 100px 0 60px; }
+.foot-grid {
+  display: grid; grid-template-columns: 1fr; gap: 48px;
+}
+@media (min-width: 900px) { .foot-grid { grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; } }
+.foot-brand .name {
+  font-family: var(--display); font-style: italic; font-weight: 300;
+  font-size: 52px; letter-spacing: 0.01em; line-height: 1;
+}
+.foot-brand .sub { font-family: var(--sans-latin); font-size: 11px; letter-spacing: 0.3em; color: var(--accent); text-transform: uppercase; margin-top: 12px; font-weight: 600; }
+.foot-brand .body { font-size: 13px; color: rgba(250,247,242,0.6); margin-top: 28px; line-height: 2; max-width: 36ch; }
+.foot-col h5 {
+  font-family: var(--sans-latin); font-size: 10px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 20px; font-weight: 600;
+}
+.foot-col ul { list-style: none; }
+.foot-col li { margin-bottom: 14px; }
+.foot-col a { font-size: 13.5px; color: rgba(250,247,242,0.65); }
+.foot-col a:hover { color: var(--accent-soft); }
+.foot-bottom {
+  margin-top: 60px; padding-top: 28px;
+  border-top: 1px solid rgba(250,247,242,0.15);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  font-family: var(--sans-latin); font-size: 10px; letter-spacing: 0.25em;
+  color: rgba(250,247,242,0.4); text-transform: uppercase; font-weight: 500;
+}
+.foot-bottom a { color: var(--accent); margin-left: 8px; font-weight: 600; }
+
+/* MOTION */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.reveal.on { opacity: 1; transform: none; }
+.d1 { transition-delay: 0.1s; }
+.d2 { transition-delay: 0.2s; }
+.d3 { transition-delay: 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+</head>
+
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-brand">
+      <span class="name">marici</span>
+      <span class="sub" style="margin-left: 12px;">Kumamoto · Kamitōri</span>
+    </a>
+    <nav class="nav-links" aria-label="primary">
+      <a href="#concept">Concept</a>
+      <a href="#studio">Studio</a>
+      <a href="#craft">Specialty</a>
+      <a href="#menu">Menu</a>
+      <a href="#stylist">Team</a>
+      <a href="#access">Access</a>
+    </nav>
+    <a href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener" class="nav-cta">Reserve</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-placeholder-note">
+    EXTERIOR / 外観写真を背景に<br>
+    差し替えてください
+  </div>
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-tagline">Kumamoto · Kamitōri Hair Salon</div>
+      <h1 class="hero-title">marici</h1>
+
+      <p class="hero-sub-copy">
+        カラー × 髪質改善。<br>
+        熊本・上通の小型ヘアサロン。
+      </p>
+      <p class="hero-body">
+        完全予約制、セット面 4 席。<br>
+        お一人お一人と、じっくり向き合う時間のための空間です。
+      </p>
+
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <div class="k">Hours</div>
+          <div class="v">10:00 - 19:00</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="k">Closed</div>
+          <div class="v">月曜日</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="k">Tel</div>
+          <div class="v">096-288-4232</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="k">Area</div>
+          <div class="v">熊本市 上通</div>
+        </div>
+      </div>
+
+      <div class="hero-ctas">
+        <a href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener" class="btn btn-brand">
+          直接予約 <span>→</span>
+        </a>
+        <a href="https://beauty.hotpepper.jp/slnH000548812/" target="_blank" rel="noopener" class="btn btn-outline-light">
+          HPB で予約
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPT -->
+<section id="concept" class="chapter">
+  <div class="container">
+    <div class="chapter-head reveal">
+      <div class="eyebrow">01 · Concept</div>
+      <h2>似合わせと、<em>美髪.</em></h2>
+    </div>
+
+    <div class="concept-grid">
+      <div class="reveal d1">
+        <div class="concept-photo">INTERIOR / 店内写真</div>
+      </div>
+      <div class="concept-body reveal d2">
+        <p>
+          <strong>marici</strong> は、熊本・上通の完全予約制ヘアサロン。
+          セット面 4 席の小型サロンだからこそ、お一人お一人に集中して向き合える時間を提供しています。
+        </p>
+        <p>
+          得意なのは <strong>カラー × 髪質改善</strong>。
+          ハイトーン、ダブルカラー、インナーカラー、ケアブリーチといったカラー提案から、
+          縮毛矯正・酸性ストレート・美髪矯正まで。
+          「似合わせ」と「美髪」を同時に叶えるのが私たちの仕事です。
+        </p>
+        <div class="quote">
+          Color × Care,<br>for every client.
+        </div>
+        <p>
+          ハイトーンが得意だからこそ提供できる、
+          ブリーチ髪への縮毛矯正・酸性ストレート対応。
+          ダメージを気にせず、理想のスタイルを叶えてください。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STUDIO (Gallery) -->
+<section id="studio" class="chapter bg-soft">
+  <div class="container">
+    <div class="chapter-head reveal">
+      <div class="eyebrow">02 · Studio</div>
+      <h2><em>marici</em> の空間。</h2>
+      <p>外観・店内・エントランス。カフェのような上質空間で、特別な時間をお過ごしください。</p>
+    </div>
+
+    <div class="gallery-wrap reveal">
+      <div class="gal g1">EXTERIOR / 外観</div>
+      <div class="gal g2">ENTRANCE</div>
+      <div class="gal g3">SEAT</div>
+      <div class="gal g4">SHAMPOO</div>
+      <div class="gal g5">DETAIL</div>
+    </div>
+
+    <p style="text-align: center; margin-top: 32px; font-size: 11px; color: var(--ink-faint); letter-spacing: 0.05em;">
+      ※ 外観・内観・エントランス・シャンプー台・ディテール写真を差し替えてください
+    </p>
+  </div>
+</section>
+
+<!-- CRAFT -->
+<section id="craft" class="chapter">
+  <div class="container">
+    <div class="chapter-head reveal">
+      <div class="eyebrow">03 · Specialty</div>
+      <h2>得意な <em>craft.</em></h2>
+    </div>
+
+    <div class="craft-grid">
+      <div class="craft-card reveal">
+        <div class="ph c1">COLOR</div>
+        <div class="body">
+          <div class="n">01</div>
+          <h3>ハイトーンカラー / <br>ダブルカラー / ケアブリーチ</h3>
+        </div>
+      </div>
+      <div class="craft-card reveal d1">
+        <div class="ph c2">DESIGN</div>
+        <div class="body">
+          <div class="n">02</div>
+          <h3>ハイライト / <br>インナーカラー / 裾カラー</h3>
+        </div>
+      </div>
+      <div class="craft-card reveal d2">
+        <div class="ph c3">REPAIR</div>
+        <div class="body">
+          <div class="n">03</div>
+          <h3>髪質改善 / 美髪矯正 / <br>縮毛矯正 / 酸性ストレート</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="tagline-box reveal">
+      <div class="lbl">Catchphrase</div>
+      <p>
+        ハイトーンと髪質改善の技術で、<br>
+        <strong>艶と透明感を両立</strong>。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu" class="chapter bg-soft">
+  <div class="container">
+    <div class="chapter-head reveal">
+      <div class="eyebrow">04 · Menu</div>
+      <h2>メニュー <em>/ 料金.</em></h2>
+      <p>カット価格 ¥4,450〜。平均ご利用料金 ¥11,000〜¥11,999（初来店・再来店とも）。</p>
+    </div>
+
+    <div class="menu-layout">
+      <div class="reveal d1">
+        <div class="menu-note-box">
+          <h4>ご案内</h4>
+          <p>
+            表示価格はクーポン適用時の実売価格です。
+            クーポンの内容・対象者・期間は時期により変動します。<br><br>
+            最新のクーポン・メニュー・空き状況は
+            <a href="https://beauty.hotpepper.jp/slnH000548812/" target="_blank" rel="noopener">HPB 予約ページ →</a>
+            にてご確認ください。
+          </p>
+        </div>
+      </div>
+
+      <div class="reveal d2">
+        <div class="menu-table">
+          <div class="menu-row">
+            <div>
+              <div class="mtag">Cut</div>
+              <h4>カット</h4>
+            </div>
+            <div class="mprice">¥4,450〜</div>
+          </div>
+          <div class="menu-row">
+            <div>
+              <div class="mtag">Coupon · Signature</div>
+              <h4>カット + 髪質改善トリートメント</h4>
+            </div>
+            <div class="mprice">¥10,700<span class="mstrike">¥12,700</span></div>
+          </div>
+          <div class="menu-row">
+            <div>
+              <div class="mtag">Coupon · Popular</div>
+              <h4>カット + カラー</h4>
+            </div>
+            <div class="mprice">¥9,700<span class="mstrike">¥10,700</span></div>
+          </div>
+          <div class="menu-row">
+            <div>
+              <div class="mtag">Coupon · Hightone</div>
+              <h4>ケアブリーチ + カラー</h4>
+            </div>
+            <div class="mprice">¥16,800</div>
+          </div>
+          <div class="menu-row">
+            <div>
+              <div class="mtag">Coupon · Premium</div>
+              <h4>髪質改善 + カラー + トリートメント</h4>
+            </div>
+            <div class="mprice">¥19,800</div>
+          </div>
+        </div>
+
+        <div class="menu-tags-box">
+          <div class="lbl">All Menu</div>
+          <div class="tags">
+            <span class="tag">カット</span>
+            <span class="tag">カラー</span>
+            <span class="tag">ハイライト</span>
+            <span class="tag">ダブルカラー</span>
+            <span class="tag">インナーカラー</span>
+            <span class="tag">ケアブリーチ</span>
+            <span class="tag">裾カラー</span>
+            <span class="tag">ハイトーンカラー</span>
+            <span class="tag">縮毛矯正</span>
+            <span class="tag">酸性ストレート</span>
+            <span class="tag">髪質改善</span>
+            <span class="tag">美髪矯正</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STYLIST -->
+<section id="stylist" class="chapter">
+  <div class="container">
+    <div class="chapter-head reveal">
+      <div class="eyebrow">05 · Team</div>
+      <h2>スタッフ <em>/ team.</em></h2>
+      <p>スタイリスト 2 名 + アシスタント 1 名。小さなチームで、丁寧に。</p>
+    </div>
+
+    <div class="stylist-card reveal">
+      <div class="stylist-photo">PORTRAIT</div>
+      <div class="stylist-info">
+        <div class="role">Owner / Stylist</div>
+        <h3>中西 雄大</h3>
+        <p>
+          スタイリスト歴 9 年。東京・表参道で修行後、marici へ。<br>
+          得意：ハイトーンカラー / デザインカラー / 髪質改善<br>
+          スタイル：カジュアル・ストリート<br>
+          趣味：フットサル / ゴルフ / 漫画 / ご飯
+        </p>
+        <div class="links">
+          <a href="https://www.instagram.com/marici_nakanishi/" target="_blank" rel="noopener">@marici_nakanishi</a>
+          <a href="https://beauty.hotpepper.jp/slnH000548812/stylist/T000724340/" target="_blank" rel="noopener">HPB プロフィール →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VOICE -->
+<section class="chapter bg-warm">
+  <div class="container">
+    <div class="chapter-head reveal">
+      <div class="eyebrow">06 · Voice</div>
+      <h2>お客様の <em>voice.</em></h2>
+      <p>HPB 公式に掲載されている新着高評価口コミより。</p>
+    </div>
+
+    <div class="voice-grid">
+      <div class="voice-card reveal">
+        <p class="voice-body">
+          いつも素敵なカラーにしてくださってありがとうございます。
+          ここで染めるとお友達からの評判がよく気に入っています。
+        </p>
+        <div class="voice-meta">HPB 口コミより · カラー</div>
+      </div>
+      <div class="voice-card reveal d1">
+        <p class="voice-body">
+          カットも、友達と親にも今までで一番良いと評判です。
+        </p>
+        <div class="voice-meta">HPB 口コミより · カット</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="chapter">
+  <div class="container-tight">
+    <div class="ig-wrap">
+      <div class="reveal">
+        <div class="eyebrow">07 · Instagram</div>
+        <h2 style="font-family: var(--display); font-weight: 400; font-size: clamp(32px, 5vw, 56px); line-height: 1.15; margin-top: 20px; letter-spacing: -0.02em;">
+          <em style="font-style: italic; color: var(--accent);">@marici_nakanishi</em>
+        </h2>
+        <p style="margin-top: 28px; color: var(--ink-soft); line-height: 2.1; font-size: 14.5px; max-width: 40ch;">
+          施術事例・スタイル提案は Instagram にて更新中。
+        </p>
+        <a href="https://www.instagram.com/marici_nakanishi/" target="_blank" rel="noopener" class="btn btn-ghost" style="margin-top: 36px;">
+          Instagram を見る →
+        </a>
+      </div>
+
+      <div class="reveal d1">
+        <div class="ig-frame">
+          <blockquote class="instagram-media"
+            data-instgrm-permalink="https://www.instagram.com/marici_nakanishi/"
+            data-instgrm-version="14"
+            style="background: #f4efe5; margin: 0; padding: 0; width: 100%;">
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESS -->
+<section id="access" class="chapter bg-soft">
+  <div class="container">
+    <div class="chapter-head reveal">
+      <div class="eyebrow">08 · Access</div>
+      <h2>アクセス <em>/ info.</em></h2>
+    </div>
+
+    <div class="access-wrap">
+      <div class="reveal">
+        <div class="access-photo">EXTERIOR / 外観写真</div>
+      </div>
+
+      <div class="reveal d1">
+        <dl class="access-info">
+          <div class="row">
+            <dt>Address</dt>
+            <dd>
+              〒860-0805<br>
+              熊本県熊本市中央区草葉町 2-32<br>
+              ウェルブライト上通り 1F-A
+              <a href="https://www.google.com/maps/search/?api=1&query=熊本県熊本市中央区草葉町2-32+ウェルブライト上通り" target="_blank" rel="noopener">Google Maps →</a>
+            </dd>
+          </div>
+          <div class="row">
+            <dt>TEL</dt>
+            <dd>
+              <a href="tel:0962884232" style="font-size: 18px; font-weight: 500; color: var(--ink); border: none; padding: 0;">096-288-4232</a>
+            </dd>
+          </div>
+          <div class="row">
+            <dt>Hours</dt>
+            <dd>
+              10:00 - 19:00
+              <div class="note">カット最終受付 18:00 / カットカラー最終受付 17:00</div>
+            </dd>
+          </div>
+          <div class="row">
+            <dt>Closed</dt>
+            <dd>月曜日</dd>
+          </div>
+          <div class="row">
+            <dt>Seats</dt>
+            <dd>セット面 4 席（完全予約制）</dd>
+          </div>
+          <div class="row">
+            <dt>Staff</dt>
+            <dd>スタイリスト 2 名 / アシスタント 1 名</dd>
+          </div>
+          <div class="row">
+            <dt>Parking</dt>
+            <dd>
+              なし
+              <div class="note">目の前に有料駐車場がございます</div>
+            </dd>
+          </div>
+          <div class="row">
+            <dt>Payment</dt>
+            <dd>現金 / クレジットカード / COIN+ / HPB ポイント</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="map-box reveal" style="margin-top: 64px;">MAP / Google Maps 埋め込みエリア</div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking" class="chapter">
+  <div class="container">
+    <div class="chapter-head reveal">
+      <div class="eyebrow">09 · Booking</div>
+      <h2>ご予約 <em>/ reserve.</em></h2>
+      <p>完全予約制サロンです。事前のご予約をお願いいたします。</p>
+    </div>
+
+    <a href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener" class="bk-cta reveal">
+      <div class="tag">Direct · Recommended</div>
+      <h3>marici に、<br>直接予約する</h3>
+      <p>24 時間ネット予約 · LINE 連携対応 · 予約確認・リマインドを自動でお届け</p>
+      <div class="arr">→</div>
+    </a>
+
+    <div class="bk-sub-grid">
+      <a href="https://beauty.hotpepper.jp/slnH000548812/" target="_blank" rel="noopener" class="bk-sub reveal d1">
+        <div class="tag">HotPepper Beauty</div>
+        <h4>HPB で予約</h4>
+        <p>ポイント利用をご希望の方</p>
+      </a>
+      <a href="tel:0962884232" class="bk-sub reveal d2">
+        <div class="tag">Phone</div>
+        <h4>お電話で予約</h4>
+        <p>096-288-4232（10:00-19:00）</p>
+      </a>
+      <a href="https://www.instagram.com/marici_nakanishi/" target="_blank" rel="noopener" class="bk-sub reveal d3">
+        <div class="tag">DM</div>
+        <h4>Instagram DM</h4>
+        <p>@marici_nakanishi</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="name">marici</div>
+        <div class="sub">Kumamoto · Kamitōri Hair Salon</div>
+        <div class="body">
+          熊本県熊本市中央区草葉町 2-32<br>
+          ウェルブライト上通り 1F-A<br>
+          TEL 096-288-4232<br>
+          OPEN 10:00 - 19:00 / CLOSED 月曜日
+        </div>
+      </div>
+      <div class="foot-col">
+        <h5>Menu</h5>
+        <ul>
+          <li><a href="#concept">Concept</a></li>
+          <li><a href="#studio">Studio</a></li>
+          <li><a href="#craft">Specialty</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#stylist">Team</a></li>
+          <li><a href="#access">Access</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Book</h5>
+        <ul>
+          <li><a href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener">直接予約 →</a></li>
+          <li><a href="https://beauty.hotpepper.jp/slnH000548812/" target="_blank" rel="noopener">HPB 予約 →</a></li>
+          <li><a href="tel:0962884232">お電話で予約</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Connect</h5>
+        <ul>
+          <li><a href="https://www.instagram.com/marici_nakanishi/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://beauty.hotpepper.jp/slnH000548812/" target="_blank" rel="noopener">HotPepper Beauty</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <div>© 2026 marici. All rights reserved.</div>
+      <div>Powered by <a href="https://hair-salon-link-production.up.railway.app/" target="_blank" rel="noopener">HairSalonLink</a></div>
+    </div>
+  </div>
+</footer>
+
+<script async src="//www.instagram.com/embed.js"></script>
+<script>
+// Nav scroll effect
+(function() {
+  const nav = document.getElementById('nav');
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    requestAnimationFrame(() => {
+      if (window.scrollY > 80) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+      ticking = false;
+    });
+    ticking = true;
+  }, { passive: true });
+})();
+
+// Reveal on scroll
+(function() {
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  els.forEach((el) => io.observe(el));
+})();
+</script>
+</body>
+</html>

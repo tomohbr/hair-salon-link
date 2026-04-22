@@ -44,6 +44,7 @@ model Salon {
   lineAccessToken     String?
   lineLiffId          String?
   lineBotUserId       String?   // LINE OA の bot userId (Webhook destination)
+  hpbInboundToken     String?   @unique // HPB メール転送 Webhook の認証トークン
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
 
@@ -156,6 +157,7 @@ model Reservation {
   source         String   @default("web")
   notes          String?
   reminderSent   Boolean  @default(false)
+  externalId     String?  // 外部システム (HPB等) の予約ID — 重複取込防止用
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
@@ -163,6 +165,7 @@ model Reservation {
 
   @@index([salonId, date])
   @@index([customerId])
+  @@unique([salonId, externalId])
 }
 
 // カルテ: 薬剤履歴は美容室の生命線
