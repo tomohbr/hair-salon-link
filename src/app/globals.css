@@ -167,112 +167,334 @@ body { background: var(--bg-base); color: var(--text); }
 /* color-scheme: dark は input 等のネイティブ描画を暗側に倒してしまい、
    ダッシュボード(白背景)側で文字が見えづらくなるため指定しない */
 
-.btn-brand {
-  background: var(--brand);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 14px;
-  transition: opacity 0.15s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.btn-brand:hover { opacity: 0.9; }
+/* ═══════════════════════════════════════════════════
+   App-side Design System  (industry-standard SaaS UI)
+   ═══════════════════════════════════════════════════ */
+:root {
+  /* Neutral gray scale — Stripe/Linear-inspired */
+  --gray-0: #ffffff;
+  --gray-50: #fafaf9;
+  --gray-100: #f5f5f4;
+  --gray-150: #efedeb;
+  --gray-200: #e7e5e4;
+  --gray-300: #d6d3d1;
+  --gray-400: #a8a29e;
+  --gray-500: #78716c;
+  --gray-600: #57534e;
+  --gray-700: #44403c;
+  --gray-800: #292524;
+  --gray-900: #1c1917;
+  --gray-950: #0c0a09;
 
-/* ダッシュボード・認証画面など「白/ライト背景」で使うラッパ。
-   body の ivory 文字色を上書きして黒に固定する。 */
-.app-light {
-  color: #1c1917; /* stone-900 */
+  /* Semantic surfaces */
+  --surface: var(--gray-0);
+  --surface-muted: var(--gray-50);
+  --surface-subtle: var(--gray-100);
+  --surface-elev: var(--gray-0);
+  --overlay: rgba(28, 25, 23, 0.50);
+
+  /* Semantic text */
+  --fg: var(--gray-900);
+  --fg-muted: var(--gray-600);
+  --fg-subtle: var(--gray-500);
+  --fg-faint: var(--gray-400);
+
+  /* Semantic borders */
+  --line: var(--gray-200);
+  --line-strong: var(--gray-300);
+  --line-subtle: var(--gray-150);
+
+  /* Accent (brand) */
+  --accent: #c9a96e;            /* antique gold — preserved from brand */
+  --accent-hover: #b89458;
+  --accent-active: #9c7a4a;
+  --accent-surface: #f9f3e8;    /* very light gold tint */
+  --accent-text: #6b5228;
+
+  /* Functional colors */
+  --success: #22c55e;
+  --success-surface: #dcfce7;
+  --success-text: #166534;
+  --warning: #f59e0b;
+  --warning-surface: #fef3c7;
+  --warning-text: #92400e;
+  --danger: #ef4444;
+  --danger-surface: #fee2e2;
+  --danger-text: #991b1b;
+  --info: #3b82f6;
+  --info-surface: #dbeafe;
+  --info-text: #1e40af;
+
+  /* Elevation — subtle, layered */
+  --shadow-xs: 0 1px 2px 0 rgba(28, 25, 23, 0.04);
+  --shadow-sm: 0 1px 2px 0 rgba(28, 25, 23, 0.05), 0 1px 3px 0 rgba(28, 25, 23, 0.04);
+  --shadow-md: 0 2px 4px 0 rgba(28, 25, 23, 0.04), 0 4px 12px -2px rgba(28, 25, 23, 0.08);
+  --shadow-lg: 0 4px 8px 0 rgba(28, 25, 23, 0.06), 0 12px 24px -4px rgba(28, 25, 23, 0.10);
+  --shadow-xl: 0 8px 16px 0 rgba(28, 25, 23, 0.08), 0 24px 48px -8px rgba(28, 25, 23, 0.14);
+
+  /* Focus ring (accessible) */
+  --ring: 0 0 0 3px rgba(201, 169, 110, 0.32);
+  --ring-danger: 0 0 0 3px rgba(239, 68, 68, 0.28);
+
+  /* Motion — spring + sharp */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 120ms;
+  --dur-med: 200ms;
+  --dur-slow: 320ms;
+
+  /* Radii */
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+  --r-2xl: 20px;
+  --r-pill: 999px;
 }
+
+/* Inter UI font for app surfaces (Japanese still uses Noto Sans JP) */
+@import url('https://rsms.me/inter/inter.css');
+
+.app-light {
+  color: var(--fg);
+  font-family: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif;
+  font-feature-settings: 'cv11', 'ss01', 'ss03';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.003em;
+}
+@supports (font-variation-settings: normal) {
+  .app-light {
+    font-family: 'Inter var', 'Noto Sans JP', -apple-system, sans-serif;
+  }
+}
+
 .app-light select,
 .app-light textarea,
-.app-light input:not(.input) {
-  color: #1c1917;
-  /* -webkit-text-fill-color は placeholder まで塗るため指定しない */
-}
+.app-light input:not(.input) { color: var(--fg); }
 .app-light select::placeholder,
 .app-light textarea::placeholder,
 .app-light input:not(.input)::placeholder {
-  color: #d6d3d1;
-  -webkit-text-fill-color: #d6d3d1;
+  color: var(--gray-300);
+  -webkit-text-fill-color: var(--gray-300);
   opacity: 1;
 }
 
-.btn-ghost {
+/* ─────────────────── BUTTONS ─────────────────── */
+.btn-brand {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
   padding: 8px 16px;
-  border-radius: 8px;
+  min-height: 36px;
+  background: var(--gray-900);
+  color: var(--gray-0);
+  border: 1px solid var(--gray-900);
+  border-radius: var(--r-md);
   font-weight: 500;
-  font-size: 14px;
-  color: #57534e;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  font-size: 13.5px;
+  letter-spacing: -0.003em;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+  box-shadow: var(--shadow-xs), inset 0 1px 0 rgba(255,255,255,0.08);
 }
-.btn-ghost:hover { background: #f5f5f4; }
+.btn-brand:hover {
+  background: var(--gray-800);
+  border-color: var(--gray-800);
+  box-shadow: var(--shadow-sm);
+}
+.btn-brand:active { transform: translateY(1px); box-shadow: var(--shadow-xs); }
+.btn-brand:focus-visible { outline: none; box-shadow: var(--shadow-sm), var(--ring); }
+.btn-brand:disabled { opacity: 0.45; cursor: not-allowed; }
 
+/* Subtle tinted variant (secondary emphasis) */
+.btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 14px;
+  min-height: 36px;
+  background: transparent;
+  color: var(--fg-muted);
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  font-weight: 500;
+  font-size: 13.5px;
+  letter-spacing: -0.003em;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-out);
+}
+.btn-ghost:hover {
+  background: var(--gray-100);
+  color: var(--fg);
+}
+.btn-ghost:active { background: var(--gray-150); }
+.btn-ghost:focus-visible { outline: none; background: var(--gray-100); box-shadow: var(--ring); }
+
+/* Outline variant */
+.btn-outline {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 14px;
+  min-height: 36px;
+  background: var(--surface);
+  color: var(--fg);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  font-weight: 500;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-out);
+  box-shadow: var(--shadow-xs);
+}
+.btn-outline:hover { border-color: var(--gray-400); box-shadow: var(--shadow-sm); }
+.btn-outline:focus-visible { outline: none; box-shadow: var(--ring); }
+
+/* ─────────────────── CARD ─────────────────── */
 .card-box {
-  background: white;
-  color: #1c1917; /* stone-900 を明示、LP の ivory 継承を断つ */
-  border: 1px solid #e7e5e4;
-  border-radius: 14px;
+  background: var(--surface);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
   padding: 20px;
+  box-shadow: var(--shadow-xs);
+  transition: box-shadow var(--dur-med) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
 }
+.card-box:hover { box-shadow: var(--shadow-sm); }
 
+/* ─────────────────── INPUT ─────────────────── */
 .input {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #d6d3d1;
-  border-radius: 8px;
-  background: white;
-  color: #1c1917; /* 入力文字を黒 */
+  padding: 9px 12px;
+  min-height: 38px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  color: var(--fg);
   font-size: 15px; /* iOS zoom 防止 */
+  font-family: inherit;
   line-height: 1.5;
-  /* ここで -webkit-text-fill-color を指定すると Safari で placeholder 文字色まで
-     上書きされてしまうため、グローバル指定はしない。autofill 用は下で限定指定。*/
+  letter-spacing: -0.003em;
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  box-shadow: var(--shadow-xs);
 }
-/* Safari / Chrome のベンダー別プレースホルダー指定 */
+.input:hover { border-color: var(--gray-400); }
 .input::placeholder {
-  color: #d6d3d1; /* stone-300 */
+  color: var(--gray-300);
   opacity: 1;
-  -webkit-text-fill-color: #d6d3d1; /* Safari が input の text-fill を継がせるため明示 */
+  -webkit-text-fill-color: var(--gray-300);
 }
 .input::-webkit-input-placeholder {
-  color: #d6d3d1;
-  -webkit-text-fill-color: #d6d3d1;
+  color: var(--gray-300);
+  -webkit-text-fill-color: var(--gray-300);
   opacity: 1;
 }
 .input:focus {
-  outline: 2px solid var(--brand);
-  outline-offset: -1px;
-  border-color: transparent;
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: var(--ring);
 }
-/* autofill の黄色背景と白文字を抑制（autofill 発生時のみに限定） */
 .input:-webkit-autofill,
 .input:-webkit-autofill:hover,
 .input:-webkit-autofill:focus {
-  -webkit-text-fill-color: #1c1917;
-  -webkit-box-shadow: 0 0 0 1000px white inset;
+  -webkit-text-fill-color: var(--fg);
+  -webkit-box-shadow: 0 0 0 1000px var(--surface) inset, var(--shadow-xs);
   transition: background-color 5000s ease-in-out 0s;
 }
 
+/* ─────────────────── BADGE ─────────────────── */
 .badge {
-  display: inline-block;
-  padding: 2px 10px;
-  border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px;
+  min-height: 20px;
+  border-radius: var(--r-pill);
   font-size: 11px;
-  font-weight: 600;
-  background: #f5f5f4;
-  color: #57534e;
+  font-weight: 500;
+  letter-spacing: -0.003em;
+  background: var(--gray-100);
+  color: var(--gray-700);
+  border: 1px solid var(--gray-150);
   white-space: nowrap;
+  line-height: 1.4;
 }
-.badge-brand { background: var(--brand-light); color: var(--brand); }
-.badge-green { background: #dcfce7; color: #166534; }
-.badge-yellow { background: #fef9c3; color: #854d0e; }
-.badge-red { background: #fee2e2; color: #991b1b; }
-.badge-blue { background: #dbeafe; color: #1e40af; }
-.badge-gray { background: #f5f5f4; color: #57534e; }
+.badge-brand  { background: var(--accent-surface); color: var(--accent-text); border-color: #f0e2c4; }
+.badge-green  { background: var(--success-surface); color: var(--success-text); border-color: #bbf7d0; }
+.badge-yellow { background: var(--warning-surface); color: var(--warning-text); border-color: #fde68a; }
+.badge-red    { background: var(--danger-surface); color: var(--danger-text); border-color: #fecaca; }
+.badge-blue   { background: var(--info-surface); color: var(--info-text); border-color: #bfdbfe; }
+.badge-gray   { background: var(--gray-100); color: var(--gray-600); border-color: var(--gray-200); }
+
+/* ─────────────────── UTIL ─────────────────── */
+.kbd {
+  display: inline-flex; align-items: center;
+  padding: 1px 5px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 10.5px;
+  color: var(--fg-muted);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  box-shadow: var(--shadow-xs);
+  line-height: 1.3;
+}
+.focus-ring:focus-visible { outline: none; box-shadow: var(--ring); }
+
+/* Skeleton loader */
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+.skel {
+  background: linear-gradient(90deg, var(--gray-150) 0%, var(--gray-100) 50%, var(--gray-150) 100%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s linear infinite;
+  border-radius: var(--r-md);
+}
+
+/* Toast */
+.toast {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 14px;
+  background: var(--gray-900);
+  color: var(--gray-0);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-xl);
+  font-size: 13.5px;
+  font-weight: 500;
+  min-width: 260px;
+  max-width: 420px;
+}
+.toast-success { background: var(--gray-900); }
+.toast-error { background: var(--danger); }
+
+/* Fine-grained hover motion */
+.hover-lift { transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.hover-lift:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+/* Scroll shadow (sticky headers) */
+.scroll-stick {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: saturate(1.1) blur(10px);
+  -webkit-backdrop-filter: saturate(1.1) blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Page transition */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.app-light main { animation: fadeUp var(--dur-med) var(--ease-out); }
+
+/* Subtle divider */
+.hr-soft { height: 1px; background: var(--line); margin: 20px 0; border: 0; }
+
+/* Sparkline base */
+.sparkline { width: 100%; height: 32px; overflow: visible; }
+.sparkline path { fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.sparkline .sparkline-fill { fill: var(--accent); opacity: 0.08; stroke: none; }
 
 /* ================================
    Landing Page — Utilities
