@@ -1,8 +1,9 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { getCurrentSalon } from '@/lib/salonData';
+import { audit } from '@/lib/audit';
 
 type State = { ok?: boolean; error?: string; message?: string } | null;
 
@@ -14,7 +15,8 @@ function parseInt0(v: FormDataEntryValue | null): number {
 /** 予約を「完了」にして支払方法と金額を記録 */
 export async function recordPaymentAction(_prev: State, fd: FormData): Promise<State> {
   try {
-    const { salon } = await getCurrentSalon();
+    const { salon, session } = await getCurrentSalon();
+    const db = prismaForSalon(salon.id);
     const id = String(fd.get('id') || '');
     const paymentMethod = String(fd.get('paymentMethod') || '');
     const paidAmount = parseInt0(fd.get('paidAmount'));
@@ -25,10 +27,10 @@ export async function recordPaymentAction(_prev: State, fd: FormData): Promise<S
     if (!paymentMethod) return { error: '支払方法を選択してください' };
     if (paidAmount < 0) return { error: '金額は 0 以上にしてください' };
 
-    const r = await prisma.reservation.findFirst({ where: { id, salonId: salon.id } });
+    const r = await db.reservation.findFirst({ where: { id } });
     if (!r) return { error: '予約が見つかりません' };
 
-    await prisma.reservation.update({
+    await db.reservation.update({
       where: { id },
       data: {
         status: 'completed',
@@ -43,7 +45,7 @@ export async function recordPaymentAction(_prev: State, fd: FormData): Promise<S
     // 顧客の累計来店・売上を更新
     if (r.customerId) {
       const totalThisTime = paidAmount + retailAmount + tip;
-      await prisma.customer.update({
+      await db.customer.update({
         where: { id: r.customerId },
         data: {
           visitCount: { increment: 1 },
@@ -52,6 +54,16 @@ export async function recordPaymentAction(_prev: State, fd: FormData): Promise<S
         },
       });
     }
+
+    await audit({
+      salonId: salon.id,
+      actorId: session.userId,
+      actorName: session.email,
+      action: 'reservation.payment',
+      targetType: 'Reservation',
+      targetId: id,
+      diff: { paymentMethod, paidAmount, retailAmount, tip },
+    });
 
     revalidatePath('/reservations');
     revalidatePath('/sales');

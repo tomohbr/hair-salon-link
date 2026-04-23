@@ -1,14 +1,16 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { getCurrentSalon } from '@/lib/salonData';
+import { audit } from '@/lib/audit';
 
 type State = { ok?: boolean; error?: string; message?: string } | null;
 
 export async function createCouponAction(_prev: State, formData: FormData): Promise<State> {
   try {
-    const { salon } = await getCurrentSalon();
+    const { salon, session } = await getCurrentSalon();
+    const db = prismaForSalon(salon.id);
     const title = String(formData.get('title') || '').trim();
     const description = String(formData.get('description') || '').trim();
     const discountType = (String(formData.get('discountType') || 'yen') === 'percent' ? 'percent' : 'yen') as 'percent' | 'yen';
@@ -22,7 +24,7 @@ export async function createCouponAction(_prev: State, formData: FormData): Prom
     if (discountValue <= 0) return { error: '割引額は 1 以上で入力してください' };
     if (discountType === 'percent' && discountValue > 100) return { error: '%割引は 100 以下にしてください' };
 
-    await prisma.coupon.create({
+    const created = await db.coupon.create({
       data: {
         salonId: salon.id,
         title,
@@ -35,6 +37,14 @@ export async function createCouponAction(_prev: State, formData: FormData): Prom
         targetSegment,
         isActive: true,
       },
+    });
+    await audit({
+      salonId: salon.id,
+      actorId: session.userId,
+      actorName: session.email,
+      action: 'coupon.create',
+      targetType: 'Coupon',
+      targetId: created.id,
     });
     revalidatePath('/coupons');
     return { ok: true, message: `「${title}」を作成しました` };

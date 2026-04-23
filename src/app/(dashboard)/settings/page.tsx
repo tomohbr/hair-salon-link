@@ -1,5 +1,6 @@
 import { getSalonData } from '@/lib/salonData';
-import { Store, MessageCircle, CreditCard, Users, Link as LinkIcon, Clock, Mail } from 'lucide-react';
+import Link from 'next/link';
+import { Store, MessageCircle, CreditCard, Users, Link as LinkIcon, Clock, Mail, ShieldCheck, ChevronRight } from 'lucide-react';
 import SalonInfoForm from './SalonInfoForm';
 import LineForm from './LineForm';
 import SlugFixer from './SlugFixer';
@@ -141,6 +142,23 @@ export default async function SettingsPage() {
           </div>
         </div>
       </div>
+
+      {/* 監査ログへの導線 */}
+      <Link
+        href="/settings/audit"
+        className="card-box flex items-center gap-3 hover:border-stone-400 transition-colors"
+      >
+        <div className="w-10 h-10 rounded-lg bg-stone-900 text-white flex items-center justify-center shrink-0">
+          <ShieldCheck className="w-5 h-5" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="font-semibold text-stone-900 text-sm">監査ログを確認</div>
+          <div className="text-xs text-stone-500 mt-0.5">
+            お店のデータへの変更履歴と、サービス運営側からのアクセス履歴が確認できます。
+          </div>
+        </div>
+        <ChevronRight className="w-5 h-5 text-stone-400 shrink-0" />
+      </Link>
     </div>
   );
 }

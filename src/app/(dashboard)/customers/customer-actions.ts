@@ -1,15 +1,17 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { getCurrentSalon } from '@/lib/salonData';
 import { pushText } from '@/lib/line/client';
+import { audit } from '@/lib/audit';
 
 type State = { ok?: boolean; error?: string; message?: string } | null;
 
 export async function createCustomerAction(_prev: State, formData: FormData): Promise<State> {
   try {
-    const { salon } = await getCurrentSalon();
+    const { salon, session } = await getCurrentSalon();
+    const db = prismaForSalon(salon.id);
     const name = String(formData.get('name') || '').trim();
     const nameKana = String(formData.get('nameKana') || '').trim() || null;
     const phone = String(formData.get('phone') || '').trim() || null;
@@ -19,18 +21,21 @@ export async function createCustomerAction(_prev: State, formData: FormData): Pr
 
     if (!name) return { error: '名前は必須です' };
 
-    // 電話 or メールが既存顧客と被る場合は警告
     if (phone) {
-      const dup = await prisma.customer.findFirst({ where: { salonId: salon.id, phone } });
+      const dup = await db.customer.findFirst({ where: { phone } });
       if (dup) return { error: '同じ電話番号の顧客が既に登録されています' };
     }
 
-    await prisma.customer.create({
-      data: {
-        salonId: salon.id,
-        name, nameKana, phone, email, source,
-        notes,
-      },
+    const created = await db.customer.create({
+      data: { salonId: salon.id, name, nameKana, phone, email, source, notes },
+    });
+    await audit({
+      salonId: salon.id,
+      actorId: session.userId,
+      actorName: session.email,
+      action: 'customer.create',
+      targetType: 'Customer',
+      targetId: created.id,
     });
     revalidatePath('/customers');
     return { ok: true, message: `「${name}」を追加しました` };
@@ -42,12 +47,13 @@ export async function createCustomerAction(_prev: State, formData: FormData): Pr
 export async function sendLineMessageAction(_prev: State, formData: FormData): Promise<State> {
   try {
     const { salon } = await getCurrentSalon();
+    const db = prismaForSalon(salon.id);
     const customerId = String(formData.get('customerId') || '');
     const text = String(formData.get('text') || '').trim();
     if (!customerId) return { error: '顧客IDが指定されていません' };
     if (!text) return { error: 'メッセージ内容を入力してください' };
 
-    const customer = await prisma.customer.findFirst({ where: { id: customerId, salonId: salon.id } });
+    const customer = await db.customer.findFirst({ where: { id: customerId } });
     if (!customer) return { error: '顧客が見つかりません' };
     if (!customer.lineUserId) return { error: 'この顧客はまだLINE連携していません（友だち追加が必要）' };
     if (!salon.lineAccessToken) return { error: 'LINE連携情報が未設定です。設定画面で LINE 認証情報を保存してください' };

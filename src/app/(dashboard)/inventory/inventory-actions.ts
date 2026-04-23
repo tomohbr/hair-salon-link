@@ -1,8 +1,9 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { getCurrentSalon } from '@/lib/salonData';
+import { audit } from '@/lib/audit';
 
 type State = { ok?: boolean; error?: string; message?: string } | null;
 
@@ -13,7 +14,8 @@ function parseInt0(v: FormDataEntryValue | null): number {
 
 export async function createProductAction(_prev: State, fd: FormData): Promise<State> {
   try {
-    const { salon } = await getCurrentSalon();
+    const { salon, session } = await getCurrentSalon();
+    const db = prismaForSalon(salon.id);
     const name = String(fd.get('name') || '').trim();
     if (!name) return { error: '商品名は必須です' };
 
@@ -27,7 +29,7 @@ export async function createProductAction(_prev: State, fd: FormData): Promise<S
     const supplier = String(fd.get('supplier') || '').trim() || null;
     const unit = String(fd.get('unit') || '個').trim() || '個';
 
-    const product = await prisma.product.create({
+    const product = await db.product.create({
       data: {
         salonId: salon.id,
         name, category, sku,
@@ -37,9 +39,8 @@ export async function createProductAction(_prev: State, fd: FormData): Promise<S
       },
     });
 
-    // 初期在庫が 0 でなければ取引履歴を残す
     if (stock > 0) {
-      await prisma.stockTransaction.create({
+      await db.stockTransaction.create({
         data: {
           salonId: salon.id,
           productId: product.id,
@@ -50,6 +51,14 @@ export async function createProductAction(_prev: State, fd: FormData): Promise<S
         },
       });
     }
+    await audit({
+      salonId: salon.id,
+      actorId: session.userId,
+      actorName: session.email,
+      action: 'product.create',
+      targetType: 'Product',
+      targetId: product.id,
+    });
     revalidatePath('/inventory');
     return { ok: true, message: `「${name}」を登録しました` };
   } catch (err) {
@@ -61,26 +70,28 @@ export async function createProductAction(_prev: State, fd: FormData): Promise<S
 export async function stockInAction(_prev: State, fd: FormData): Promise<State> {
   try {
     const { salon } = await getCurrentSalon();
+    const db = prismaForSalon(salon.id);
     const productId = String(fd.get('productId') || '');
     const quantity = parseInt0(fd.get('quantity'));
     const unitCost = parseInt0(fd.get('unitCost'));
     const notes = String(fd.get('notes') || '').trim() || null;
     if (!productId || quantity <= 0) return { error: '商品と数量を入力してください' };
 
-    const product = await prisma.product.findFirst({ where: { id: productId, salonId: salon.id } });
+    const product = await db.product.findFirst({ where: { id: productId } });
     if (!product) return { error: '商品が見つかりません' };
 
-    await prisma.$transaction([
-      prisma.product.update({
+    await db.$transaction([
+      db.product.update({
         where: { id: productId },
         data: {
           stock: { increment: quantity },
           unitCost: unitCost > 0 ? unitCost : undefined,
         },
       }),
-      prisma.stockTransaction.create({
+      db.stockTransaction.create({
         data: {
-          salonId: salon.id, productId,
+          salonId: salon.id,
+          productId,
           kind: 'in', quantity,
           amount: (unitCost || product.unitCost) * quantity,
           notes,
@@ -98,27 +109,29 @@ export async function stockInAction(_prev: State, fd: FormData): Promise<State> 
 export async function stockSellAction(_prev: State, fd: FormData): Promise<State> {
   try {
     const { salon } = await getCurrentSalon();
+    const db = prismaForSalon(salon.id);
     const productId = String(fd.get('productId') || '');
     const quantity = parseInt0(fd.get('quantity'));
     const unitPriceRaw = fd.get('unitPrice');
     const notes = String(fd.get('notes') || '').trim() || null;
     if (!productId || quantity <= 0) return { error: '商品と数量を入力してください' };
 
-    const product = await prisma.product.findFirst({ where: { id: productId, salonId: salon.id } });
+    const product = await db.product.findFirst({ where: { id: productId } });
     if (!product) return { error: '商品が見つかりません' };
     if (product.stock < quantity) return { error: `在庫不足 (現在 ${product.stock}${product.unit})` };
 
     const unitPrice = unitPriceRaw ? parseInt0(unitPriceRaw) : (product.retailPrice ?? 0);
     if (unitPrice <= 0) return { error: '販売単価が 0 です。商品の販売価格を設定してください' };
 
-    await prisma.$transaction([
-      prisma.product.update({
+    await db.$transaction([
+      db.product.update({
         where: { id: productId },
         data: { stock: { decrement: quantity } },
       }),
-      prisma.stockTransaction.create({
+      db.stockTransaction.create({
         data: {
-          salonId: salon.id, productId,
+          salonId: salon.id,
+          productId,
           kind: 'sell', quantity: -quantity,
           amount: unitPrice * quantity,
           notes,
@@ -136,23 +149,25 @@ export async function stockSellAction(_prev: State, fd: FormData): Promise<State
 export async function stockUseAction(_prev: State, fd: FormData): Promise<State> {
   try {
     const { salon } = await getCurrentSalon();
+    const db = prismaForSalon(salon.id);
     const productId = String(fd.get('productId') || '');
     const quantity = parseInt0(fd.get('quantity'));
     const notes = String(fd.get('notes') || '').trim() || null;
     if (!productId || quantity <= 0) return { error: '商品と数量を入力してください' };
 
-    const product = await prisma.product.findFirst({ where: { id: productId, salonId: salon.id } });
+    const product = await db.product.findFirst({ where: { id: productId } });
     if (!product) return { error: '商品が見つかりません' };
     if (product.stock < quantity) return { error: `在庫不足 (現在 ${product.stock}${product.unit})` };
 
-    await prisma.$transaction([
-      prisma.product.update({
+    await db.$transaction([
+      db.product.update({
         where: { id: productId },
         data: { stock: { decrement: quantity } },
       }),
-      prisma.stockTransaction.create({
+      db.stockTransaction.create({
         data: {
-          salonId: salon.id, productId,
+          salonId: salon.id,
+          productId,
           kind: 'use', quantity: -quantity,
           notes,
         },
@@ -169,24 +184,26 @@ export async function stockUseAction(_prev: State, fd: FormData): Promise<State>
 export async function stockAdjustAction(_prev: State, fd: FormData): Promise<State> {
   try {
     const { salon } = await getCurrentSalon();
+    const db = prismaForSalon(salon.id);
     const productId = String(fd.get('productId') || '');
     const target = parseInt0(fd.get('target'));
     const notes = String(fd.get('notes') || '').trim() || null;
     if (!productId) return { error: '商品が指定されていません' };
     if (target < 0) return { error: '在庫数は 0 以上にしてください' };
 
-    const product = await prisma.product.findFirst({ where: { id: productId, salonId: salon.id } });
+    const product = await db.product.findFirst({ where: { id: productId } });
     if (!product) return { error: '商品が見つかりません' };
     const delta = target - product.stock;
 
-    await prisma.$transaction([
-      prisma.product.update({
+    await db.$transaction([
+      db.product.update({
         where: { id: productId },
         data: { stock: target },
       }),
-      prisma.stockTransaction.create({
+      db.stockTransaction.create({
         data: {
-          salonId: salon.id, productId,
+          salonId: salon.id,
+          productId,
           kind: 'adjust', quantity: delta,
           notes: notes || `棚卸: ${product.stock} → ${target}`,
         },
@@ -201,14 +218,24 @@ export async function stockAdjustAction(_prev: State, fd: FormData): Promise<Sta
 
 export async function deleteProductAction(_prev: State, fd: FormData): Promise<State> {
   try {
-    const { salon } = await getCurrentSalon();
+    const { salon, session } = await getCurrentSalon();
+    const db = prismaForSalon(salon.id);
     const id = String(fd.get('id') || '');
     if (!id) return { error: 'ID が指定されていません' };
-    const product = await prisma.product.findFirst({ where: { id, salonId: salon.id } });
+    const product = await db.product.findFirst({ where: { id } });
     if (!product) return { error: '商品が見つかりません' };
-    await prisma.product.update({
+    await db.product.update({
       where: { id },
       data: { isActive: false },
+    });
+    await audit({
+      salonId: salon.id,
+      actorId: session.userId,
+      actorName: session.email,
+      action: 'product.delete',
+      targetType: 'Product',
+      targetId: id,
+      diff: { name: product.name },
     });
     revalidatePath('/inventory');
     return { ok: true, message: `「${product.name}」を非表示にしました` };

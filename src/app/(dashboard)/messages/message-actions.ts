@@ -1,15 +1,17 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { getCurrentSalon } from '@/lib/salonData';
 import { broadcastText, multicastText } from '@/lib/line/client';
+import { audit } from '@/lib/audit';
 
 type State = { ok?: boolean; error?: string; message?: string } | null;
 
 export async function sendBroadcastAction(_prev: State, formData: FormData): Promise<State> {
   try {
-    const { salon } = await getCurrentSalon();
+    const { salon, session } = await getCurrentSalon();
+    const db = prismaForSalon(salon.id);
     if (!salon.lineAccessToken) return { error: 'LINE 認証情報が未設定です。設定画面で先に保存してください。' };
 
     const title = String(formData.get('title') || '').trim();
@@ -26,11 +28,9 @@ export async function sendBroadcastAction(_prev: State, formData: FormData): Pro
     if (type === 'broadcast') {
       const result = await broadcastText(content, creds);
       if (!result.ok) return { error: 'LINE 配信に失敗しました' };
-      // 友だち全員 → 正確な数は LINE API で別途取得する必要があるが、ここでは登録友だち数で代用
-      sentCount = await prisma.customer.count({ where: { salonId: salon.id, isLineFriend: true } });
+      sentCount = await db.customer.count({ where: { isLineFriend: true } });
     } else {
-      // セグメント配信
-      const where: Record<string, unknown> = { salonId: salon.id, isLineFriend: true };
+      const where: Record<string, unknown> = { isLineFriend: true };
       if (segment === 'dormant') {
         const thresh = new Date(Date.now() - 90 * 86400000).toISOString().slice(0, 10);
         where.lastVisitDate = { lte: thresh };
@@ -39,7 +39,7 @@ export async function sendBroadcastAction(_prev: State, formData: FormData): Pro
       } else if (segment === 'vip') {
         where.tags = { has: 'vip' };
       }
-      const targets = await prisma.customer.findMany({ where, select: { lineUserId: true } });
+      const targets = await db.customer.findMany({ where, select: { lineUserId: true } });
       const userIds = targets.map((t) => t.lineUserId).filter((x): x is string => !!x);
       if (userIds.length === 0) return { error: '対象の友だちが 0 人です' };
       const result = await multicastText(userIds, content, creds);
@@ -47,7 +47,7 @@ export async function sendBroadcastAction(_prev: State, formData: FormData): Pro
       sentCount = userIds.length;
     }
 
-    await prisma.message.create({
+    const created = await db.message.create({
       data: {
         salonId: salon.id,
         type: type === 'broadcast' ? 'broadcast' : 'segment',
@@ -60,6 +60,16 @@ export async function sendBroadcastAction(_prev: State, formData: FormData): Pro
         status: 'sent',
         sentAt: new Date(),
       },
+    });
+
+    await audit({
+      salonId: salon.id,
+      actorId: session.userId,
+      actorName: session.email,
+      action: 'message.broadcast',
+      targetType: 'Message',
+      targetId: created.id,
+      diff: { title, type, segment, sentCount },
     });
 
     revalidatePath('/messages');
