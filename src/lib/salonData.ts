@@ -1,5 +1,6 @@
 // 現在ログイン中のユーザーの店舗データを取得
 import { prisma } from './db';
+import { prismaForSalon } from './prismaScoped';
 import { getSession } from './auth';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -31,16 +32,20 @@ export async function getCurrentSalon() {
 
 export async function getSalonData() {
   const { salon, session, isSuperadminView } = await getCurrentSalon();
+  // Defense-in-depth: auto-inject salonId via client extension.
+  // Even if a `where` clause is forgotten elsewhere, scoped queries
+  // cannot leak rows from another tenant.
+  const db = prismaForSalon(salon.id);
 
   const [staff, customers, menus, reservations, treatments, coupons, messages, designs] = await Promise.all([
-    prisma.staff.findMany({ where: { salonId: salon.id }, orderBy: { sortOrder: 'asc' } }),
-    prisma.customer.findMany({ where: { salonId: salon.id }, orderBy: { totalSpent: 'desc' } }),
-    prisma.menu.findMany({ where: { salonId: salon.id }, orderBy: { sortOrder: 'asc' } }),
-    prisma.reservation.findMany({ where: { salonId: salon.id } }),
-    prisma.treatmentRecord.findMany({ where: { salonId: salon.id }, orderBy: { date: 'desc' } }),
-    prisma.coupon.findMany({ where: { salonId: salon.id }, orderBy: { createdAt: 'desc' } }),
-    prisma.message.findMany({ where: { salonId: salon.id }, orderBy: { createdAt: 'desc' } }),
-    prisma.hairStyle.findMany({ where: { salonId: salon.id }, orderBy: { createdAt: 'desc' } }),
+    db.staff.findMany({ orderBy: { sortOrder: 'asc' } }),
+    db.customer.findMany({ orderBy: { totalSpent: 'desc' } }),
+    db.menu.findMany({ orderBy: { sortOrder: 'asc' } }),
+    db.reservation.findMany(),
+    db.treatmentRecord.findMany({ orderBy: { date: 'desc' } }),
+    db.coupon.findMany({ orderBy: { createdAt: 'desc' } }),
+    db.message.findMany({ orderBy: { createdAt: 'desc' } }),
+    db.hairStyle.findMany({ orderBy: { createdAt: 'desc' } }),
   ]);
 
   return { salon, session, isSuperadminView, staff, customers, menus, reservations, treatments, coupons, messages, designs };

@@ -4,6 +4,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import { buildRedirectUrl } from '@/lib/baseUrl';
+import { audit } from '@/lib/audit';
 
 const VIEW_COOKIE = 'hsl_superadmin_view_salon';
 
@@ -20,6 +21,17 @@ export async function GET(
   if (!salonId) {
     return NextResponse.redirect(buildRedirectUrl(req, '/superadmin'));
   }
+
+  // Audit: SuperAdmin is impersonating another tenant.
+  // Written to the target salon's AuditLog so the owner can see it.
+  await audit({
+    salonId,
+    actorId: session.userId,
+    actorName: session.email,
+    action: 'superadmin.view_as.enter',
+    targetType: 'Salon',
+    targetId: salonId,
+  });
 
   const res = NextResponse.redirect(buildRedirectUrl(req, '/dashboard'));
   res.cookies.set(VIEW_COOKIE, salonId, {
