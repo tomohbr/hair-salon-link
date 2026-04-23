@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#0c0a09] text-[#ebe1cf]">
+    <div className="min-h-screen bg-[#14100c] text-[#efe3c8]">
       <Header />
       <TrustBar />
       <Hero />
@@ -41,29 +41,29 @@ export default function LandingPage() {
 
 function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-[#2a2320]/80 bg-[#0c0a09]/90 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-[#302519]/80 bg-[#14100c]/90 backdrop-blur">
       <div className="max-w-6xl mx-auto px-5 md:px-8 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-sm brand-bg flex items-center justify-center">
-            <Scissors className="w-4 h-4 text-[#0c0a09]" strokeWidth={2} />
+            <Scissors className="w-4 h-4 text-[#14100c]" strokeWidth={2} />
           </div>
           <div className="leading-tight">
             <div className="font-semibold tracking-tight text-[15px]">HairSalonLink</div>
-            <div className="text-[9px] text-[#8a7f6e] tracking-[0.18em] uppercase">for Hair Salons</div>
+            <div className="text-[9px] text-[#a89778] tracking-[0.18em] uppercase">for Hair Salons</div>
           </div>
         </Link>
-        <nav className="hidden md:flex items-center gap-7 text-[13px] text-[#8a7f6e]">
-          <Link href="#features" className="hover:text-[#ebe1cf] transition">機能</Link>
-          <Link href="#tour" className="hover:text-[#ebe1cf] transition">画面ツアー</Link>
-          <Link href="#compare" className="hover:text-[#ebe1cf] transition">比較</Link>
-          <Link href="#roi" className="hover:text-[#ebe1cf] transition">試算</Link>
-          <Link href="#pricing" className="hover:text-[#ebe1cf] transition">料金</Link>
-          <Link href="#faq" className="hover:text-[#ebe1cf] transition">FAQ</Link>
-          <Link href="/login" className="hover:text-[#ebe1cf] transition">ログイン</Link>
+        <nav className="hidden md:flex items-center gap-7 text-[13px] text-[#a89778]">
+          <Link href="#features" className="hover:text-[#efe3c8] transition">機能</Link>
+          <Link href="#tour" className="hover:text-[#efe3c8] transition">画面ツアー</Link>
+          <Link href="#compare" className="hover:text-[#efe3c8] transition">比較</Link>
+          <Link href="#roi" className="hover:text-[#efe3c8] transition">試算</Link>
+          <Link href="#pricing" className="hover:text-[#efe3c8] transition">料金</Link>
+          <Link href="#faq" className="hover:text-[#efe3c8] transition">FAQ</Link>
+          <Link href="/login" className="hover:text-[#efe3c8] transition">ログイン</Link>
         </nav>
         <Link
           href="/register"
-          className="hidden sm:inline-flex items-center gap-1.5 text-[12px] font-medium tracking-wider px-4 py-2 brand-bg text-[#0c0a09] hover:opacity-90 transition"
+          className="hidden sm:inline-flex items-center gap-1.5 text-[12px] font-medium tracking-wider px-4 py-2 brand-bg text-[#14100c] hover:opacity-90 transition"
         >
           無料ではじめる
         </Link>
@@ -84,8 +84,8 @@ function TrustBar() {
     { icon: Users, label: '美容室特化設計' },
   ];
   return (
-    <div className="border-b border-[#2a2320] bg-[#0f0c0b]">
-      <div className="max-w-6xl mx-auto px-5 md:px-8 py-3 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-[11px] text-[#8a7f6e] tracking-wide">
+    <div className="border-b border-[#302519] bg-[#1a1511]">
+      <div className="max-w-6xl mx-auto px-5 md:px-8 py-3 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-[11px] text-[#a89778] tracking-wide">
         {items.map((i) => {
           const Icon = i.icon;
           return (
@@ -108,19 +108,19 @@ function Hero() {
   return (
     <section className="relative hero-bg">
       <div className="relative max-w-5xl mx-auto px-5 md:px-8 pt-20 pb-20 md:pt-32 md:pb-28 text-center fade-up">
-        <div className="text-[10px] tracking-[0.32em] uppercase text-[#8a7f6e] mb-8">
+        <div className="text-[10px] tracking-[0.32em] uppercase text-[#a89778] mb-8">
           HAIR SALON &nbsp;×&nbsp; LINE &nbsp;×&nbsp; HOT PEPPER
         </div>
 
-        <h1 className="display-serif text-[38px] md:text-[72px] leading-[1.35] md:leading-[1.22] text-[#ebe1cf]">
+        <h1 className="display-serif text-[38px] md:text-[72px] leading-[1.35] md:leading-[1.22] text-[#efe3c8]">
           広告に依存しない店へ、<br />
           静かに切り替えていく。
         </h1>
 
-        <p className="mt-10 text-[14px] md:text-[16px] text-[#b5a98f] leading-[2.1] max-w-2xl mx-auto">
+        <p className="mt-10 text-[14px] md:text-[16px] text-[#bdaa88] leading-[2.1] max-w-2xl mx-auto">
           ホットペッパーの広告費、紙カルテ、個人LINEでの返信——
           <br className="hidden md:block" />
-          <span className="text-[#ebe1cf]">毎月削られている経営の裏側を、一本の地図にまとめる。</span>
+          <span className="text-[#efe3c8]">毎月削られている経営の裏側を、一本の地図にまとめる。</span>
         </p>
 
         <div className="mt-12 flex flex-col sm:flex-row gap-3 justify-center items-center">
@@ -132,26 +132,28 @@ function Hero() {
           </Link>
         </div>
 
-        <div className="mt-6 text-[11px] text-[#6b5f52]">
+        <div className="mt-6 text-[11px] text-[#7a6850]">
           クレジットカード登録不要 ・ 30 秒で開設
         </div>
 
-        {/* Hero stats row */}
-        <div className="mt-16 md:mt-20 grid grid-cols-3 max-w-3xl mx-auto border-y border-[#2a2320] divide-x divide-[#2a2320]">
+        {/* Hero stats row — editorial hairline */}
+        <div className="divider-brass mt-16 md:mt-20 max-w-3xl mx-auto" />
+        <div className="grid grid-cols-3 max-w-3xl mx-auto divide-x divide-[#302519]/70">
           {[
             { n: '¥0', l: '初期費用' },
             { n: '30分', l: '導入完了まで' },
             { n: '¥4,980〜', l: '月額 (税別)' },
           ].map((s) => (
             <div key={s.l} className="py-7 md:py-9">
-              <div className="display-serif text-[22px] md:text-[32px] text-[#ebe1cf]">{s.n}</div>
-              <div className="mt-2 text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#8a7f6e]">{s.l}</div>
+              <div className="display-serif text-[24px] md:text-[36px] text-[#efe3c8] tabular-nums" style={{ letterSpacing: '-0.015em' }}>{s.n}</div>
+              <div className="mt-2 text-[10px] md:text-[11px] tracking-[0.24em] uppercase text-[#a89778]">{s.l}</div>
             </div>
           ))}
         </div>
+        <div className="divider-brass max-w-3xl mx-auto" />
 
         <div className="mt-10">
-          <Link href="/book/hair-salon-demo" className="inline-flex items-center gap-1.5 text-xs text-[#8a7f6e] hover:text-[#ebe1cf] transition underline underline-offset-4 decoration-[#3a302a]">
+          <Link href="/book/hair-salon-demo" className="inline-flex items-center gap-1.5 text-xs text-[#a89778] hover:text-[#efe3c8] transition underline underline-offset-4 decoration-[#48382a]">
             サンプル店舗の予約ページを見る
             <ArrowRight className="w-3 h-3" />
           </Link>
@@ -168,15 +170,15 @@ function Hero() {
 function SocialProof() {
   const cities = ['熊本', '表参道', '恵比寿', '博多', '京都', '札幌', '仙台', '横浜', '神戸', '名古屋', '金沢', '那覇'];
   return (
-    <section aria-hidden className="border-y border-[#2a2320] bg-[#0f0c0b] overflow-hidden">
+    <section aria-hidden className="border-y border-[#302519] bg-[#1a1511] overflow-hidden">
       <div className="max-w-6xl mx-auto px-5 md:px-8 py-5 flex items-center gap-6">
-        <div className="shrink-0 text-[10px] tracking-[0.28em] uppercase text-[#8a7f6e]">
+        <div className="shrink-0 text-[10px] tracking-[0.28em] uppercase text-[#a89778]">
           Built for salons across Japan
         </div>
         <div className="relative flex-1 overflow-hidden mask-fade">
           <div className="flex gap-10 whitespace-nowrap animate-marquee">
             {[...cities, ...cities].map((c, i) => (
-              <span key={i} className="display-serif text-[15px] md:text-[17px] text-[#5a514c]">
+              <span key={i} className="display-serif text-[15px] md:text-[17px] text-[#6b5b44]">
                 {c}
               </span>
             ))}
@@ -193,7 +195,7 @@ function SocialProof() {
 
 function About() {
   return (
-    <section id="about" className="bg-[#120e0c] border-b border-[#2a2320]">
+    <section id="about" className="bg-[#1b1510] border-b border-[#302519]">
       <div className="max-w-3xl mx-auto px-5 md:px-8 py-24 md:py-32 text-center">
         <div className="eyebrow mb-8">ABOUT</div>
         <h2 className="display-serif text-[28px] md:text-[44px] leading-[1.55] md:leading-[1.45] mb-14">
@@ -201,7 +203,7 @@ function About() {
           店は回らない。
         </h2>
 
-        <div className="space-y-7 text-[14px] md:text-[15px] leading-[2.1] text-[#b5a98f] text-left md:text-center">
+        <div className="space-y-7 text-[14px] md:text-[15px] leading-[2.1] text-[#bdaa88] text-left md:text-center">
           <p>
             技術は確かだ。お客さまも、覚えていてくれる。
             それでも、毎月の広告費と、紙のカルテと、オーナー個人のLINEの返信が、小さな店を少しずつ削っていく。
@@ -242,7 +244,7 @@ function Tour() {
   ];
 
   return (
-    <section id="tour" className="bg-[#0c0a09] border-b border-[#2a2320]">
+    <section id="tour" className="bg-[#14100c] border-b border-[#302519]">
       <div className="max-w-6xl mx-auto px-5 md:px-8 py-24 md:py-32">
         <div className="text-center mb-14 md:mb-20">
           <div className="eyebrow mb-6">PRODUCT TOUR</div>
@@ -259,32 +261,32 @@ function Tour() {
               className={`grid md:grid-cols-2 gap-10 md:gap-16 items-center ${i % 2 === 1 ? 'md:[&>*:first-child]:order-2' : ''}`}
             >
               <div>
-                <div className="text-[10px] tracking-[0.28em] uppercase text-[#c9a96e] mb-4">
+                <div className="text-[10px] tracking-[0.28em] uppercase text-[#c9a675] mb-4">
                   0{i + 1} — Screen
                 </div>
                 <h3 className="display-serif text-[24px] md:text-[32px] leading-[1.4] mb-5">
                   {t.name}
                 </h3>
-                <p className="text-[14px] md:text-[15px] leading-[2.05] text-[#b5a98f]">
+                <p className="text-[14px] md:text-[15px] leading-[2.05] text-[#bdaa88]">
                   {t.desc}
                 </p>
                 <Link
                   href="/register"
-                  className="mt-6 inline-flex items-center gap-1.5 text-[12px] tracking-[0.1em] text-[#c9a96e] hover:text-[#ebe1cf] transition"
+                  className="mt-6 inline-flex items-center gap-1.5 text-[12px] tracking-[0.1em] text-[#c9a675] hover:text-[#efe3c8] transition"
                 >
                   この画面を実際に試す
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
               <div className="relative">
-                <div className="absolute -inset-6 bg-gradient-to-br from-[#c9a96e]/10 to-transparent blur-2xl" />
-                <div className="relative rounded-lg overflow-hidden border border-[#2a2320] bg-[#0f0c0b] shadow-[0_32px_64px_-24px_rgba(0,0,0,0.8)]">
+                <div className="absolute -inset-6 bg-gradient-to-br from-[#c9a675]/10 to-transparent blur-2xl" />
+                <div className="relative rounded-lg overflow-hidden border border-[#302519] bg-[#1a1511] shadow-[0_32px_64px_-24px_rgba(0,0,0,0.8)]">
                   {/* chrome */}
-                  <div className="flex items-center gap-1.5 px-3 py-2 border-b border-[#2a2320] bg-[#0a0807]">
-                    <span className="w-2 h-2 rounded-full bg-[#3a302a]" />
-                    <span className="w-2 h-2 rounded-full bg-[#3a302a]" />
-                    <span className="w-2 h-2 rounded-full bg-[#3a302a]" />
-                    <span className="ml-3 text-[9px] text-[#5a514c] tracking-wider">hairsalonlink.app</span>
+                  <div className="flex items-center gap-1.5 px-3 py-2 border-b border-[#302519] bg-[#100c08]">
+                    <span className="w-2 h-2 rounded-full bg-[#48382a]" />
+                    <span className="w-2 h-2 rounded-full bg-[#48382a]" />
+                    <span className="w-2 h-2 rounded-full bg-[#48382a]" />
+                    <span className="ml-3 text-[9px] text-[#6b5b44] tracking-wider">hairsalonlink.app</span>
                   </div>
                   {t.mock}
                 </div>
@@ -300,41 +302,41 @@ function Tour() {
 function MockCalendar() {
   const cells = Array.from({ length: 42 });
   const bookings: Record<number, { t: string; c: string }[]> = {
-    8: [{ t: '10:00', c: 'bg-[#c9a96e]/80' }],
+    8: [{ t: '10:00', c: 'bg-[#c9a675]/80' }],
     9: [{ t: '11:30', c: 'bg-emerald-500/70' }],
-    14: [{ t: '09:00', c: 'bg-sky-500/70' }, { t: '13:00', c: 'bg-[#c9a96e]/80' }],
+    14: [{ t: '09:00', c: 'bg-sky-500/70' }, { t: '13:00', c: 'bg-[#c9a675]/80' }],
     17: [{ t: '15:00', c: 'bg-emerald-500/70' }],
-    22: [{ t: '11:00', c: 'bg-[#c9a96e]/80' }, { t: '16:30', c: 'bg-sky-500/70' }],
-    25: [{ t: '10:00', c: 'bg-[#c9a96e]/80' }],
+    22: [{ t: '11:00', c: 'bg-[#c9a675]/80' }, { t: '16:30', c: 'bg-sky-500/70' }],
+    25: [{ t: '10:00', c: 'bg-[#c9a675]/80' }],
   };
   return (
     <div className="p-4 md:p-5">
       <div className="flex items-center justify-between mb-3">
-        <div className="text-[11px] text-[#b5a98f]">2026 年 4 月</div>
+        <div className="text-[11px] text-[#bdaa88]">2026 年 4 月</div>
         <div className="flex gap-1.5">
-          <span className="inline-flex items-center gap-1 text-[9px] text-[#8a7f6e]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#c9a96e]" /> HPB
+          <span className="inline-flex items-center gap-1 text-[9px] text-[#a89778]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#c9a675]" /> HPB
           </span>
-          <span className="inline-flex items-center gap-1 text-[9px] text-[#8a7f6e]">
+          <span className="inline-flex items-center gap-1 text-[9px] text-[#a89778]">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> LINE
           </span>
-          <span className="inline-flex items-center gap-1 text-[9px] text-[#8a7f6e]">
+          <span className="inline-flex items-center gap-1 text-[9px] text-[#a89778]">
             <span className="w-1.5 h-1.5 rounded-full bg-sky-500" /> 自社
           </span>
         </div>
       </div>
       <div className="grid grid-cols-7 gap-1 text-[9px]">
         {['日','月','火','水','木','金','土'].map((d) => (
-          <div key={d} className="text-center text-[#8a7f6e] py-1">{d}</div>
+          <div key={d} className="text-center text-[#a89778] py-1">{d}</div>
         ))}
         {cells.map((_, i) => {
           const day = i - 2;
           const has = bookings[day];
           return (
-            <div key={i} className={`aspect-square rounded-sm border p-1 ${day > 0 && day <= 30 ? 'border-[#2a2320]' : 'border-transparent'}`}>
+            <div key={i} className={`aspect-square rounded-sm border p-1 ${day > 0 && day <= 30 ? 'border-[#302519]' : 'border-transparent'}`}>
               {day > 0 && day <= 30 && (
                 <>
-                  <div className="text-[#b5a98f]">{day}</div>
+                  <div className="text-[#bdaa88]">{day}</div>
                   <div className="flex flex-col gap-[2px] mt-[2px]">
                     {has?.map((b, j) => (
                       <div key={j} className={`h-[3px] rounded-sm ${b.c}`} />
@@ -354,12 +356,12 @@ function MockCustomer() {
   return (
     <div className="p-4 md:p-5 text-[11px]">
       <div className="flex items-center gap-3 mb-4">
-        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#c9a96e] to-[#7a6547] flex items-center justify-center text-[14px] display-serif text-[#0c0a09]">M</div>
+        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#c9a675] to-[#7a6547] flex items-center justify-center text-[14px] display-serif text-[#14100c]">M</div>
         <div>
-          <div className="text-[13px] text-[#ebe1cf]">宮田 結花 様</div>
-          <div className="text-[10px] text-[#8a7f6e]">累計 17 回来店 ・ 担当 中西</div>
+          <div className="text-[13px] text-[#efe3c8]">宮田 結花 様</div>
+          <div className="text-[10px] text-[#a89778]">累計 17 回来店 ・ 担当 中西</div>
         </div>
-        <div className="ml-auto px-2 py-0.5 rounded-full bg-[#c9a96e]/15 text-[9px] brand-text border border-[#c9a96e]/30">VIP</div>
+        <div className="ml-auto px-2 py-0.5 rounded-full bg-[#c9a675]/15 text-[9px] brand-text border border-[#c9a675]/30">VIP</div>
       </div>
       <div className="grid grid-cols-3 gap-2 mb-4">
         {[
@@ -367,21 +369,21 @@ function MockCustomer() {
           { l: '最終来店', v: '38 日前' },
           { l: '平均周期', v: '42 日' },
         ].map((k) => (
-          <div key={k.l} className="rounded border border-[#2a2320] p-2">
-            <div className="text-[8px] tracking-wide text-[#8a7f6e] uppercase">{k.l}</div>
-            <div className="text-[12px] text-[#ebe1cf] mt-1">{k.v}</div>
+          <div key={k.l} className="rounded border border-[#302519] p-2">
+            <div className="text-[8px] tracking-wide text-[#a89778] uppercase">{k.l}</div>
+            <div className="text-[12px] text-[#efe3c8] mt-1">{k.v}</div>
           </div>
         ))}
       </div>
-      <div className="rounded border border-[#2a2320] p-2.5 mb-2">
-        <div className="text-[9px] text-[#8a7f6e] mb-1.5 tracking-wide uppercase">薬剤カルテ (直近)</div>
-        <div className="space-y-1 text-[10px] text-[#b5a98f]">
+      <div className="rounded border border-[#302519] p-2.5 mb-2">
+        <div className="text-[9px] text-[#a89778] mb-1.5 tracking-wide uppercase">薬剤カルテ (直近)</div>
+        <div className="space-y-1 text-[10px] text-[#bdaa88]">
           <div>イルミナ ヌード 8 : オキシ 6% = 1 : 1.5 ・ 35 分放置</div>
           <div>スロウ アッシュ 7 ・ 根元 20 分 / 毛先 10 分</div>
         </div>
       </div>
-      <div className="rounded border border-[#2a2320] p-2.5">
-        <div className="text-[9px] text-[#8a7f6e] mb-1 tracking-wide uppercase">アレルギー</div>
+      <div className="rounded border border-[#302519] p-2.5">
+        <div className="text-[9px] text-[#a89778] mb-1 tracking-wide uppercase">アレルギー</div>
         <div className="text-[10px] text-red-300">ジアミン陽性 — 要パッチテスト</div>
       </div>
     </div>
@@ -398,23 +400,23 @@ function MockDashboard() {
           { l: '客単価', v: '¥8,950', d: '+3%' },
           { l: '転換率', v: '42.1%', d: '+5.2pt' },
         ].map((k) => (
-          <div key={k.l} className="rounded border border-[#2a2320] p-2">
-            <div className="text-[8px] tracking-wide text-[#8a7f6e] uppercase">{k.l}</div>
-            <div className="text-[13px] text-[#ebe1cf] mt-0.5 display-serif">{k.v}</div>
+          <div key={k.l} className="rounded border border-[#302519] p-2">
+            <div className="text-[8px] tracking-wide text-[#a89778] uppercase">{k.l}</div>
+            <div className="text-[13px] text-[#efe3c8] mt-0.5 display-serif">{k.v}</div>
             <div className="text-[9px] text-emerald-400 mt-0.5">{k.d}</div>
           </div>
         ))}
       </div>
-      <div className="rounded border border-[#2a2320] p-3">
+      <div className="rounded border border-[#302519] p-3">
         <div className="flex items-center justify-between mb-2">
-          <div className="text-[10px] text-[#b5a98f]">日別売上</div>
-          <div className="text-[9px] text-[#8a7f6e]">4/1 — 4/23</div>
+          <div className="text-[10px] text-[#bdaa88]">日別売上</div>
+          <div className="text-[9px] text-[#a89778]">4/1 — 4/23</div>
         </div>
         <div className="flex items-end gap-[3px] h-16">
           {bars.map((h, i) => (
             <div
               key={i}
-              className={`flex-1 rounded-t-sm ${i === bars.length - 1 ? 'bg-[#c9a96e]' : 'bg-[#3a302a]'}`}
+              className={`flex-1 rounded-t-sm ${i === bars.length - 1 ? 'bg-[#c9a675]' : 'bg-[#48382a]'}`}
               style={{ height: `${h}%` }}
             />
           ))}
@@ -439,7 +441,7 @@ function Features() {
   ];
 
   return (
-    <section id="features" className="bg-[#120e0c] border-y border-[#2a2320]">
+    <section id="features" className="bg-[#1b1510] border-y border-[#302519]">
       <div className="max-w-5xl mx-auto px-5 md:px-8 py-24 md:py-32">
         <div className="text-center mb-16 md:mb-20">
           <div className="eyebrow mb-6">FEATURES</div>
@@ -452,11 +454,11 @@ function Features() {
           {features.map((f) => (
             <div key={f.n} className="grid md:grid-cols-12 gap-6 md:gap-10 items-start">
               <div className="md:col-span-3">
-                <div className="display-serif text-[40px] md:text-[56px] leading-none text-[#c9a96e]/55">{f.n}</div>
+                <div className="display-serif text-[40px] md:text-[56px] leading-none text-[#c9a675]/55">{f.n}</div>
               </div>
               <div className="md:col-span-9">
                 <h3 className="display-serif text-[20px] md:text-[26px] leading-[1.5] mb-4">{f.title}</h3>
-                <p className="text-[14px] md:text-[15px] leading-[2.05] text-[#b5a98f]">{f.body}</p>
+                <p className="text-[14px] md:text-[15px] leading-[2.05] text-[#bdaa88]">{f.body}</p>
               </div>
             </div>
           ))}
@@ -484,12 +486,12 @@ function Comparison() {
 
   const renderCell = (v: string | boolean) => {
     if (v === true) return <Check className="w-4 h-4 brand-text mx-auto" strokeWidth={2.5} />;
-    if (v === false) return <span className="text-[#5a514c]">—</span>;
-    return <span className="text-[12px] text-[#b5a98f]">{v}</span>;
+    if (v === false) return <span className="text-[#6b5b44]">—</span>;
+    return <span className="text-[12px] text-[#bdaa88]">{v}</span>;
   };
 
   return (
-    <section id="compare" className="bg-[#0c0a09] border-b border-[#2a2320]">
+    <section id="compare" className="bg-[#14100c] border-b border-[#302519]">
       <div className="max-w-6xl mx-auto px-5 md:px-8 py-24 md:py-32">
         <div className="text-center mb-12 md:mb-16">
           <div className="eyebrow mb-6">COMPARISON</div>
@@ -497,7 +499,7 @@ function Comparison() {
             他の予約SaaSと、<br className="md:hidden" />
             どう違うのか。
           </h2>
-          <p className="mt-6 text-[12px] text-[#6b5f52] tracking-wide">
+          <p className="mt-6 text-[12px] text-[#7a6850] tracking-wide">
             各社の公開情報をもとに作成 ・ 2026年4月時点
           </p>
         </div>
@@ -505,22 +507,22 @@ function Comparison() {
         <div className="overflow-x-auto -mx-5 md:mx-0">
           <table className="w-full min-w-[720px] mx-5 md:mx-0 text-[13px]">
             <thead>
-              <tr className="border-b border-[#2a2320]">
-                <th className="text-left py-4 px-3 text-[11px] tracking-[0.18em] uppercase text-[#8a7f6e] font-normal">比較項目</th>
-                <th className="text-center py-4 px-3 bg-[#1c1715] border-x border-[#c9a96e]/30">
-                  <div className="display-serif text-[15px] text-[#ebe1cf]">HairSalonLink</div>
+              <tr className="border-b border-[#302519]">
+                <th className="text-left py-4 px-3 text-[11px] tracking-[0.18em] uppercase text-[#a89778] font-normal">比較項目</th>
+                <th className="text-center py-4 px-3 bg-[#2a2119] border-x border-[#c9a675]/30">
+                  <div className="display-serif text-[15px] text-[#efe3c8]">HairSalonLink</div>
                   <div className="text-[9px] brand-text mt-0.5 tracking-wider">OURS</div>
                 </th>
-                <th className="text-center py-4 px-3 text-[11px] text-[#8a7f6e] font-normal">SALON BOARD</th>
-                <th className="text-center py-4 px-3 text-[11px] text-[#8a7f6e] font-normal">大手 SaaS A</th>
-                <th className="text-center py-4 px-3 text-[11px] text-[#8a7f6e] font-normal">大手 SaaS B</th>
+                <th className="text-center py-4 px-3 text-[11px] text-[#a89778] font-normal">SALON BOARD</th>
+                <th className="text-center py-4 px-3 text-[11px] text-[#a89778] font-normal">大手 SaaS A</th>
+                <th className="text-center py-4 px-3 text-[11px] text-[#a89778] font-normal">大手 SaaS B</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((r) => (
-                <tr key={r.label} className="border-b border-[#2a2320]">
-                  <td className="py-4 px-3 text-[#b5a98f]">{r.label}</td>
-                  <td className="text-center py-4 px-3 bg-[#1c1715]/60 border-x border-[#c9a96e]/20">{renderCell(r.hsl)}</td>
+                <tr key={r.label} className="border-b border-[#302519]">
+                  <td className="py-4 px-3 text-[#bdaa88]">{r.label}</td>
+                  <td className="text-center py-4 px-3 bg-[#2a2119]/60 border-x border-[#c9a675]/20">{renderCell(r.hsl)}</td>
                   <td className="text-center py-4 px-3">{renderCell(r.sb)}</td>
                   <td className="text-center py-4 px-3">{renderCell(r.m)}</td>
                   <td className="text-center py-4 px-3">{renderCell(r.o)}</td>
@@ -540,7 +542,7 @@ function Comparison() {
 
 function Roi() {
   return (
-    <section id="roi" className="bg-[#120e0c] border-b border-[#2a2320]">
+    <section id="roi" className="bg-[#1b1510] border-b border-[#302519]">
       <div className="max-w-4xl mx-auto px-5 md:px-8 py-24 md:py-32">
         <div className="text-center mb-12 md:mb-16">
           <div className="eyebrow mb-6">ROI SIMULATOR</div>
@@ -548,7 +550,7 @@ function Roi() {
             あなたの店で、<br className="md:hidden" />
             いくら残るか。
           </h2>
-          <p className="mt-6 text-[13px] text-[#8a7f6e] tracking-wide leading-relaxed">
+          <p className="mt-6 text-[13px] text-[#a89778] tracking-wide leading-relaxed">
             HPB 広告費を一部「自社リピート」に置き換えたときの、年額の残り方を試算します。
           </p>
         </div>
@@ -565,7 +567,7 @@ function Roi() {
 
 function CaseStudy() {
   return (
-    <section className="bg-[#0c0a09] border-b border-[#2a2320]">
+    <section className="bg-[#14100c] border-b border-[#302519]">
       <div className="max-w-5xl mx-auto px-5 md:px-8 py-24 md:py-32">
         <div className="grid md:grid-cols-5 gap-10 md:gap-14">
           <div className="md:col-span-2">
@@ -574,19 +576,20 @@ function CaseStudy() {
               2席のサロンで、<br />
               残りが変わった話。
             </h2>
-            <p className="text-[13px] leading-[2] text-[#8a7f6e]">
+            <p className="text-[13px] leading-[2] text-[#a89778]">
               ※ 導入検討中オーナー様と描いた試算シナリオです。数値は実店舗の公開 KPI レンジに基づく例示で、効果を保証するものではありません。
             </p>
           </div>
-          <div className="md:col-span-3 bg-[#120e0c] border border-[#2a2320] p-8 md:p-10">
-            <Quote className="w-8 h-8 brand-text mb-6" strokeWidth={1.5} />
-            <p className="display-serif text-[17px] md:text-[19px] leading-[1.9] text-[#ebe1cf] mb-8">
+          <div className="md:col-span-3 bg-gradient-to-br from-[#1b1510] to-[#211a14] border border-[#302519] p-8 md:p-10 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#7a2e2b] via-[#c9a675] to-transparent" aria-hidden />
+            <Quote className="w-10 h-10 mb-6" strokeWidth={1.2} style={{ color: '#7a2e2b' }} />
+            <p className="display-serif text-[17px] md:text-[19px] leading-[1.9] text-[#efe3c8] mb-8">
               「HPB の広告を、半分だけ LINE リピートに振り替えた。
               新規が減った分だけ不安だったけど、
               <span className="brand-text">常連の再来周期が 9 日縮まって、</span>
               年間で見ると残りが増えていた。」
             </p>
-            <div className="grid grid-cols-3 gap-4 pt-6 border-t border-[#2a2320]">
+            <div className="grid grid-cols-3 gap-4 pt-6 border-t border-[#302519]">
               {[
                 { v: '+¥43万', l: '年間の残り', d: '(試算)' },
                 { v: '-12%', l: 'HPB広告費', d: '' },
@@ -594,8 +597,8 @@ function CaseStudy() {
               ].map((k) => (
                 <div key={k.l}>
                   <div className="display-serif text-[18px] md:text-[22px] brand-text">{k.v}</div>
-                  <div className="text-[10px] text-[#8a7f6e] mt-1 tracking-wide">{k.l}</div>
-                  {k.d && <div className="text-[9px] text-[#5a514c]">{k.d}</div>}
+                  <div className="text-[10px] text-[#a89778] mt-1 tracking-wide">{k.l}</div>
+                  {k.d && <div className="text-[9px] text-[#6b5b44]">{k.d}</div>}
                 </div>
               ))}
             </div>
@@ -631,7 +634,7 @@ function Gallery() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {cards.map((c) => (
-            <div key={c.label} className="relative aspect-[3/4] overflow-hidden border border-[#2a2320] group">
+            <div key={c.label} className="relative aspect-[3/4] overflow-hidden border border-[#302519] group">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={c.img}
@@ -639,10 +642,10 @@ function Gallery() {
                 loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover grayscale-[40%] brightness-75 group-hover:grayscale-0 group-hover:brightness-90 transition duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0c0a09] via-[#0c0a09]/55 to-[#0c0a09]/10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#14100c] via-[#14100c]/55 to-[#14100c]/10" />
               <div className="relative h-full p-5 md:p-6 flex flex-col justify-between">
-                <div className="text-[10px] tracking-[0.3em] text-[#c9a96e] uppercase">{c.label}</div>
-                <p className="display-serif text-[15px] md:text-[17px] leading-[1.9] text-[#ebe1cf] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                <div className="text-[10px] tracking-[0.3em] text-[#c9a675] uppercase">{c.label}</div>
+                <p className="display-serif text-[15px] md:text-[17px] leading-[1.9] text-[#efe3c8] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                   {c.caption}
                 </p>
               </div>
@@ -666,7 +669,7 @@ function Why() {
   ];
 
   return (
-    <section className="bg-[#0c0a09] border-y border-[#2a2320]">
+    <section className="bg-[#14100c] border-y border-[#302519]">
       <div className="max-w-4xl mx-auto px-5 md:px-8 py-24 md:py-32">
         <div className="text-center mb-14">
           <div className="eyebrow mb-6">THREE THINGS</div>
@@ -676,17 +679,17 @@ function Why() {
           </h2>
         </div>
 
-        <div className="bg-[#120e0c] border border-[#2a2320] py-12 px-8 md:px-14">
+        <div className="bg-[#1b1510] border border-[#302519] py-12 px-8 md:px-14">
           <div className="text-center mb-12">
-            <div className="display-serif text-[48px] md:text-[72px] leading-none text-[#ebe1cf]">¥4,980</div>
-            <div className="text-[11px] tracking-[0.2em] uppercase text-[#8a7f6e] mt-3">Standard Plan — 月額（税別）</div>
+            <div className="display-serif text-[48px] md:text-[72px] leading-none text-[#efe3c8]">¥4,980</div>
+            <div className="text-[11px] tracking-[0.2em] uppercase text-[#a89778] mt-3">Standard Plan — 月額（税別）</div>
           </div>
-          <div className="h-px bg-[#2a2320] mb-10" />
+          <div className="h-px bg-[#302519] mb-10" />
           <div className="grid md:grid-cols-3 gap-10 md:gap-8">
             {points.map((p) => (
               <div key={p.label} className="text-center md:text-left">
-                <div className="display-serif text-[16px] md:text-[18px] mb-3 text-[#ebe1cf]">{p.label}</div>
-                <p className="text-[13px] leading-[2] text-[#8a7f6e]">{p.body}</p>
+                <div className="display-serif text-[16px] md:text-[18px] mb-3 text-[#efe3c8]">{p.label}</div>
+                <p className="text-[13px] leading-[2] text-[#a89778]">{p.body}</p>
               </div>
             ))}
           </div>
@@ -708,7 +711,7 @@ function Pricing() {
   ];
 
   return (
-    <section id="pricing" className="bg-[#120e0c] border-y border-[#2a2320]">
+    <section id="pricing" className="bg-[#1b1510] border-y border-[#302519]">
       <div className="max-w-6xl mx-auto px-5 md:px-8 py-24 md:py-32">
         <div className="text-center mb-16 md:mb-20">
           <div className="eyebrow mb-6">PRICING</div>
@@ -716,39 +719,39 @@ function Pricing() {
             席数で、<br />
             プランを選ぶ。
           </h2>
-          <p className="mt-6 text-[13px] text-[#8a7f6e] tracking-wide">
+          <p className="mt-6 text-[13px] text-[#a89778] tracking-wide">
             初期費用 ¥0　/　いつでも解約可能　/　契約期間の縛りなし
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
           {plans.map((p) => (
-            <div key={p.name} className={`relative p-10 md:p-11 ${p.recommended ? 'bg-[#1c1715] border border-[#c9a96e]/70 shadow-[0_32px_64px_-24px_rgba(201,169,110,0.15)]' : 'bg-[#120e0c] border border-[#2a2320]'}`}>
+            <div key={p.name} className={`relative p-10 md:p-11 ${p.recommended ? 'bg-[#2a2119] border border-[#c9a675]/70 shadow-[0_40px_80px_-24px_rgba(201,166,117,0.32),0_0_0_1px_rgba(201,166,117,0.18)]' : 'bg-[#1b1510] border border-[#302519]'}`}>
               {p.recommended && (
                 <div className="absolute top-0 left-0 right-0 -translate-y-1/2 flex justify-center">
-                  <span className="brand-bg text-[#0c0a09] text-[10px] font-semibold tracking-[0.2em] uppercase px-4 py-1.5">Recommended</span>
+                  <span className="brand-bg text-[#14100c] text-[10px] font-semibold tracking-[0.2em] uppercase px-4 py-1.5">Recommended</span>
                 </div>
               )}
               <div className="text-center mb-6">
-                <div className="display-serif text-[22px] text-[#ebe1cf]">{p.name}</div>
-                <p className="text-[11px] text-[#8a7f6e] mt-1 tracking-wide">{p.desc}</p>
+                <div className="display-serif text-[22px] text-[#efe3c8]">{p.name}</div>
+                <p className="text-[11px] text-[#a89778] mt-1 tracking-wide">{p.desc}</p>
               </div>
               <div className="text-center mb-8">
                 <div className="flex items-baseline justify-center gap-1">
-                  <span className="display-serif text-[40px] text-[#ebe1cf]">{p.price}</span>
-                  <span className="text-[11px] text-[#8a7f6e]">/月 (税別)</span>
+                  <span className="display-serif text-[40px] text-[#efe3c8]">{p.price}</span>
+                  <span className="text-[11px] text-[#a89778]">/月 (税別)</span>
                 </div>
-                <div className="mt-3 text-[11px] text-[#8a7f6e]">
-                  席数 <span className="text-[#ebe1cf]">{p.seats}</span>
-                  <span className="mx-2 text-[#3a302a]">/</span>
-                  予約 <span className="text-[#ebe1cf]">{p.reservations}</span>
+                <div className="mt-3 text-[11px] text-[#a89778]">
+                  席数 <span className="text-[#efe3c8]">{p.seats}</span>
+                  <span className="mx-2 text-[#48382a]">/</span>
+                  予約 <span className="text-[#efe3c8]">{p.reservations}</span>
                 </div>
               </div>
-              <div className="h-px bg-[#2a2320] mb-6" />
-              <div className="text-[11px] text-[#8a7f6e] mb-5 text-center">対象: {p.target}</div>
+              <div className="h-px bg-[#302519] mb-6" />
+              <div className="text-[11px] text-[#a89778] mb-5 text-center">対象: {p.target}</div>
               <ul className="space-y-3 mb-9">
                 {p.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2.5 text-[13px] text-[#b5a98f]">
+                  <li key={f} className="flex items-start gap-2.5 text-[13px] text-[#bdaa88]">
                     <Check className="w-3.5 h-3.5 brand-text mt-1 flex-shrink-0" strokeWidth={2.5} />
                     <span>{f}</span>
                   </li>
@@ -756,7 +759,7 @@ function Pricing() {
               </ul>
               <Link
                 href={`/register?plan=${p.name.toLowerCase()}`}
-                className={`w-full inline-flex items-center justify-center gap-1.5 py-3.5 text-[12px] font-medium tracking-[0.1em] transition ${p.recommended ? 'brand-bg text-[#0c0a09] hover:opacity-90' : 'border border-[#3a302a] text-[#ebe1cf] hover:border-[#c9a96e]/70'}`}
+                className={`w-full inline-flex items-center justify-center gap-1.5 py-3.5 text-[12px] font-medium tracking-[0.1em] transition ${p.recommended ? 'brand-bg text-[#14100c] hover:opacity-90' : 'border border-[#48382a] text-[#efe3c8] hover:border-[#c9a675]/70'}`}
               >
                 {p.name === 'Free' ? '無料で始める' : 'このプランで始める'}
               </Link>
@@ -786,7 +789,7 @@ function HomepageOption() {
   ];
 
   return (
-    <section id="homepage" className="bg-[#0c0a09] border-b border-[#2a2320]">
+    <section id="homepage" className="bg-[#14100c] border-b border-[#302519]">
       <div className="max-w-6xl mx-auto px-5 md:px-8 py-24 md:py-32">
         <div className="text-center mb-16 md:mb-20">
           <div className="eyebrow mb-6">OPTIONAL — HOMEPAGE</div>
@@ -794,47 +797,47 @@ function HomepageOption() {
             ホームページも、<br />
             まとめてお任せください。
           </h2>
-          <p className="mt-6 text-[13px] md:text-[14px] text-[#8a7f6e] tracking-wide leading-relaxed">
+          <p className="mt-6 text-[13px] md:text-[14px] text-[#a89778] tracking-wide leading-relaxed">
             「HP がない / 古いまま放置」のオーナー様へ。<br />
             予約システムを自社開発しているからこそ出せる、圧倒的な価格で制作いたします。
           </p>
         </div>
 
         <div className="mb-16 md:mb-20">
-          <div className="text-center mb-8"><div className="text-[11px] text-[#8a7f6e] tracking-[0.2em] uppercase">他社で作ると</div></div>
+          <div className="text-center mb-8"><div className="text-[11px] text-[#a89778] tracking-[0.2em] uppercase">他社で作ると</div></div>
           <div className="max-w-2xl mx-auto space-y-2">
             {competitors.map((c) => (
-              <div key={c.label} className="flex items-center justify-between px-6 py-4 bg-[#120e0c] border border-[#2a2320]">
-                <span className="text-[13px] text-[#b5a98f]">{c.label}</span>
-                <span className="display-serif text-[16px] md:text-[18px] text-[#8a7f6e]">{c.price}</span>
+              <div key={c.label} className="flex items-center justify-between px-6 py-4 bg-[#1b1510] border border-[#302519]">
+                <span className="text-[13px] text-[#bdaa88]">{c.label}</span>
+                <span className="display-serif text-[16px] md:text-[18px] text-[#a89778]">{c.price}</span>
               </div>
             ))}
           </div>
-          <div className="text-center mt-10"><div className="inline-block text-[#c9a96e] text-[18px]">↓</div></div>
+          <div className="text-center mt-10"><div className="inline-block text-[#c9a675] text-[18px]">↓</div></div>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {plans.map((p) => (
-            <div key={p.name} className={`relative p-10 md:p-11 ${p.recommended ? 'bg-[#1c1715] border border-[#c9a96e]/70 shadow-[0_32px_64px_-24px_rgba(201,169,110,0.15)]' : 'bg-[#120e0c] border border-[#2a2320]'}`}>
+            <div key={p.name} className={`relative p-10 md:p-11 ${p.recommended ? 'bg-[#2a2119] border border-[#c9a675]/70 shadow-[0_40px_80px_-24px_rgba(201,166,117,0.32),0_0_0_1px_rgba(201,166,117,0.18)]' : 'bg-[#1b1510] border border-[#302519]'}`}>
               {p.recommended && (
                 <div className="absolute top-0 left-0 right-0 -translate-y-1/2 flex justify-center">
-                  <span className="brand-bg text-[#0c0a09] text-[10px] font-semibold tracking-[0.2em] uppercase px-4 py-1.5">Recommended</span>
+                  <span className="brand-bg text-[#14100c] text-[10px] font-semibold tracking-[0.2em] uppercase px-4 py-1.5">Recommended</span>
                 </div>
               )}
               <div className="text-center mb-6">
-                <div className="display-serif text-[22px] text-[#ebe1cf]">{p.name}</div>
-                <p className="text-[11px] text-[#8a7f6e] mt-1 tracking-wide">{p.desc}</p>
+                <div className="display-serif text-[22px] text-[#efe3c8]">{p.name}</div>
+                <p className="text-[11px] text-[#a89778] mt-1 tracking-wide">{p.desc}</p>
               </div>
               <div className="text-center mb-8">
                 <div className="flex items-baseline justify-center gap-1">
-                  <span className="display-serif text-[40px] text-[#ebe1cf]">{p.price}</span>
-                  <span className="text-[11px] text-[#8a7f6e]">{p.priceNote}</span>
+                  <span className="display-serif text-[40px] text-[#efe3c8]">{p.price}</span>
+                  <span className="text-[11px] text-[#a89778]">{p.priceNote}</span>
                 </div>
               </div>
-              <div className="h-px bg-[#2a2320] mb-6" />
+              <div className="h-px bg-[#302519] mb-6" />
               <ul className="space-y-3 mb-9">
                 {p.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2.5 text-[13px] text-[#b5a98f]">
+                  <li key={f} className="flex items-start gap-2.5 text-[13px] text-[#bdaa88]">
                     <Check className="w-3.5 h-3.5 brand-text mt-1 flex-shrink-0" strokeWidth={2.5} />
                     <span>{f}</span>
                   </li>
@@ -842,7 +845,7 @@ function HomepageOption() {
               </ul>
               <a
                 href="mailto:shibahara.724@gmail.com?subject=HP制作の相談&body=HairSalonLink%20のHP制作について相談したいです。%0A%0A店舗名：%0Aご希望プラン：%0Aご希望内容：%0A"
-                className={`w-full inline-flex items-center justify-center gap-1.5 py-3.5 text-[12px] font-medium tracking-[0.1em] transition ${p.recommended ? 'brand-bg text-[#0c0a09] hover:opacity-90' : 'border border-[#3a302a] text-[#ebe1cf] hover:border-[#c9a96e]/70'}`}
+                className={`w-full inline-flex items-center justify-center gap-1.5 py-3.5 text-[12px] font-medium tracking-[0.1em] transition ${p.recommended ? 'brand-bg text-[#14100c] hover:opacity-90' : 'border border-[#48382a] text-[#efe3c8] hover:border-[#c9a675]/70'}`}
               >
                 このプランで相談する
               </a>
@@ -858,14 +861,14 @@ function HomepageOption() {
               { t: '02', h: '美容室専用テンプレ', d: '業種を絞ることで、制作工程をほぼ流し込み化。1時間で完成する基盤を持っています。' },
               { t: '03', h: '契約者様限定オプション', d: 'HairSalonLink ご契約オーナー様のみのため、新規営業コストがかからず価格に還元できます。' },
             ].map((i) => (
-              <div key={i.t} className="p-6 bg-[#120e0c] border border-[#2a2320]">
-                <div className="text-[#c9a96e] text-[11px] tracking-[0.2em] mb-3">{i.t}</div>
-                <div className="display-serif text-[16px] text-[#ebe1cf] mb-2">{i.h}</div>
-                <p className="text-[12px] text-[#8a7f6e] leading-relaxed">{i.d}</p>
+              <div key={i.t} className="p-6 bg-[#1b1510] border border-[#302519]">
+                <div className="text-[#c9a675] text-[11px] tracking-[0.2em] mb-3">{i.t}</div>
+                <div className="display-serif text-[16px] text-[#efe3c8] mb-2">{i.h}</div>
+                <p className="text-[12px] text-[#a89778] leading-relaxed">{i.d}</p>
               </div>
             ))}
           </div>
-          <p className="mt-8 text-center text-[11px] text-[#6b5f52] tracking-wide leading-relaxed">
+          <p className="mt-8 text-center text-[11px] text-[#7a6850] tracking-wide leading-relaxed">
             ※ 独自ドメイン（例: your-salon.com）ご希望の場合は別途 ¥9,800 で取得・設定代行も承ります。<br />
             ※ 制作はご契約プラン内の特典ではなく、別途有料オプションとなります。
           </p>
@@ -889,7 +892,7 @@ function Security() {
     { icon: Sparkles,   t: '個人情報保護法 準拠',        d: '日本の個人情報保護法・特定商取引法に対応した運用。データエクスポートは常時可能。' },
   ];
   return (
-    <section className="bg-[#120e0c] border-b border-[#2a2320]">
+    <section className="section-paper border-y border-[#d4c39e]">
       <div className="max-w-6xl mx-auto px-5 md:px-8 py-24 md:py-32">
         <div className="text-center mb-14 md:mb-16">
           <div className="eyebrow mb-6">SECURITY &amp; TRUST</div>
@@ -897,7 +900,7 @@ function Security() {
             顧客データは、<br className="md:hidden" />
             あなたの資産です。
           </h2>
-          <p className="mt-6 text-[13px] text-[#8a7f6e] tracking-wide">
+          <p className="mt-6 text-[13px] text-[#6b5b44] tracking-wide">
             守り方も、渡し方も、取り出し方も——事業者側で塞がない設計にしています。
           </p>
         </div>
@@ -905,10 +908,10 @@ function Security() {
           {items.map((i) => {
             const Icon = i.icon;
             return (
-              <div key={i.t} className="p-6 md:p-7 bg-[#0c0a09] border border-[#2a2320]">
-                <Icon className="w-5 h-5 brand-text mb-4" strokeWidth={1.8} />
-                <div className="display-serif text-[16px] text-[#ebe1cf] mb-2">{i.t}</div>
-                <p className="text-[12px] leading-[1.9] text-[#8a7f6e]">{i.d}</p>
+              <div key={i.t} className="p-6 md:p-7 bg-white/60 backdrop-blur border border-[#d4c39e] shadow-warm-sm">
+                <Icon className="w-5 h-5 mb-4" strokeWidth={1.8} style={{ color: '#8a5a2a' }} />
+                <div className="display-serif text-[16px] text-[#1a120c] mb-2">{i.t}</div>
+                <p className="text-[12px] leading-[1.9] text-[#5d4f3e]">{i.d}</p>
               </div>
             );
           })}
@@ -924,12 +927,12 @@ function Security() {
 
 function FounderNote() {
   return (
-    <section className="bg-[#0c0a09] border-b border-[#2a2320]">
+    <section className="bg-[#14100c] border-b border-[#302519]">
       <div className="max-w-3xl mx-auto px-5 md:px-8 py-24 md:py-32">
         <div className="text-center mb-10">
           <div className="eyebrow mb-6">FROM THE FOUNDER</div>
         </div>
-        <div className="display-serif text-[18px] md:text-[22px] leading-[2] text-[#ebe1cf] space-y-6">
+        <div className="display-serif text-[18px] md:text-[22px] leading-[2] text-[#efe3c8] space-y-6">
           <p>
             個人で回している美容室ほど、
             予約・カルテ・LINE返信・広告費の判断が、
@@ -948,11 +951,11 @@ function FounderNote() {
         </div>
         <div className="mt-10 flex items-center justify-center gap-3">
           <div className="w-10 h-10 rounded-full brand-bg flex items-center justify-center">
-            <Scissors className="w-4 h-4 text-[#0c0a09]" strokeWidth={2} />
+            <Scissors className="w-4 h-4 text-[#14100c]" strokeWidth={2} />
           </div>
           <div className="text-left">
-            <div className="text-[12px] text-[#ebe1cf] display-serif">HairSalonLink 開発チーム</div>
-            <div className="text-[10px] text-[#8a7f6e] tracking-wider">Tokyo / Kumamoto</div>
+            <div className="text-[12px] text-[#efe3c8] display-serif">HairSalonLink 開発チーム</div>
+            <div className="text-[10px] text-[#a89778] tracking-wider">Tokyo / Kumamoto</div>
           </div>
         </div>
       </div>
@@ -991,7 +994,7 @@ function Faq() {
             </details>
           ))}
         </div>
-        <div className="mt-14 text-center text-[13px] text-[#8a7f6e]">
+        <div className="mt-14 text-center text-[13px] text-[#a89778]">
           ほかにご不明な点は、{' '}
           <a href="mailto:shibahara.724@gmail.com" className="brand-text font-semibold underline underline-offset-4">
             shibahara.724@gmail.com
@@ -1012,11 +1015,11 @@ function FinalCta() {
     <section className="cta-dark relative">
       <div className="relative max-w-3xl mx-auto px-5 md:px-8 py-24 md:py-32 text-center">
         <div className="eyebrow mb-8">GET STARTED</div>
-        <h2 className="display-serif text-[30px] md:text-[48px] leading-[1.5] md:leading-[1.4] text-[#ebe1cf]">
+        <h2 className="display-serif text-[30px] md:text-[48px] leading-[1.5] md:leading-[1.4] text-[#efe3c8]">
           次の一人の常連を、<br />
           自分の手で。
         </h2>
-        <p className="mt-8 text-[14px] md:text-[15px] leading-[2] text-[#8a7f6e]">
+        <p className="mt-8 text-[14px] md:text-[15px] leading-[2] text-[#a89778]">
           ホットペッパーは、今日もはたらいてくれる。<br className="hidden md:block" />
           けれど、次の常連を連れてくるのは、広告ではなく、あなたの店そのものだ。
         </p>
@@ -1025,17 +1028,17 @@ function FinalCta() {
           <Link href="/register" className="btn-cta-gold">HairSalonLink を始める</Link>
           <Link
             href="/book/hair-salon-demo"
-            className="inline-flex items-center justify-center gap-2 px-7 py-[15px] text-[13px] font-medium tracking-[0.12em] text-[#ebe1cf] border border-[#3a302a] hover:border-[#c9a96e] hover:text-[#c9a96e] transition"
+            className="inline-flex items-center justify-center gap-2 px-7 py-[15px] text-[13px] font-medium tracking-[0.12em] text-[#efe3c8] border border-[#48382a] hover:border-[#c9a675] hover:text-[#c9a675] transition"
           >
             サンプル店舗を見る
           </Link>
         </div>
 
-        <div className="mt-10 flex items-center justify-center gap-1 text-[#c9a96e]">
+        <div className="mt-10 flex items-center justify-center gap-1 text-[#c9a675]">
           {Array.from({ length: 5 }).map((_, i) => (
             <Star key={i} className="w-3.5 h-3.5 fill-current" strokeWidth={0} />
           ))}
-          <span className="ml-2 text-[11px] text-[#8a7f6e]">美容室オーナー様の声をもとに設計</span>
+          <span className="ml-2 text-[11px] text-[#a89778]">美容室オーナー様の声をもとに設計</span>
         </div>
       </div>
     </section>
@@ -1048,26 +1051,26 @@ function FinalCta() {
 
 function Footer() {
   return (
-    <footer className="bg-[#0a0807] text-[#9b8d87] text-sm">
+    <footer className="bg-[#100c08] text-[#a89778] text-sm">
       <div className="max-w-6xl mx-auto px-5 md:px-8 py-16">
         <div className="grid md:grid-cols-4 gap-10">
           <div className="md:col-span-1">
             <div className="flex items-center gap-2.5 mb-5">
               <div className="w-8 h-8 rounded-sm brand-bg flex items-center justify-center border border-white/10">
-                <Scissors className="w-3.5 h-3.5 text-[#0c0a09]" strokeWidth={2} />
+                <Scissors className="w-3.5 h-3.5 text-[#14100c]" strokeWidth={2} />
               </div>
               <div>
                 <div className="font-semibold text-white tracking-tight text-[14px]">HairSalonLink</div>
-                <div className="text-[9px] tracking-[0.18em] uppercase text-[#7a6e68]">for Hair Salons</div>
+                <div className="text-[9px] tracking-[0.18em] uppercase text-[#8a7a60]">for Hair Salons</div>
               </div>
             </div>
-            <p className="text-[11px] leading-[1.9] text-[#7a6e68]">
+            <p className="text-[11px] leading-[1.9] text-[#8a7a60]">
               広告に頼らない経営のための、<br />
               美容室専用の管理ツール。
             </p>
           </div>
           <div>
-            <div className="text-[10px] tracking-[0.28em] uppercase text-[#c9a96e] mb-5">Product</div>
+            <div className="text-[10px] tracking-[0.28em] uppercase text-[#c9a675] mb-5">Product</div>
             <ul className="space-y-3 text-[12px]">
               <li><Link href="#features" className="hover:text-white transition">機能</Link></li>
               <li><Link href="#tour" className="hover:text-white transition">画面ツアー</Link></li>
@@ -1078,7 +1081,7 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <div className="text-[10px] tracking-[0.28em] uppercase text-[#c9a96e] mb-5">Account</div>
+            <div className="text-[10px] tracking-[0.28em] uppercase text-[#c9a675] mb-5">Account</div>
             <ul className="space-y-3 text-[12px]">
               <li><Link href="/login" className="hover:text-white transition">ログイン</Link></li>
               <li><Link href="/register" className="hover:text-white transition">新規ご登録</Link></li>
@@ -1086,8 +1089,8 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <div className="text-[10px] tracking-[0.28em] uppercase text-[#c9a96e] mb-5">Legal</div>
-            <ul className="space-y-3 text-[12px] text-[#5a514c]">
+            <div className="text-[10px] tracking-[0.28em] uppercase text-[#c9a675] mb-5">Legal</div>
+            <ul className="space-y-3 text-[12px] text-[#6b5b44]">
               <li>利用規約</li>
               <li>プライバシーポリシー</li>
               <li>特定商取引法に基づく表記</li>
@@ -1095,7 +1098,7 @@ function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 pt-6 border-t border-[#2e2629] flex flex-col md:flex-row items-center justify-between gap-3 text-[10px] text-[#5a514c] tracking-wider">
+        <div className="mt-14 pt-6 border-t border-[#332a1e] flex flex-col md:flex-row items-center justify-between gap-3 text-[10px] text-[#6b5b44] tracking-wider">
           <div>© 2026 HairSalonLink. All rights reserved.</div>
           <div>Made for small hair salons in Japan.</div>
         </div>

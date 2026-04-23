@@ -136,21 +136,33 @@
 }
 
 :root {
-  /* Nostalgic dark palette — jazz bar / film noir */
-  --bg-base: #0c0a09;        /* warm near-black */
-  --bg-alt: #120e0c;         /* slightly lighter */
-  --bg-card: #161210;        /* card surface */
-  --bg-card-hi: #1c1715;     /* elevated card */
-  --border: #2a2320;         /* warm dark border */
-  --border-hi: #3a302a;      /* hover border */
+  /* Editorial noir — Hermès / Aesop / The Row digital palette
+     Deep chocolate ink layered with champagne cream & refined brass */
+  --bg-base: #14100c;        /* rich warm ink (chocolate undertone) */
+  --bg-alt: #1b1510;         /* alt section */
+  --bg-card: #211a14;        /* card surface — warmer, tonal */
+  --bg-card-hi: #2a2119;     /* elevated card */
+  --border: #302519;         /* warm dark border */
+  --border-hi: #48382a;      /* hover border */
 
-  --text: #ebe1cf;           /* warm ivory primary text */
-  --text-muted: #8a7f6e;     /* muted warm */
-  --text-dim: #5c5448;       /* dim warm */
+  --text: #efe3c8;           /* champagne cream primary text */
+  --text-muted: #a89778;     /* muted warm taupe */
+  --text-dim: #6b5b44;       /* dim brass-taupe */
 
-  --brand: #c9a96e;          /* muted antique gold */
-  --brand-deep: #9c7a4a;     /* deeper bronze */
-  --brand-light: #1f1812;    /* dark brown accent bg */
+  --brand: #c9a675;          /* refined brass (warmer than gold) */
+  --brand-deep: #a37b47;     /* deeper bronze */
+  --brand-soft: #e3c897;     /* soft glow */
+  --brand-light: #241a12;    /* dark brass-tinted bg */
+
+  /* Sparingly-used accents for editorial pop */
+  --bordeaux: #7a2e2b;       /* deep wine — quote marks, rare emphasis */
+  --sage: #6a7562;           /* smoky sage — secondary accent */
+
+  /* Paper cream — for inverted sections (future use) */
+  --paper: #f2e9d6;
+  --paper-alt: #e6d9bd;
+  --paper-ink: #2a1f16;
+
   --ink: var(--text);
   --ink-muted: var(--text-muted);
 }
@@ -553,12 +565,23 @@ body { background: var(--bg-base); color: var(--text); }
   color: var(--brand);
 }
 
-/* Hero — warm-black with subtle vignette */
+/* Hero — layered editorial noir with brass aurora */
 .hero-bg {
+  position: relative;
   background:
-    radial-gradient(ellipse 900px 520px at 50% 0%, rgba(201, 169, 110, 0.08), transparent 65%),
-    radial-gradient(ellipse 700px 400px at 90% 100%, rgba(156, 122, 74, 0.06), transparent 60%),
-    linear-gradient(180deg, #0c0a09 0%, #120e0c 100%);
+    radial-gradient(ellipse 1100px 620px at 50% -8%, rgba(201, 166, 117, 0.14), transparent 60%),
+    radial-gradient(ellipse 800px 500px at 88% 108%, rgba(163, 123, 71, 0.10), transparent 55%),
+    radial-gradient(ellipse 600px 400px at 10% 60%, rgba(122, 46, 43, 0.06), transparent 65%),
+    linear-gradient(180deg, #14100c 0%, #1b1510 50%, #14100c 100%);
+}
+.hero-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 0.88  0 0 0 0 0.65  0 0 0 0.25 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  opacity: 0.12;
+  mix-blend-mode: overlay;
 }
 
 /* Nostalgic film grain overlay */
@@ -576,15 +599,50 @@ body { background: var(--bg-base); color: var(--text); }
 }
 
 /* Alternating section background */
-.section-alt { background: #120e0c; }
-.section-deep { background: #0c0a09; }
+.section-alt { background: #1b1510; }
+.section-deep { background: #14100c; }
 
-/* Final CTA — deepest black with gold halo */
-.cta-dark {
+/* Paper-cream inverted section — editorial "intermission" */
+.section-paper {
   background:
-    radial-gradient(ellipse 700px 400px at 50% 0%, rgba(201, 169, 110, 0.09), transparent 70%),
-    linear-gradient(180deg, #0c0a09 0%, #050403 100%);
+    radial-gradient(ellipse 900px 500px at 50% 0%, rgba(201, 166, 117, 0.10), transparent 70%),
+    linear-gradient(180deg, #f2e9d6 0%, #e6d9bd 100%);
+  color: #2a1f16;
+}
+.section-paper .display-serif,
+.section-paper h1, .section-paper h2, .section-paper h3 { color: #1a120c; }
+.section-paper .eyebrow { color: #8a5a2a; }
+
+/* Final CTA — layered warm black with brass aurora + grain */
+.cta-dark {
+  position: relative;
+  background:
+    radial-gradient(ellipse 900px 500px at 50% 0%, rgba(201, 166, 117, 0.14), transparent 70%),
+    radial-gradient(ellipse 500px 350px at 20% 100%, rgba(122, 46, 43, 0.08), transparent 65%),
+    linear-gradient(180deg, #14100c 0%, #0a0705 100%);
   color: var(--text);
+  overflow: hidden;
+}
+.cta-dark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 0.88  0 0 0 0 0.65  0 0 0 0.25 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  opacity: 0.10;
+  mix-blend-mode: overlay;
+}
+
+/* Warm-tinted elevation shadows (not cold neutral black) */
+.shadow-warm-sm { box-shadow: 0 2px 8px -2px rgba(36, 26, 18, 0.35); }
+.shadow-warm-md { box-shadow: 0 12px 28px -12px rgba(36, 26, 18, 0.45); }
+.shadow-warm-lg { box-shadow: 0 32px 64px -24px rgba(36, 26, 18, 0.55), 0 0 0 1px rgba(201, 166, 117, 0.08); }
+.shadow-brass    { box-shadow: 0 32px 72px -24px rgba(163, 123, 71, 0.28), 0 0 0 1px rgba(201, 166, 117, 0.18); }
+
+/* Hairline divider — brass fade */
+.divider-brass {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201, 166, 117, 0.4), transparent);
 }
 
 /* Large metric number */
@@ -648,11 +706,11 @@ body { background: var(--bg-base); color: var(--text); }
   color: var(--brand);
 }
 
-/* Gold CTA variant — for final CTA section */
+/* Gold CTA variant — brass with inset highlight (editorial metallic) */
 .btn-cta-gold {
-  background: var(--brand);
-  color: var(--bg-base);
-  padding: 16px 34px;
+  background: linear-gradient(180deg, #d9b986 0%, #c9a675 55%, #a37b47 100%);
+  color: #1a120c;
+  padding: 16px 36px;
   border-radius: 1px;
   font-weight: 700;
   font-size: 13px;
@@ -660,11 +718,18 @@ body { background: var(--bg-base); color: var(--text); }
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  transition: transform 0.2s ease, background 0.2s ease;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 236, 200, 0.45),
+    inset 0 -1px 0 rgba(60, 40, 20, 0.25),
+    0 12px 32px -10px rgba(163, 123, 71, 0.55);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .btn-cta-gold:hover {
-  background: #d8b979;
   transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 236, 200, 0.55),
+    inset 0 -1px 0 rgba(60, 40, 20, 0.25),
+    0 18px 40px -10px rgba(163, 123, 71, 0.7);
 }
 
 /* Details/FAQ styling — dark theme */
