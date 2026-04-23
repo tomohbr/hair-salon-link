@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { getCurrentSalon } from '@/lib/salonData';
 import InventoryClient from './InventoryClient';
 
@@ -6,8 +6,9 @@ export const dynamic = 'force-dynamic';
 
 export default async function InventoryPage() {
   const { salon } = await getCurrentSalon();
-  const products = await prisma.product.findMany({
-    where: { salonId: salon.id, isActive: true },
+  const db = prismaForSalon(salon.id);
+  const products = await db.product.findMany({
+    where: { isActive: true },
     orderBy: [{ category: 'asc' }, { name: 'asc' }],
   });
   return (

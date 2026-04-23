@@ -1,5 +1,5 @@
 import { getCurrentSalon, computeSalonKpis } from '@/lib/salonData';
-import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { yen, pct, sourceLabel, fmtDate } from '@/lib/utils/format';
 import {
   TrendingUp, TrendingDown, Users, Calendar, AlertTriangle, MessageCircle,
@@ -10,12 +10,12 @@ import Link from 'next/link';
 
 export default async function DashboardPage() {
   const { salon } = await getCurrentSalon();
+  const db = prismaForSalon(salon.id);
   const kpi = await computeSalonKpis(salon.id);
   const todayStr = new Date().toISOString().slice(0, 10);
 
-  const upcomingRes = await prisma.reservation.findMany({
+  const upcomingRes = await db.reservation.findMany({
     where: {
-      salonId: salon.id,
       status: { in: ['confirmed', 'pending'] },
       date: { gte: todayStr },
     },

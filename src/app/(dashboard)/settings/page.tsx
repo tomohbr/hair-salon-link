@@ -9,8 +9,9 @@ import HpbInboundForm from './HpbInboundForm';
 import { parseBusinessHours } from '@/lib/availability';
 
 export default async function SettingsPage() {
-  const { salon, staff } = await getSalonData();
+  const { salon, staff, session } = await getSalonData();
   const businessHours = parseBusinessHours(salon.businessHours);
+  const canViewAudit = session.role === 'admin' || session.role === 'superadmin';
 
   // 公開URL
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://hair-salon-link-production.up.railway.app';
@@ -143,8 +144,8 @@ export default async function SettingsPage() {
         </div>
       </div>
 
-      {/* 監査ログへの導線 */}
-      <Link
+      {/* 監査ログへの導線 — オーナーのみ */}
+      {canViewAudit && <Link
         href="/settings/audit"
         className="card-box flex items-center gap-3 hover:border-stone-400 transition-colors"
       >
@@ -158,7 +159,7 @@ export default async function SettingsPage() {
           </div>
         </div>
         <ChevronRight className="w-5 h-5 text-stone-400 shrink-0" />
-      </Link>
+      </Link>}
     </div>
   );
 }

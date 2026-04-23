@@ -2,13 +2,14 @@
 // 電話番号が一致する既存顧客があれば上書き、なければ新規作成。
 
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { getCurrentSalon } from '@/lib/salonData';
 import { parseCustomersCsv } from '@/lib/csv/hpb';
 
 export async function POST(req: NextRequest) {
   try {
     const { salon } = await getCurrentSalon();
+    const db = prismaForSalon(salon.id);
     const { csv } = await req.json();
     if (!csv) return NextResponse.json({ error: 'CSV が空です' }, { status: 400 });
 
@@ -20,20 +21,15 @@ export async function POST(req: NextRequest) {
 
     for (const row of parsed.rows) {
       try {
-        // 電話番号で一致検索（なければ email で検索）
         let existing = null;
         if (row.phone) {
-          existing = await prisma.customer.findFirst({
-            where: { salonId: salon.id, phone: row.phone },
-          });
+          existing = await db.customer.findFirst({ where: { phone: row.phone } });
         }
         if (!existing && row.email) {
-          existing = await prisma.customer.findFirst({
-            where: { salonId: salon.id, email: row.email },
-          });
+          existing = await db.customer.findFirst({ where: { email: row.email } });
         }
         if (existing) {
-          await prisma.customer.update({
+          await db.customer.update({
             where: { id: existing.id },
             data: {
               name: row.name,
@@ -51,7 +47,7 @@ export async function POST(req: NextRequest) {
           });
           updated++;
         } else {
-          await prisma.customer.create({
+          await db.customer.create({
             data: {
               salonId: salon.id,
               name: row.name,

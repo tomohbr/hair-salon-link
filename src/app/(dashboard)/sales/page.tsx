@@ -1,5 +1,5 @@
 // 売上サマリー — 期間別・支払方法別・客単価
-import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { getCurrentSalon } from '@/lib/salonData';
 import { yen } from '@/lib/utils/format';
 import { TrendingUp, TrendingDown, Wallet, CreditCard, Smartphone, Users } from 'lucide-react';
@@ -56,13 +56,12 @@ function getJstBounds() {
 
 export default async function SalesPage() {
   const { salon } = await getCurrentSalon();
+  const db = prismaForSalon(salon.id);
 
   const { today: todayStr, monthStart, prevMonthStart, prevMonthEnd, year, month } = getJstBounds();
 
-  // 今月分 — 「完了」状態 もしくは 決済 (paidAt) 済み を含める (取りこぼし防止)
-  const thisMonthReservations = await prisma.reservation.findMany({
+  const thisMonthReservations = await db.reservation.findMany({
     where: {
-      salonId: salon.id,
       date: { gte: monthStart },
       OR: [
         { status: 'completed' },
@@ -80,9 +79,8 @@ export default async function SalesPage() {
     },
   });
 
-  const prevMonthReservations = await prisma.reservation.findMany({
+  const prevMonthReservations = await db.reservation.findMany({
     where: {
-      salonId: salon.id,
       date: { gte: prevMonthStart, lte: prevMonthEnd },
       OR: [
         { status: 'completed' },

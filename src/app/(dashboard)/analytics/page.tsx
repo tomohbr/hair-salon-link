@@ -1,10 +1,11 @@
 import { getCurrentSalon, computeSalonKpis } from '@/lib/salonData';
-import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { yen, pct, sourceLabel } from '@/lib/utils/format';
 import { canAccessFeature } from '@/lib/planLimits';
 
 export default async function AnalyticsPage() {
   const { salon } = await getCurrentSalon();
+  const db = prismaForSalon(salon.id);
 
   // プランチェック: standard, pro のみ
   if (!canAccessFeature(salon.plan, 'analytics')) {
@@ -18,7 +19,7 @@ export default async function AnalyticsPage() {
   }
 
   const kpi = await computeSalonKpis(salon.id);
-  const customers = await prisma.customer.findMany({ where: { salonId: salon.id } });
+  const customers = await db.customer.findMany();
 
   const segments = ['hpb_new_repeat', 'hpb_new_churn', 'hpb_new_dormant', 'own_repeater', 'line_heavy', 'coupon_reactive', 'vip'];
   const segmentStats = segments.map(seg => {

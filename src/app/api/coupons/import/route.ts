@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { getCurrentSalon } from '@/lib/salonData';
 import { parseCouponsCsv } from '@/lib/csv/hpb';
 
 export async function POST(req: NextRequest) {
   try {
     const { salon } = await getCurrentSalon();
+    const db = prismaForSalon(salon.id);
     const { csv } = await req.json();
     if (!csv) return NextResponse.json({ error: 'CSV が空です' }, { status: 400 });
 
@@ -14,7 +15,7 @@ export async function POST(req: NextRequest) {
     let updated = 0;
     let skipped = parsed.skipped;
 
-    const existingAll = await prisma.coupon.findMany({ where: { salonId: salon.id } });
+    const existingAll = await db.coupon.findMany();
     const existingByTitle = new Map(existingAll.map((c) => [c.title.trim().toLowerCase(), c]));
 
     for (const row of parsed.rows) {
@@ -22,7 +23,7 @@ export async function POST(req: NextRequest) {
         const key = row.title.trim().toLowerCase();
         const existing = existingByTitle.get(key);
         if (existing) {
-          await prisma.coupon.update({
+          await db.coupon.update({
             where: { id: existing.id },
             data: {
               description: row.description ?? existing.description,
@@ -36,7 +37,7 @@ export async function POST(req: NextRequest) {
           });
           updated++;
         } else {
-          await prisma.coupon.create({
+          await db.coupon.create({
             data: {
               salonId: salon.id,
               title: row.title,

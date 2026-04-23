@@ -11,7 +11,7 @@
 // 重複判定: 同じ salonId + date + startTime + customerName は既存とみなしスキップ
 
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { requireRole } from '@/lib/auth';
 import { parseHpbCsv } from '@/lib/csvImport';
 import { getAvailableSlots } from '@/lib/availability';
@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
     const session = await requireRole(['admin']);
     if (!session.salonId) return NextResponse.json({ error: 'no salon' }, { status: 403 });
     const salonId = session.salonId;
+    const db = prismaForSalon(salonId);
 
     const body = await req.json();
     const csvText: string = body.csv || '';
@@ -30,7 +31,7 @@ export async function POST(req: NextRequest) {
 
     const { imported, skipped } = parseHpbCsv(csvText);
 
-    const menus = await prisma.menu.findMany({ where: { salonId } });
+    const menus = await db.menu.findMany();
 
     let created = 0;
     let duplicates = 0;
@@ -41,9 +42,8 @@ export async function POST(req: NextRequest) {
       const r = imported[i];
       try {
         // 既存の重複チェック
-        const dup = await prisma.reservation.findFirst({
+        const dup = await db.reservation.findFirst({
           where: {
-            salonId,
             date: r.date,
             startTime: r.startTime,
             customer: { name: r.customerName },
@@ -75,10 +75,10 @@ export async function POST(req: NextRequest) {
 
         // 顧客作成 or 取得
         let customer = r.phone
-          ? await prisma.customer.findFirst({ where: { salonId, phone: r.phone } })
+          ? await db.customer.findFirst({ where: { phone: r.phone } })
           : null;
         if (!customer) {
-          customer = await prisma.customer.create({
+          customer = await db.customer.create({
             data: {
               salonId,
               name: r.customerName,
@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
         const endMin = sh * 60 + sm + duration;
         const endTime = `${String(Math.floor(endMin / 60)).padStart(2, '0')}:${String(endMin % 60).padStart(2, '0')}`;
 
-        await prisma.reservation.create({
+        await db.reservation.create({
           data: {
             salonId,
             customerId: customer.id,

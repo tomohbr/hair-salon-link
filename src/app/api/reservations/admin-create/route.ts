@@ -12,6 +12,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { requireRole } from '@/lib/auth';
 import { getAvailableSlots } from '@/lib/availability';
 import { checkCustomerLimit, checkReservationLimit } from '@/lib/planLimits';
@@ -20,6 +21,7 @@ export async function POST(req: NextRequest) {
   try {
     const session = await requireRole(['admin', 'staff']);
     if (!session.salonId) return NextResponse.json({ error: 'no salon' }, { status: 403 });
+    const db = prismaForSalon(session.salonId);
 
     const { menuId, date, startTime, customerName, phone, source } = await req.json();
 
@@ -27,9 +29,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: '必須項目が不足しています' }, { status: 400 });
     }
 
-    const menu = await prisma.menu.findFirst({
-      where: { id: menuId, salonId: session.salonId },
-    });
+    const menu = await db.menu.findFirst({ where: { id: menuId } });
     if (!menu) return NextResponse.json({ error: 'メニュー不明' }, { status: 404 });
 
     // 空き枠チェック
@@ -39,23 +39,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'この時間枠は既に予約が入っています', slots }, { status: 409 });
     }
 
+    // Salon 自体は RLS 対象外 (テナント主体) なので素の prisma で OK
     const salon = await prisma.salon.findUnique({ where: { id: session.salonId } });
     if (!salon) return NextResponse.json({ error: 'salon not found' }, { status: 404 });
 
-    // プラン制限チェック
     const resErr = await checkReservationLimit(salon.id, salon.plan);
     if (resErr) return NextResponse.json({ error: resErr }, { status: 403 });
 
     const validSource = ['line', 'web', 'hotpepper', 'phone', 'walk_in', 'manual'].includes(source) ? source : 'manual';
 
-    // 顧客検索 or 新規
     let customer = phone
-      ? await prisma.customer.findFirst({ where: { salonId: session.salonId, phone } })
+      ? await db.customer.findFirst({ where: { phone } })
       : null;
     if (!customer) {
       const custErr = await checkCustomerLimit(salon.id, salon.plan);
       if (custErr) return NextResponse.json({ error: custErr }, { status: 403 });
-      customer = await prisma.customer.create({
+      customer = await db.customer.create({
         data: {
           salonId: session.salonId,
           name: customerName,
@@ -70,7 +69,7 @@ export async function POST(req: NextRequest) {
     const endMin = sh * 60 + sm + menu.durationMinutes;
     const endTime = `${String(Math.floor(endMin / 60)).padStart(2, '0')}:${String(endMin % 60).padStart(2, '0')}`;
 
-    const r = await prisma.reservation.create({
+    const r = await db.reservation.create({
       data: {
         salonId: session.salonId,
         customerId: customer.id,

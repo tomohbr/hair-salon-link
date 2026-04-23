@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { getCurrentSalon } from '@/lib/salonData';
 import { parseMenusCsv } from '@/lib/csv/hpb';
 
 export async function POST(req: NextRequest) {
   try {
     const { salon } = await getCurrentSalon();
+    const db = prismaForSalon(salon.id);
     const { csv } = await req.json();
     if (!csv) return NextResponse.json({ error: 'CSV が空です' }, { status: 400 });
 
@@ -14,8 +15,7 @@ export async function POST(req: NextRequest) {
     let updated = 0;
     let skipped = parsed.skipped;
 
-    // 既存メニューをあらかじめ取得し、名前一致で上書き判定
-    const existingAll = await prisma.menu.findMany({ where: { salonId: salon.id } });
+    const existingAll = await db.menu.findMany();
     const existingByName = new Map(existingAll.map((m) => [m.name.trim().toLowerCase(), m]));
 
     for (const row of parsed.rows) {
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
         const key = row.name.trim().toLowerCase();
         const existing = existingByName.get(key);
         if (existing) {
-          await prisma.menu.update({
+          await db.menu.update({
             where: { id: existing.id },
             data: {
               category: row.category || existing.category,
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
           updated++;
         } else {
           const maxSort = existingAll.reduce((m, x) => Math.max(m, x.sortOrder), 0);
-          await prisma.menu.create({
+          await db.menu.create({
             data: {
               salonId: salon.id,
               name: row.name,

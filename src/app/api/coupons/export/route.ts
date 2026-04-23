@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { getCurrentSalon } from '@/lib/salonData';
 import { toCsv } from '@/lib/csv/hpb';
 
 export async function GET() {
   try {
     const { salon } = await getCurrentSalon();
-    const coupons = await prisma.coupon.findMany({
-      where: { salonId: salon.id },
+    const db = prismaForSalon(salon.id);
+    const coupons = await db.coupon.findMany({
       orderBy: { createdAt: 'desc' },
     });
     const headers = [

@@ -1,6 +1,6 @@
 import { getCurrentSalon } from '@/lib/salonData';
 import { getWeekCalendar } from '@/lib/availability';
-import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { fmtDate, sourceLabel } from '@/lib/utils/format';
 import ReservationsClient from './ReservationsClient';
 import PaymentButton from './PaymentButton';
@@ -8,8 +8,8 @@ import PaymentButton from './PaymentButton';
 export default async function ReservationsPage({ searchParams }: { searchParams: Promise<{ week?: string }> }) {
   const sp = await searchParams;
   const { salon } = await getCurrentSalon();
+  const db = prismaForSalon(salon.id);
 
-  // 週の開始日（パラメータ or 今週の月曜）
   const today = new Date();
   const mondayOffset = (today.getDay() + 6) % 7;
   const defaultMonday = new Date(today);
@@ -18,16 +18,15 @@ export default async function ReservationsPage({ searchParams }: { searchParams:
 
   const week = await getWeekCalendar(salon.id, weekStart);
 
-  // 週内の全予約を詳細情報込みで取得（支払い記録UI用）
   const weekDates = week.map((d) => d.date);
-  const detailed = await prisma.reservation.findMany({
-    where: { salonId: salon.id, date: { in: weekDates } },
+  const detailed = await db.reservation.findMany({
+    where: { date: { in: weekDates } },
     orderBy: [{ date: 'asc' }, { startTime: 'asc' }],
     include: { customer: true },
   });
 
-  const menus = await prisma.menu.findMany({
-    where: { salonId: salon.id, isActive: true },
+  const menus = await db.menu.findMany({
+    where: { isActive: true },
     orderBy: { sortOrder: 'asc' },
     select: { id: true, name: true, price: true, durationMinutes: true, category: true },
   });

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { ChevronLeft, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { getCurrentSalon } from '@/lib/salonData';
 import { prismaForSalon } from '@/lib/prismaScoped';
@@ -51,7 +52,11 @@ export default async function AuditPage({
 }: {
   searchParams: Promise<{ page?: string; filter?: string }>;
 }) {
-  const { salon } = await getCurrentSalon();
+  const { salon, session } = await getCurrentSalon();
+  // オーナー (admin) と SuperAdmin のみ閲覧可能
+  if (session.role !== 'admin' && session.role !== 'superadmin') {
+    notFound();
+  }
   const db = prismaForSalon(salon.id);
   const sp = await searchParams;
   const page = Math.max(1, parseInt(sp.page ?? '1', 10) || 1);

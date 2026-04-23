@@ -3,13 +3,14 @@
 // 外部ID で重複チェック、無ければ顧客名+日時でも重複チェック
 
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { getCurrentSalon } from '@/lib/salonData';
 import { parseHpbEmail } from '@/lib/hpb/emailParser';
 
 export async function POST(req: NextRequest) {
   try {
     const { salon } = await getCurrentSalon();
+    const db = prismaForSalon(salon.id);
     const { body } = await req.json();
     if (!body || typeof body !== 'string') {
       return NextResponse.json({ error: 'メール本文を入力してください' }, { status: 400 });
@@ -32,15 +33,14 @@ export async function POST(req: NextRequest) {
       // 既存確認
       let existing = null;
       if (bk.externalId) {
-        existing = await prisma.reservation.findFirst({
-          where: { salonId: salon.id, externalId: bk.externalId },
+        existing = await db.reservation.findFirst({
+          where: { externalId: bk.externalId },
         });
       }
       if (!existing) {
         // 日付+開始時刻+顧客名でも重複チェック
-        existing = await prisma.reservation.findFirst({
+        existing = await db.reservation.findFirst({
           where: {
-            salonId: salon.id,
             date: bk.date,
             startTime: bk.startTime,
             customer: { name: bk.customerName },
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
       // キャンセルイベント
       if (bk.kind === 'cancel') {
         if (existing) {
-          await prisma.reservation.update({
+          await db.reservation.update({
             where: { id: existing.id },
             data: { status: 'cancelled' },
           });
@@ -67,10 +67,10 @@ export async function POST(req: NextRequest) {
 
       // 顧客を確保（電話番号で検索し無ければ作成）
       let customer = bk.customerPhone
-        ? await prisma.customer.findFirst({ where: { salonId: salon.id, phone: bk.customerPhone } })
+        ? await db.customer.findFirst({ where: { phone: bk.customerPhone } })
         : null;
       if (!customer) {
-        customer = await prisma.customer.create({
+        customer = await db.customer.create({
           data: {
             salonId: salon.id,
             name: bk.customerName,
@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
 
       // 変更イベント
       if (bk.kind === 'change' && existing) {
-        await prisma.reservation.update({
+        await db.reservation.update({
           where: { id: existing.id },
           data: {
             date: bk.date,
@@ -109,9 +109,8 @@ export async function POST(req: NextRequest) {
       }
 
       // 枠の他予約との衝突チェック（同一店舗同一日時）
-      const conflict = await prisma.reservation.findFirst({
+      const conflict = await db.reservation.findFirst({
         where: {
-          salonId: salon.id,
           date: bk.date,
           status: { in: ['pending', 'confirmed', 'completed'] },
           AND: [
@@ -131,7 +130,7 @@ export async function POST(req: NextRequest) {
         continue;
       }
 
-      await prisma.reservation.create({
+      await db.reservation.create({
         data: {
           salonId: salon.id,
           customerId: customer.id,

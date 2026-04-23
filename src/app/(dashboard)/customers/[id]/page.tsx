@@ -1,5 +1,5 @@
 import { getCurrentSalon } from '@/lib/salonData';
-import { prisma } from '@/lib/db';
+import { prismaForSalon } from '@/lib/prismaScoped';
 import { yen, fmtDate, sourceLabel } from '@/lib/utils/format';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -9,12 +9,11 @@ import SendLineButton from './SendLineButton';
 export default async function CustomerDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const { salon } = await getCurrentSalon();
-  const customer = await prisma.customer.findFirst({
-    where: { id, salonId: salon.id },
-  });
+  const db = prismaForSalon(salon.id);
+  const customer = await db.customer.findFirst({ where: { id } });
   if (!customer) return notFound();
 
-  const treatments = await prisma.treatmentRecord.findMany({
+  const treatments = await db.treatmentRecord.findMany({
     where: { customerId: id },
     orderBy: { date: 'desc' },
     include: { staff: true },
