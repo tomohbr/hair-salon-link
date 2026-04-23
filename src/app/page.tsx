@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { Scissors, ArrowRight, Check, Shield, Zap, Users, TrendingUp, Clock, Database, Sparkles, Quote, Star } from 'lucide-react';
 import RoiCalculator from './_landing/RoiCalculator';
 import StickyMobileCta from './_landing/StickyMobileCta';
+import Reveal from './_landing/Reveal';
+import CountUp from './_landing/CountUp';
 
 export const metadata = {
   title: 'HairSalonLink — 広告に頼らない経営へ。美容室専用の顧客管理ツール',
@@ -53,13 +55,13 @@ function Header() {
           </div>
         </Link>
         <nav className="hidden md:flex items-center gap-7 text-[13px] text-[#a89778]">
-          <Link href="#features" className="hover:text-[#efe3c8] transition">機能</Link>
-          <Link href="#tour" className="hover:text-[#efe3c8] transition">画面ツアー</Link>
-          <Link href="#compare" className="hover:text-[#efe3c8] transition">比較</Link>
-          <Link href="#roi" className="hover:text-[#efe3c8] transition">試算</Link>
-          <Link href="#pricing" className="hover:text-[#efe3c8] transition">料金</Link>
-          <Link href="#faq" className="hover:text-[#efe3c8] transition">FAQ</Link>
-          <Link href="/login" className="hover:text-[#efe3c8] transition">ログイン</Link>
+          <Link href="#features" className="nav-link hover:text-[#efe3c8] transition">機能</Link>
+          <Link href="#tour" className="nav-link hover:text-[#efe3c8] transition">画面ツアー</Link>
+          <Link href="#compare" className="nav-link hover:text-[#efe3c8] transition">比較</Link>
+          <Link href="#roi" className="nav-link hover:text-[#efe3c8] transition">試算</Link>
+          <Link href="#pricing" className="nav-link hover:text-[#efe3c8] transition">料金</Link>
+          <Link href="#faq" className="nav-link hover:text-[#efe3c8] transition">FAQ</Link>
+          <Link href="/login" className="nav-link hover:text-[#efe3c8] transition">ログイン</Link>
         </nav>
         <Link
           href="/register"
@@ -86,6 +88,14 @@ function TrustBar() {
   return (
     <div className="border-b border-[#302519] bg-[#1a1511]">
       <div className="max-w-6xl mx-auto px-5 md:px-8 py-3 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-[11px] text-[#a89778] tracking-wide">
+        <span className="inline-flex items-center gap-1.5">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full rounded-full bg-[#c9a675] opacity-60 pulse-brass" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#c9a675]" />
+          </span>
+          <span>全国でご導入中</span>
+        </span>
+        <span className="hidden sm:inline text-[#48382a]">·</span>
         {items.map((i) => {
           const Icon = i.icon;
           return (
@@ -106,50 +116,79 @@ function TrustBar() {
 
 function Hero() {
   return (
-    <section className="relative hero-bg">
+    <section className="relative hero-bg overflow-hidden">
+      {/* animated brass aurora */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full animate-aurora"
+        style={{
+          background:
+            'radial-gradient(closest-side, rgba(201,166,117,0.20), rgba(122,46,43,0.06) 55%, transparent 75%)',
+          filter: 'blur(30px)',
+        }}
+      />
       <div className="relative max-w-5xl mx-auto px-5 md:px-8 pt-20 pb-20 md:pt-32 md:pb-28 text-center fade-up">
-        <div className="text-[10px] tracking-[0.32em] uppercase text-[#a89778] mb-8">
-          HAIR SALON &nbsp;×&nbsp; LINE &nbsp;×&nbsp; HOT PEPPER
-        </div>
+        <Reveal variant="fade" delay={0}>
+          <div className="text-[10px] tracking-[0.32em] uppercase text-[#a89778] mb-8">
+            HAIR SALON &nbsp;×&nbsp; LINE &nbsp;×&nbsp; HOT PEPPER
+          </div>
+        </Reveal>
 
-        <h1 className="display-serif text-[38px] md:text-[72px] leading-[1.35] md:leading-[1.22] text-[#efe3c8]">
-          広告に依存しない店へ、<br />
-          静かに切り替えていく。
-        </h1>
+        <Reveal variant="up" delay={80}>
+          <h1 className="display-serif text-[38px] md:text-[72px] leading-[1.35] md:leading-[1.22] text-[#efe3c8]">
+            広告に<span className="text-brass-sheen">依存しない店</span>へ、<br />
+            静かに切り替えていく。
+          </h1>
+        </Reveal>
 
-        <p className="mt-10 text-[14px] md:text-[16px] text-[#bdaa88] leading-[2.1] max-w-2xl mx-auto">
-          ホットペッパーの広告費、紙カルテ、個人LINEでの返信——
-          <br className="hidden md:block" />
-          <span className="text-[#efe3c8]">毎月削られている経営の裏側を、一本の地図にまとめる。</span>
-        </p>
+        <Reveal variant="up" delay={180}>
+          <p className="mt-10 text-[14px] md:text-[16px] text-[#bdaa88] leading-[2.1] max-w-2xl mx-auto">
+            ホットペッパーの広告費、紙カルテ、個人LINEでの返信——
+            <br className="hidden md:block" />
+            <span className="text-[#efe3c8]">毎月削られている経営の裏側を、一本の地図にまとめる。</span>
+          </p>
+        </Reveal>
 
-        <div className="mt-12 flex flex-col sm:flex-row gap-3 justify-center items-center">
-          <Link href="/register" className="btn-cta">
-            無料で HairSalonLink を始める
-          </Link>
-          <Link href="#tour" className="btn-cta-ghost">
-            画面ツアーを見る
-          </Link>
-        </div>
+        <Reveal variant="up" delay={280}>
+          <div className="mt-12 flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <Link href="/register" className="btn-cta">
+              無料で HairSalonLink を始める
+            </Link>
+            <Link href="#tour" className="btn-cta-ghost">
+              画面ツアーを見る
+            </Link>
+          </div>
 
-        <div className="mt-6 text-[11px] text-[#7a6850]">
-          クレジットカード登録不要 ・ 30 秒で開設
-        </div>
+          <div className="mt-6 text-[11px] text-[#7a6850]">
+            クレジットカード登録不要 ・ 30 秒で開設
+          </div>
+        </Reveal>
 
         {/* Hero stats row — editorial hairline */}
         <div className="divider-brass mt-16 md:mt-20 max-w-3xl mx-auto" />
-        <div className="grid grid-cols-3 max-w-3xl mx-auto divide-x divide-[#302519]/70">
-          {[
-            { n: '¥0', l: '初期費用' },
-            { n: '30分', l: '導入完了まで' },
-            { n: '¥4,980〜', l: '月額 (税別)' },
-          ].map((s) => (
-            <div key={s.l} className="py-7 md:py-9">
-              <div className="display-serif text-[24px] md:text-[36px] text-[#efe3c8] tabular-nums" style={{ letterSpacing: '-0.015em' }}>{s.n}</div>
-              <div className="mt-2 text-[10px] md:text-[11px] tracking-[0.24em] uppercase text-[#a89778]">{s.l}</div>
-            </div>
-          ))}
-        </div>
+        <Reveal variant="up" delay={100}>
+          <div className="grid grid-cols-3 max-w-3xl mx-auto divide-x divide-[#302519]/70">
+            <StatCell label="初期費用">
+              <span className="display-serif text-[24px] md:text-[36px] text-[#efe3c8]" style={{ letterSpacing: '-0.015em' }}>¥0</span>
+            </StatCell>
+            <StatCell label="導入完了まで">
+              <CountUp
+                to={30}
+                durationMs={1400}
+                format={(n) => `${n}分`}
+                className="display-serif text-[24px] md:text-[36px] text-[#efe3c8] tabular-nums"
+              />
+            </StatCell>
+            <StatCell label="月額 (税別)">
+              <CountUp
+                to={4980}
+                durationMs={1600}
+                format={(n) => `¥${n.toLocaleString('ja-JP')}〜`}
+                className="display-serif text-[24px] md:text-[36px] text-[#efe3c8] tabular-nums"
+              />
+            </StatCell>
+          </div>
+        </Reveal>
         <div className="divider-brass max-w-3xl mx-auto" />
 
         <div className="mt-10">
@@ -160,6 +199,15 @@ function Hero() {
         </div>
       </div>
     </section>
+  );
+}
+
+function StatCell({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="py-7 md:py-9">
+      <div>{children}</div>
+      <div className="mt-2 text-[10px] md:text-[11px] tracking-[0.24em] uppercase text-[#a89778]">{label}</div>
+    </div>
   );
 }
 
@@ -260,27 +308,30 @@ function Tour() {
               key={t.name}
               className={`grid md:grid-cols-2 gap-10 md:gap-16 items-center ${i % 2 === 1 ? 'md:[&>*:first-child]:order-2' : ''}`}
             >
-              <div>
-                <div className="text-[10px] tracking-[0.28em] uppercase text-[#c9a675] mb-4">
-                  0{i + 1} — Screen
+              <Reveal variant={i % 2 === 0 ? 'left' : 'right'}>
+                <div>
+                  <div className="text-[10px] tracking-[0.28em] uppercase text-[#c9a675] mb-4">
+                    0{i + 1} — Screen
+                  </div>
+                  <h3 className="display-serif text-[24px] md:text-[32px] leading-[1.4] mb-5">
+                    {t.name}
+                  </h3>
+                  <p className="text-[14px] md:text-[15px] leading-[2.05] text-[#bdaa88]">
+                    {t.desc}
+                  </p>
+                  <Link
+                    href="/register"
+                    className="group mt-6 inline-flex items-center gap-1.5 text-[12px] tracking-[0.1em] text-[#c9a675] hover:text-[#efe3c8] transition"
+                  >
+                    この画面を実際に試す
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                  </Link>
                 </div>
-                <h3 className="display-serif text-[24px] md:text-[32px] leading-[1.4] mb-5">
-                  {t.name}
-                </h3>
-                <p className="text-[14px] md:text-[15px] leading-[2.05] text-[#bdaa88]">
-                  {t.desc}
-                </p>
-                <Link
-                  href="/register"
-                  className="mt-6 inline-flex items-center gap-1.5 text-[12px] tracking-[0.1em] text-[#c9a675] hover:text-[#efe3c8] transition"
-                >
-                  この画面を実際に試す
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-              <div className="relative">
-                <div className="absolute -inset-6 bg-gradient-to-br from-[#c9a675]/10 to-transparent blur-2xl" />
-                <div className="relative rounded-lg overflow-hidden border border-[#302519] bg-[#1a1511] shadow-[0_32px_64px_-24px_rgba(0,0,0,0.8)]">
+              </Reveal>
+              <Reveal variant={i % 2 === 0 ? 'right' : 'left'} delay={100}>
+                <div className="relative tilt-hover">
+                  <div className="absolute -inset-6 bg-gradient-to-br from-[#c9a675]/10 to-transparent blur-2xl" />
+                  <div className="relative rounded-lg overflow-hidden border border-[#302519] bg-[#1a1511] shadow-[0_32px_64px_-24px_rgba(0,0,0,0.8)]">
                   {/* chrome */}
                   <div className="flex items-center gap-1.5 px-3 py-2 border-b border-[#302519] bg-[#100c08]">
                     <span className="w-2 h-2 rounded-full bg-[#48382a]" />
@@ -291,6 +342,7 @@ function Tour() {
                   {t.mock}
                 </div>
               </div>
+              </Reveal>
             </div>
           ))}
         </div>
@@ -451,16 +503,18 @@ function Features() {
         </div>
 
         <div className="space-y-16 md:space-y-20">
-          {features.map((f) => (
-            <div key={f.n} className="grid md:grid-cols-12 gap-6 md:gap-10 items-start">
-              <div className="md:col-span-3">
-                <div className="display-serif text-[40px] md:text-[56px] leading-none text-[#c9a675]/55">{f.n}</div>
+          {features.map((f, idx) => (
+            <Reveal key={f.n} variant="up" delay={idx * 60}>
+              <div className="grid md:grid-cols-12 gap-6 md:gap-10 items-start group">
+                <div className="md:col-span-3">
+                  <div className="display-serif text-[40px] md:text-[56px] leading-none text-[#c9a675]/55 transition-all duration-500 group-hover:text-[#c9a675] group-hover:translate-x-1">{f.n}</div>
+                </div>
+                <div className="md:col-span-9">
+                  <h3 className="display-serif text-[20px] md:text-[26px] leading-[1.5] mb-4">{f.title}</h3>
+                  <p className="text-[14px] md:text-[15px] leading-[2.05] text-[#bdaa88]">{f.body}</p>
+                </div>
               </div>
-              <div className="md:col-span-9">
-                <h3 className="display-serif text-[20px] md:text-[26px] leading-[1.5] mb-4">{f.title}</h3>
-                <p className="text-[14px] md:text-[15px] leading-[2.05] text-[#bdaa88]">{f.body}</p>
-              </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -633,23 +687,28 @@ function Gallery() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {cards.map((c) => (
-            <div key={c.label} className="relative aspect-[3/4] overflow-hidden border border-[#302519] group">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={c.img}
-                alt={c.label}
-                loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover grayscale-[40%] brightness-75 group-hover:grayscale-0 group-hover:brightness-90 transition duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#14100c] via-[#14100c]/55 to-[#14100c]/10" />
-              <div className="relative h-full p-5 md:p-6 flex flex-col justify-between">
-                <div className="text-[10px] tracking-[0.3em] text-[#c9a675] uppercase">{c.label}</div>
-                <p className="display-serif text-[15px] md:text-[17px] leading-[1.9] text-[#efe3c8] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-                  {c.caption}
-                </p>
+          {cards.map((c, idx) => (
+            <Reveal key={c.label} variant="up" delay={idx * 90}>
+              <div className="relative aspect-[3/4] overflow-hidden border border-[#302519] group cursor-pointer">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={c.img}
+                  alt={c.label}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover grayscale-[40%] brightness-75 group-hover:grayscale-0 group-hover:brightness-95 group-hover:scale-110 transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#14100c] via-[#14100c]/55 to-[#14100c]/10 group-hover:from-[#14100c]/85 transition-all duration-700" />
+                <div className="relative h-full p-5 md:p-6 flex flex-col justify-between">
+                  <div className="text-[10px] tracking-[0.3em] text-[#c9a675] uppercase translate-y-0 group-hover:-translate-y-0.5 transition-transform duration-500">{c.label}</div>
+                  <div className="overflow-hidden">
+                    <p className="display-serif text-[15px] md:text-[17px] leading-[1.9] text-[#efe3c8] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] translate-y-0 group-hover:-translate-y-0.5 transition-transform duration-500">
+                      {c.caption}
+                    </p>
+                    <div className="mt-2 w-0 group-hover:w-8 h-px bg-[#c9a675] transition-all duration-500" />
+                  </div>
+                </div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -725,8 +784,9 @@ function Pricing() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {plans.map((p) => (
-            <div key={p.name} className={`relative p-10 md:p-11 ${p.recommended ? 'bg-[#2a2119] border border-[#c9a675]/70 shadow-[0_40px_80px_-24px_rgba(201,166,117,0.32),0_0_0_1px_rgba(201,166,117,0.18)]' : 'bg-[#1b1510] border border-[#302519]'}`}>
+          {plans.map((p, idx) => (
+            <Reveal key={p.name} variant="up" delay={idx * 100}>
+            <div className={`relative p-10 md:p-11 lift-hover ${p.recommended ? 'bg-[#2a2119] border border-[#c9a675]/70 shadow-[0_40px_80px_-24px_rgba(201,166,117,0.32),0_0_0_1px_rgba(201,166,117,0.18)]' : 'bg-[#1b1510] border border-[#302519] hover:border-[#48382a]'}`}>
               {p.recommended && (
                 <div className="absolute top-0 left-0 right-0 -translate-y-1/2 flex justify-center">
                   <span className="brand-bg text-[#14100c] text-[10px] font-semibold tracking-[0.2em] uppercase px-4 py-1.5">Recommended</span>
@@ -764,6 +824,7 @@ function Pricing() {
                 {p.name === 'Free' ? '無料で始める' : 'このプランで始める'}
               </Link>
             </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -908,7 +969,7 @@ function Security() {
           {items.map((i) => {
             const Icon = i.icon;
             return (
-              <div key={i.t} className="p-6 md:p-7 bg-white/60 backdrop-blur border border-[#d4c39e] shadow-warm-sm">
+              <div key={i.t} className="p-6 md:p-7 bg-white/60 backdrop-blur border border-[#d4c39e] shadow-warm-sm lift-hover hover:bg-white/80 hover:border-[#c9a675]">
                 <Icon className="w-5 h-5 mb-4" strokeWidth={1.8} style={{ color: '#8a5a2a' }} />
                 <div className="display-serif text-[16px] text-[#1a120c] mb-2">{i.t}</div>
                 <p className="text-[12px] leading-[1.9] text-[#5d4f3e]">{i.d}</p>
