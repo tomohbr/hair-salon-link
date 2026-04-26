@@ -408,17 +408,6 @@
       <span>Color Specialist</span>
       <span>髪質改善</span>
     </div>
-    <div class="hero-cta-row">
-      <a class="btn btn-primary hero-cta" href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener">
-        <span class="live-dot" aria-hidden></span>
-        24時間オンライン予約
-        <span class="arrow">→</span>
-      </a>
-      <a class="btn btn-ghost hero-cta-tel" href="tel:0962884232">
-        096-288-4232
-      </a>
-    </div>
-    <p class="hero-microcopy">空席はリアルタイムで反映 ・ ご来店の3時間前まで予約可能</p>
   </div>
   <div class="hero-scroll">scroll</div>
 </section>
@@ -442,11 +431,6 @@
           オーダーは、写真でも、雰囲気の言葉でも構いません。<br />
           似合うを一緒に探す時間を、大切にしています。
         </p>
-        <a class="btn btn-primary" href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener" style="margin-top: 28px;">
-          <span class="live-dot" aria-hidden></span>
-          24時間オンライン予約
-          <span class="arrow">→</span>
-        </a>
       </div>
     </div>
   </div>
@@ -544,14 +528,7 @@
         </div>
       </li>
     </ol>
-    <div class="flow-cta reveal">
-      <a class="btn btn-primary" href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener">
-        <span class="live-dot" aria-hidden></span>
-        いますぐ空席をチェック
-        <span class="arrow">→</span>
-      </a>
-      <p class="flow-cta-note">クレジットカード登録不要 ・ キャンセルもオンラインで OK</p>
-    </div>
+    <p class="flow-cta-note reveal" style="text-align:center;">クレジットカード登録不要 ・ キャンセルもオンラインで OK</p>
   </div>
 </section>
 
@@ -575,11 +552,6 @@
       ※ 価格は税込目安。長さ・状態によって変動します。<br />
       ※ 当日のメニュー追加・組み替えはお気軽にご相談ください。
     </p>
-    <div class="menu-cta reveal">
-      <a class="btn btn-primary" href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener">
-        メニューを選んで予約 <span class="arrow">→</span>
-      </a>
-    </div>
   </div>
 </section>
 
@@ -632,16 +604,6 @@
   </div>
 </section>
 
-<!-- ─── Sticky Mobile CTA ─── -->
-<div class="sticky-cta" id="stickyCta" aria-hidden="true">
-  <a href="tel:0962884232" class="sticky-tel">電話</a>
-  <a href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" class="sticky-book" target="_blank" rel="noopener">
-    <span class="live-dot" aria-hidden></span>
-    24時間オンライン予約
-    <span class="arrow">→</span>
-  </a>
-</div>
-
 <!-- ─── Footer ─── -->
 <footer>
   <div class="container">
@@ -667,16 +629,6 @@
     document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-in'));
   }
 
-  // Sticky mobile CTA — 600px スクロール後に表示
-  const stickyCta = document.getElementById('stickyCta');
-  if (stickyCta) {
-    const onScroll = () => {
-      if (window.scrollY > 600) stickyCta.classList.add('is-visible');
-      else stickyCta.classList.remove('is-visible');
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  }
 </script>
 </body>
 </html>
