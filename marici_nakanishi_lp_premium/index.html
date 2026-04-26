@@ -78,6 +78,40 @@
     transition: background .3s, color .3s;
   }
   .nav-cta:hover { background: var(--ink); color: var(--bg); }
+  .nav-cta-primary {
+    background: linear-gradient(180deg, #d9b986 0%, #b88a4a 100%);
+    color: #1a1612 !important;
+    border-color: transparent;
+    font-weight: 600;
+    display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 8px 20px -8px rgba(184,138,74,0.5), inset 0 1px 0 rgba(255,236,200,0.4);
+  }
+  .nav-cta-primary:hover { background: linear-gradient(180deg, #e8c898 0%, #c69b58 100%); transform: translateY(-1px); }
+  .nav-cta-label-short { display: none; }
+  @media (max-width: 480px) {
+    .nav-cta-label-full { display: none; }
+    .nav-cta-label-short { display: inline; }
+  }
+
+  /* ─────────── Live dot (pulsing brass) ─────────── */
+  .live-dot {
+    position: relative;
+    display: inline-block; width: 7px; height: 7px;
+    border-radius: 50%; background: #4ade80;
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+    animation: livePulse 2.2s ease-out infinite;
+  }
+  .nav-cta-primary .live-dot { background: #2a8a4a; box-shadow: 0 0 0 0 rgba(42,138,74,0.8); animation-name: livePulseDark; }
+  @keyframes livePulse {
+    0%   { box-shadow: 0 0 0 0 rgba(74,222,128,0.7); }
+    70%  { box-shadow: 0 0 0 8px rgba(74,222,128,0); }
+    100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
+  }
+  @keyframes livePulseDark {
+    0%   { box-shadow: 0 0 0 0 rgba(42,138,74,0.7); }
+    70%  { box-shadow: 0 0 0 8px rgba(42,138,74,0); }
+    100% { box-shadow: 0 0 0 0 rgba(42,138,74,0); }
+  }
 
   /* ─────────── Hero ─────────── */
   .hero { position: relative; height: 100vh; min-height: 640px; overflow: hidden; background: var(--bg-deep); }
@@ -108,6 +142,20 @@
   .hero-scroll { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); color: rgba(248,241,227,0.7); font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 8px; }
   .hero-scroll::after { content: ""; display: block; width: 1px; height: 24px; background: rgba(248,241,227,0.5); animation: scrollLine 1.8s ease-in-out infinite; }
   @keyframes scrollLine { 0%,100% { transform: scaleY(0.4); transform-origin: top; } 50% { transform: scaleY(1); } }
+
+  .hero-cta-row { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .hero-cta { gap: 10px; }
+  .hero-cta-tel { padding: 14px 22px; font-size: 11px; }
+  .hero-microcopy {
+    margin-top: 18px;
+    font-size: 11px; letter-spacing: 0.06em;
+    color: rgba(248,241,227,0.68);
+  }
+  @media (max-width: 480px) {
+    .hero-cta-row { flex-direction: column; align-items: stretch; gap: 10px; width: 100%; max-width: 320px; }
+    .hero-cta { justify-content: center; }
+    .hero-cta-tel { justify-content: center; }
+  }
 
   /* ─────────── Section base ─────────── */
   section { padding: 120px 0; }
@@ -178,6 +226,53 @@
     .strength-block + .strength-block { margin-top: 80px; }
   }
 
+  /* ─────────── Booking Flow ─────────── */
+  .flow {
+    background: linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+    padding: 120px 0;
+  }
+  .flow-head { text-align: center; margin-bottom: 64px; }
+  .flow-head .lead { max-width: 56ch; margin: 16px auto 0; }
+  .flow-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-bottom: 56px;
+    counter-reset: flow;
+  }
+  .flow-list li {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 32px 28px;
+    position: relative;
+    transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s;
+  }
+  .flow-list li:hover { transform: translateY(-4px); box-shadow: 0 24px 48px -16px rgba(36,26,18,0.18); }
+  .flow-list .num {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
+    font-size: 44px; color: var(--accent); opacity: 0.7;
+    line-height: 1; margin-bottom: 12px;
+  }
+  .flow-list h3 {
+    font-family: 'Fraunces', serif; font-weight: 400;
+    font-size: 19px; line-height: 1.4; margin-bottom: 10px;
+  }
+  .flow-list p { font-size: 13px; line-height: 1.95; color: var(--ink-soft); }
+  @media (max-width: 720px) {
+    .flow-list { grid-template-columns: 1fr; gap: 16px; }
+    .flow-list li { padding: 22px 20px; }
+  }
+  .flow-cta { text-align: center; }
+  .flow-cta .btn { gap: 10px; }
+  .flow-cta-note {
+    margin-top: 14px;
+    font-size: 11px; letter-spacing: 0.06em;
+    color: var(--ink-mute);
+  }
+
+  .menu-cta { margin-top: 36px; text-align: center; }
+
   /* ─────────── Menu ─────────── */
   .menu { background: var(--paper); padding: 120px 0; }
   .menu-head { text-align: center; margin-bottom: 72px; }
@@ -231,6 +326,44 @@
   .info .map-card a { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
   @media (max-width: 880px) { .info-grid { grid-template-columns: 1fr; gap: 48px; } }
 
+  /* ─────────── Sticky Mobile CTA ─────────── */
+  .sticky-cta {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    z-index: 90;
+    display: none;
+    gap: 10px;
+    padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(245, 239, 230, 0.96);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid var(--line);
+    transform: translateY(120%);
+    transition: transform .4s cubic-bezier(.22,1,.36,1);
+  }
+  .sticky-cta.is-visible { transform: translateY(0); }
+  .sticky-tel {
+    flex: 0 0 auto;
+    padding: 14px 18px;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    text-align: center;
+  }
+  .sticky-book {
+    flex: 1 1 auto;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 14px 20px;
+    background: linear-gradient(180deg, #d9b986 0%, #b88a4a 100%);
+    color: #1a1612;
+    font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+    font-weight: 600;
+    box-shadow: 0 12px 24px -8px rgba(184,138,74,0.5), inset 0 1px 0 rgba(255,236,200,0.4);
+  }
+  @media (max-width: 720px) {
+    .sticky-cta { display: flex; }
+    /* 末尾セクションが隠れないよう余白を作る */
+    footer { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
+  }
+
   /* ─────────── Footer ─────────── */
   footer { background: var(--bg-deep); color: rgba(248,241,227,0.66); padding: 60px 0 40px; font-size: 11px; letter-spacing: 0.04em; }
   footer .inner { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
@@ -250,9 +383,14 @@
       <a href="#editorial">Works</a>
       <a href="#strengths">Craft</a>
       <a href="#menu">Menu</a>
+      <a href="#flow">Booking</a>
       <a href="#info">Info</a>
     </nav>
-    <a href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" class="nav-cta" target="_blank" rel="noopener">Book</a>
+    <a href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" class="nav-cta nav-cta-primary" target="_blank" rel="noopener">
+      <span class="live-dot" aria-hidden></span>
+      <span class="nav-cta-label-full">ご予約 / 空席を見る</span>
+      <span class="nav-cta-label-short">予約</span>
+    </a>
   </div>
 </header>
 
@@ -270,6 +408,17 @@
       <span>Color Specialist</span>
       <span>髪質改善</span>
     </div>
+    <div class="hero-cta-row">
+      <a class="btn btn-primary hero-cta" href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener">
+        <span class="live-dot" aria-hidden></span>
+        24時間オンライン予約
+        <span class="arrow">→</span>
+      </a>
+      <a class="btn btn-ghost hero-cta-tel" href="tel:0962884232">
+        096-288-4232
+      </a>
+    </div>
+    <p class="hero-microcopy">空席はリアルタイムで反映 ・ ご来店の3時間前まで予約可能</p>
   </div>
   <div class="hero-scroll">scroll</div>
 </section>
@@ -293,6 +442,11 @@
           オーダーは、写真でも、雰囲気の言葉でも構いません。<br />
           似合うを一緒に探す時間を、大切にしています。
         </p>
+        <a class="btn btn-primary" href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener" style="margin-top: 28px;">
+          <span class="live-dot" aria-hidden></span>
+          24時間オンライン予約
+          <span class="arrow">→</span>
+        </a>
       </div>
     </div>
   </div>
@@ -323,7 +477,7 @@
   <div class="interior-photo">
     <div class="interior-caption">
       <h2 class="serif">熊本・上通り、<br />光と素材の店内で。</h2>
-      <p>コンクリートの床に、抜けの良い天井。落ち着いた間接照明。<br />2 席だけだから、ひとりひとりに丁寧に向き合えます。</p>
+      <p>コンクリートの床に、抜けの良い天井。落ち着いた間接照明。<br />4 席のちいさな店だから、ひとりひとりに丁寧に向き合えます。</p>
     </div>
   </div>
 </section>
@@ -359,6 +513,48 @@
   </div>
 </section>
 
+<!-- ─── Booking Flow ─── -->
+<section class="flow" id="flow">
+  <div class="container-narrow">
+    <div class="flow-head reveal">
+      <div class="section-eyebrow">How to book</div>
+      <h2 class="section-title serif">ご予約は、<br /><em>3 ステップ</em>で完了。</h2>
+      <p class="lead" style="margin: 0 auto;">深夜でも早朝でも、お好きな時に。空席はリアルタイムで表示されるので、二重予約や折り返しの心配はありません。</p>
+    </div>
+    <ol class="flow-list">
+      <li class="reveal">
+        <div class="num serif">01</div>
+        <div class="body">
+          <h3 class="serif">空席を選ぶ</h3>
+          <p>カレンダーから希望日を選ぶと、その日の空き時間が一覧で表示されます。</p>
+        </div>
+      </li>
+      <li class="reveal">
+        <div class="num serif">02</div>
+        <div class="body">
+          <h3 class="serif">メニューを選ぶ</h3>
+          <p>カット・カラー・ケアブリーチ・髪質改善などから、ご希望のメニューを選択。</p>
+        </div>
+      </li>
+      <li class="reveal">
+        <div class="num serif">03</div>
+        <div class="body">
+          <h3 class="serif">お名前と連絡先を入力</h3>
+          <p>30 秒で完了。LINE 登録があると次回からは入力不要です。</p>
+        </div>
+      </li>
+    </ol>
+    <div class="flow-cta reveal">
+      <a class="btn btn-primary" href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener">
+        <span class="live-dot" aria-hidden></span>
+        いますぐ空席をチェック
+        <span class="arrow">→</span>
+      </a>
+      <p class="flow-cta-note">クレジットカード登録不要 ・ キャンセルもオンラインで OK</p>
+    </div>
+  </div>
+</section>
+
 <!-- ─── Menu ─── -->
 <section class="menu" id="menu">
   <div class="container-narrow">
@@ -379,6 +575,11 @@
       ※ 価格は税込目安。長さ・状態によって変動します。<br />
       ※ 当日のメニュー追加・組み替えはお気軽にご相談ください。
     </p>
+    <div class="menu-cta reveal">
+      <a class="btn btn-primary" href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener">
+        メニューを選んで予約 <span class="arrow">→</span>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -431,6 +632,16 @@
   </div>
 </section>
 
+<!-- ─── Sticky Mobile CTA ─── -->
+<div class="sticky-cta" id="stickyCta" aria-hidden="true">
+  <a href="tel:0962884232" class="sticky-tel">電話</a>
+  <a href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" class="sticky-book" target="_blank" rel="noopener">
+    <span class="live-dot" aria-hidden></span>
+    24時間オンライン予約
+    <span class="arrow">→</span>
+  </a>
+</div>
+
 <!-- ─── Footer ─── -->
 <footer>
   <div class="container">
@@ -454,6 +665,17 @@
     document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
   } else {
     document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-in'));
+  }
+
+  // Sticky mobile CTA — 600px スクロール後に表示
+  const stickyCta = document.getElementById('stickyCta');
+  if (stickyCta) {
+    const onScroll = () => {
+      if (window.scrollY > 600) stickyCta.classList.add('is-visible');
+      else stickyCta.classList.remove('is-visible');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   }
 </script>
 </body>
