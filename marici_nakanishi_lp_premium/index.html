@@ -5,390 +5,694 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>marici — hair salon, Kumamoto</title>
 <meta name="description" content="熊本のヘアサロン marici(マリーチ)。ケアブリーチ・髪質改善・繊細なカラーで、自分らしい髪へ。" />
+<meta name="theme-color" content="#1a1612" />
 <meta property="og:title" content="marici — hair salon, Kumamoto" />
 <meta property="og:description" content="熊本のヘアサロン marici(マリーチ)。" />
 <meta property="og:type" content="website" />
+<meta property="og:image" content="photos/01-hero-trio.jpg" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200..700;1,9..144,300..600&family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@200;300;400;500&display=swap" rel="stylesheet" />
 
 <style>
-  /* ─────────── Tokens ─────────── */
+  /* ─────────────────────────────────────────────────────
+     Tokens — editorial neutrals + brass
+     ───────────────────────────────────────────────────── */
   :root {
     --bg:        #f5efe6;     /* warm ivory */
-    --bg-alt:    #ebe1d2;     /* champagne */
-    --bg-deep:   #1a1612;     /* dark for contrast */
+    --bg-alt:    #ebe1d2;
+    --bg-deep:   #14110d;     /* near black, warm */
+    --bg-deep-2: #1f1a14;
     --paper:     #ffffff;
-    --ink:       #1a1612;
-    --ink-soft:  #5a4d40;
+    --ink:       #14110d;
+    --ink-soft:  #4a3f33;
     --ink-mute:  #8a7a66;
     --ink-dim:   #b5a68f;
     --line:      #d8c9b0;
     --accent:    #8b5e3c;     /* terracotta */
-    --accent-hi: #a87a5a;
     --gold:      #b88a4a;
+    --gold-hi:   #d9b986;
+    --cream:     #f5e8cf;
   }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  *:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
   body {
     background: var(--bg);
     color: var(--ink);
     font-family: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
     font-weight: 400;
-    line-height: 1.8;
+    line-height: 1.85;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
   img { display: block; max-width: 100%; height: auto; }
   a { color: inherit; text-decoration: none; }
+  picture { display: block; }
+
   .serif {
     font-family: 'Fraunces', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
     font-weight: 300;
+    font-variation-settings: "opsz" 144, "SOFT" 50, "WONK" 0;
     letter-spacing: 0.005em;
   }
-  .uppercase-spaced { text-transform: uppercase; letter-spacing: 0.32em; font-size: 10px; font-weight: 500; }
-  .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-  .container-narrow { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+  .serif-italic {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-variation-settings: "opsz" 144;
+  }
+  .uc { text-transform: uppercase; letter-spacing: 0.32em; font-size: 10px; font-weight: 500; }
 
-  /* ─────────── Reveal ─────────── */
-  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1); }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 22px; }
+  .container-narrow { max-width: 720px; margin: 0 auto; padding: 0 22px; }
+
+  /* ─────────────────────────────────────────────────────
+     Reveal — scroll-driven
+     ───────────────────────────────────────────────────── */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s cubic-bezier(.22,1,.36,1), transform 1s cubic-bezier(.22,1,.36,1); }
   .reveal.is-in { opacity: 1; transform: none; }
-  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+  .reveal-slow { transition-duration: 1.4s; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal-slow { opacity: 1; transform: none; transition: none; }
+    *[class*="anim-"] { animation: none !important; }
+  }
 
-  /* ─────────── Header ─────────── */
+  /* ─────────────────────────────────────────────────────
+     Header — minimal, always visible
+     ───────────────────────────────────────────────────── */
   .site-header {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: 56px;
     background: rgba(245, 239, 230, 0.78);
-    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
     border-bottom: 1px solid rgba(216, 201, 176, 0.5);
+    transition: background .4s, border-color .4s;
   }
+  .site-header.is-dark {
+    background: rgba(20, 17, 13, 0.72);
+    border-bottom-color: rgba(216, 201, 176, 0.18);
+  }
+  .site-header.is-dark .brand-mark { color: #f5e8cf; }
   .site-header .inner {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 14px 28px; max-width: 1400px; margin: 0 auto;
+    padding: 0 18px; max-width: 1400px; margin: 0 auto;
+    height: 100%;
   }
-  .brand-mark { font-family: 'Fraunces', serif; font-weight: 300; font-size: 22px; letter-spacing: 0.04em; font-style: italic; }
-  .nav { display: flex; gap: 28px; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); }
-  .nav a { transition: color .25s; }
-  .nav a:hover { color: var(--accent); }
-  @media (max-width: 720px) { .nav { display: none; } }
+  .brand-mark {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    transition: color .4s;
+  }
   .nav-cta {
-    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
-    padding: 9px 18px; border: 1px solid var(--ink); color: var(--ink);
-    transition: background .3s, color .3s;
-  }
-  .nav-cta:hover { background: var(--ink); color: var(--bg); }
-  .nav-cta-primary {
-    background: linear-gradient(180deg, #d9b986 0%, #b88a4a 100%);
-    color: #1a1612 !important;
-    border-color: transparent;
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 10px 16px;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
     font-weight: 600;
-    display: inline-flex; align-items: center; gap: 8px;
-    box-shadow: 0 8px 20px -8px rgba(184,138,74,0.5), inset 0 1px 0 rgba(255,236,200,0.4);
+    background: linear-gradient(180deg, var(--gold-hi) 0%, var(--gold) 100%);
+    color: #1a1612;
+    border-radius: 1px;
+    box-shadow: 0 8px 22px -8px rgba(184,138,74,0.55), inset 0 1px 0 rgba(255,236,200,0.45);
+    transition: transform .25s, box-shadow .25s;
   }
-  .nav-cta-primary:hover { background: linear-gradient(180deg, #e8c898 0%, #c69b58 100%); transform: translateY(-1px); }
-  .nav-cta-label-short { display: none; }
-  @media (max-width: 480px) {
-    .nav-cta-label-full { display: none; }
-    .nav-cta-label-short { display: inline; }
-  }
+  .nav-cta:hover, .nav-cta:active { transform: translateY(-1px); box-shadow: 0 12px 28px -10px rgba(184,138,74,0.7), inset 0 1px 0 rgba(255,236,200,0.6); }
+  .nav-cta-label-full { display: none; }
+  @media (min-width: 481px) { .nav-cta-label-full { display: inline; } .nav-cta-label-short { display: none; } }
 
-  /* ─────────── Live dot (pulsing brass) ─────────── */
+  /* live dot */
   .live-dot {
-    position: relative;
-    display: inline-block; width: 7px; height: 7px;
-    border-radius: 50%; background: #4ade80;
-    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #2a8a4a;
+    box-shadow: 0 0 0 0 rgba(42,138,74,0.7);
     animation: livePulse 2.2s ease-out infinite;
   }
-  .nav-cta-primary .live-dot { background: #2a8a4a; box-shadow: 0 0 0 0 rgba(42,138,74,0.8); animation-name: livePulseDark; }
-  @keyframes livePulse {
-    0%   { box-shadow: 0 0 0 0 rgba(74,222,128,0.7); }
-    70%  { box-shadow: 0 0 0 8px rgba(74,222,128,0); }
-    100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
-  }
-  @keyframes livePulseDark {
-    0%   { box-shadow: 0 0 0 0 rgba(42,138,74,0.7); }
-    70%  { box-shadow: 0 0 0 8px rgba(42,138,74,0); }
-    100% { box-shadow: 0 0 0 0 rgba(42,138,74,0); }
-  }
+  .live-dot-light { background: #9affc7; box-shadow: 0 0 0 0 rgba(154,255,199,0.7); animation-name: livePulseLight; }
+  @keyframes livePulse { 0%{box-shadow:0 0 0 0 rgba(42,138,74,0.7);} 70%{box-shadow:0 0 0 8px rgba(42,138,74,0);} 100%{box-shadow:0 0 0 0 rgba(42,138,74,0);} }
+  @keyframes livePulseLight { 0%{box-shadow:0 0 0 0 rgba(154,255,199,0.7);} 70%{box-shadow:0 0 0 8px rgba(154,255,199,0);} 100%{box-shadow:0 0 0 0 rgba(154,255,199,0);} }
 
-  /* ─────────── Hero ─────────── */
-  .hero { position: relative; height: 100vh; min-height: 640px; overflow: hidden; background: var(--bg-deep); }
+  /* ─────────────────────────────────────────────────────
+     Hero — cinematic, mobile portrait first
+     ───────────────────────────────────────────────────── */
+  .hero {
+    position: relative;
+    height: 100svh; min-height: 600px;
+    overflow: hidden;
+    background: var(--bg-deep);
+  }
   .hero-photo {
     position: absolute; inset: 0;
     background-image: url('photos/01-hero-trio.jpg');
-    background-size: cover; background-position: center;
-    filter: brightness(0.78) contrast(1.05);
-    transform: scale(1.06);
-    animation: heroZoom 18s ease-out forwards;
+    background-size: cover;
+    background-position: center 30%;
+    filter: brightness(0.78) contrast(1.04) saturate(1.02);
+    transform: scale(1.08);
+    animation: heroZoom 22s ease-out forwards;
+    will-change: transform;
   }
-  @keyframes heroZoom { from { transform: scale(1.06); } to { transform: scale(1.0); } }
+  @keyframes heroZoom { from { transform: scale(1.08); } to { transform: scale(1.0); } }
+  /* darker scrim from bottom for text legibility */
   .hero::after {
     content: ""; position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(26,22,18,0.18) 0%, rgba(26,22,18,0.05) 35%, rgba(26,22,18,0.55) 100%);
+    background:
+      linear-gradient(180deg, rgba(20,17,13,0.32) 0%, rgba(20,17,13,0.0) 28%, rgba(20,17,13,0.0) 48%, rgba(20,17,13,0.78) 100%);
     pointer-events: none;
   }
-  .hero-content { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 6vw 9vh; color: #f8f1e3; }
-  .hero-eyebrow { font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(248,241,227,0.85); margin-bottom: 22px; }
-  .hero-title {
-    font-family: 'Fraunces', serif; font-weight: 300;
-    font-size: clamp(40px, 7.5vw, 96px); line-height: 1.04; letter-spacing: -0.012em; max-width: 14ch;
+  .hero-content {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 24px calc(56px + env(safe-area-inset-bottom));
+    color: #faf3e3;
   }
-  .hero-title em { font-style: italic; font-weight: 300; color: #fde8c6; }
-  .hero-meta { margin-top: 28px; display: flex; gap: 22px; flex-wrap: wrap; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(248,241,227,0.78); }
+  .hero-eyebrow {
+    font-size: 10px; letter-spacing: 0.42em; text-transform: uppercase;
+    color: rgba(250,243,227,0.75);
+    margin-bottom: 18px;
+  }
+  .hero-title {
+    font-family: 'Fraunces', serif; font-weight: 250;
+    font-variation-settings: "opsz" 144;
+    font-size: clamp(38px, 11.5vw, 88px);
+    line-height: 1.02;
+    letter-spacing: -0.018em;
+    max-width: 14ch;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.35);
+  }
+  .hero-title em { font-style: italic; font-weight: 300; color: var(--cream); }
+  .hero-meta {
+    margin-top: 20px;
+    display: flex; gap: 14px; flex-wrap: wrap;
+    font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(250,243,227,0.78);
+  }
   .hero-meta span { display: inline-flex; align-items: center; gap: 8px; }
-  .hero-meta span::before { content: ""; display: block; width: 18px; height: 1px; background: rgba(248,241,227,0.5); }
-  .hero-scroll { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); color: rgba(248,241,227,0.7); font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-  .hero-scroll::after { content: ""; display: block; width: 1px; height: 24px; background: rgba(248,241,227,0.5); animation: scrollLine 1.8s ease-in-out infinite; }
+  .hero-meta span::before { content: ""; display: block; width: 14px; height: 1px; background: rgba(250,243,227,0.5); }
+  .hero-scroll {
+    position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+    color: rgba(250,243,227,0.65);
+    font-size: 9px; letter-spacing: 0.42em; text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .hero-scroll::after { content: ""; display: block; width: 1px; height: 22px; background: rgba(250,243,227,0.5); animation: scrollLine 1.8s ease-in-out infinite; }
   @keyframes scrollLine { 0%,100% { transform: scaleY(0.4); transform-origin: top; } 50% { transform: scaleY(1); } }
 
-  .hero-cta-row { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-  .hero-cta { gap: 10px; }
-  .hero-cta-tel { padding: 14px 22px; font-size: 11px; }
-  .hero-microcopy {
-    margin-top: 18px;
-    font-size: 11px; letter-spacing: 0.06em;
-    color: rgba(248,241,227,0.68);
-  }
-  @media (max-width: 480px) {
-    .hero-cta-row { flex-direction: column; align-items: stretch; gap: 10px; width: 100%; max-width: 320px; }
-    .hero-cta { justify-content: center; }
-    .hero-cta-tel { justify-content: center; }
+  @media (min-width: 720px) {
+    .hero-content { padding: 0 6vw 9vh; }
   }
 
-  /* ─────────── Section base ─────────── */
-  section { padding: 120px 0; }
-  @media (max-width: 720px) { section { padding: 80px 0; } }
-  .section-eyebrow { font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
-  .section-title { font-family: 'Fraunces', serif; font-weight: 300; font-size: clamp(30px, 4.5vw, 56px); line-height: 1.2; letter-spacing: -0.005em; margin-bottom: 24px; }
-  .section-title em { font-style: italic; color: var(--accent); }
-  .lead { font-size: 14px; line-height: 2.1; color: var(--ink-soft); max-width: 56ch; }
+  /* ─────────────────────────────────────────────────────
+     Section base
+     ───────────────────────────────────────────────────── */
+  section { padding: 96px 0; }
+  @media (min-width: 720px) { section { padding: 140px 0; } }
 
-  /* ─────────── Concept ─────────── */
+  .eyebrow {
+    display: inline-block;
+    font-size: 10px; letter-spacing: 0.42em; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+  .eyebrow.on-dark { color: var(--gold-hi); }
+  .h2 {
+    font-family: 'Fraunces', serif; font-weight: 280;
+    font-variation-settings: "opsz" 144;
+    font-size: clamp(30px, 8vw, 56px);
+    line-height: 1.16;
+    letter-spacing: -0.01em;
+    margin-bottom: 22px;
+  }
+  .h2 em { font-style: italic; color: var(--accent); font-weight: 300; }
+  .h2.on-dark em { color: var(--cream); }
+  .lead {
+    font-size: 15px;
+    line-height: 2.05;
+    color: var(--ink-soft);
+  }
+  .divider-brass {
+    width: 36px; height: 1px;
+    background: var(--gold);
+    margin: 0 0 22px;
+  }
+  .center .divider-brass { margin-left: auto; margin-right: auto; }
+  .center { text-align: center; }
+
+  /* ─────────────────────────────────────────────────────
+     Concept — vertical: photo → text on mobile
+     ───────────────────────────────────────────────────── */
   .concept { background: var(--bg); }
-  .concept-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
-  .concept-photo { position: relative; aspect-ratio: 3/4; overflow: hidden; }
-  .concept-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 8s ease-out; }
-  .concept-photo:hover img { transform: scale(1.04); }
-  .concept-photo::before { content: ""; position: absolute; top: -16px; left: -16px; width: 64px; height: 64px; border-top: 1px solid var(--accent); border-left: 1px solid var(--accent); z-index: 2; }
-  .concept-photo::after { content: ""; position: absolute; bottom: -16px; right: -16px; width: 64px; height: 64px; border-bottom: 1px solid var(--accent); border-right: 1px solid var(--accent); z-index: 2; }
-  .concept-text { padding-right: 24px; }
-  .concept-text p { font-family: 'Fraunces', serif; font-weight: 300; font-size: clamp(18px, 1.6vw, 22px); line-height: 1.95; color: var(--ink); margin-bottom: 22px; }
-  .concept-text p.tail { font-family: 'Inter', 'Noto Sans JP', sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 2.05; margin-top: 32px; }
-  @media (max-width: 880px) { .concept-grid { grid-template-columns: 1fr; gap: 56px; } .concept-text { padding-right: 0; } }
-
-  /* ─────────── Editorial gallery ─────────── */
-  .editorial { background: var(--bg-alt); overflow: hidden; }
-  .editorial-head { text-align: center; margin-bottom: 80px; }
-  .editorial-grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: 80px; gap: 18px; }
-  .ed { position: relative; overflow: hidden; }
-  .ed img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.22,1,.36,1), filter .8s; filter: saturate(0.95); }
-  .ed:hover img { transform: scale(1.05); filter: saturate(1.05); }
-  .ed-1 { grid-column: 1 / span 5; grid-row: 1 / span 7; }
-  .ed-2 { grid-column: 6 / span 4; grid-row: 1 / span 5; }
-  .ed-3 { grid-column: 10 / span 3; grid-row: 1 / span 4; }
-  .ed-4 { grid-column: 6 / span 3; grid-row: 6 / span 6; }
-  .ed-5 { grid-column: 9 / span 4; grid-row: 5 / span 7; }
-  @media (max-width: 880px) {
-    .editorial-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 220px; gap: 12px; }
-    .ed-1, .ed-2, .ed-3, .ed-4, .ed-5 { grid-column: auto / span 1; grid-row: auto / span 1; }
-    .ed-1 { grid-column: span 2; grid-row: span 2; }
-    .ed-5 { grid-column: span 2; }
+  .concept-grid {
+    display: grid; grid-template-columns: 1fr; gap: 48px;
+    align-items: center;
   }
-
-  /* ─────────── Interior ─────────── */
-  .interior { background: var(--bg); padding: 0; }
-  .interior-photo {
-    width: 100%; height: 70vh; min-height: 520px;
-    background-image: url('photos/03-interior.jpg'); background-size: cover; background-position: center;
+  .concept-photo {
     position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    margin: 0 -22px;
   }
-  .interior-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(26,22,18,0.55) 100%); pointer-events: none; }
-  .interior-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 48px 6vw; color: #f8f1e3; }
-  .interior-caption h2 { font-family: 'Fraunces', serif; font-weight: 300; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.2; }
-  .interior-caption p { margin-top: 14px; font-size: 13px; letter-spacing: 0.04em; line-height: 1.9; max-width: 52ch; color: rgba(248,241,227,0.86); }
-
-  /* ─────────── Strengths ─────────── */
-  .strengths { background: var(--bg); padding: 120px 0; }
-  .strength-block { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-  .strength-block + .strength-block { margin-top: 120px; }
-  .strength-block.reverse > *:first-child { order: 2; }
-  .strength-photo { position: relative; aspect-ratio: 4/3; overflow: hidden; }
-  .strength-photo img { width: 100%; height: 100%; object-fit: cover; }
-  .strength-text .num { font-family: 'Fraunces', serif; font-style: italic; font-size: 64px; color: var(--accent); opacity: 0.55; line-height: 1; margin-bottom: 8px; }
-  .strength-text h3 { font-family: 'Fraunces', serif; font-weight: 300; font-size: clamp(26px, 3vw, 38px); line-height: 1.3; margin-bottom: 24px; }
-  .strength-text p { font-size: 14px; line-height: 2.05; color: var(--ink-soft); margin-bottom: 18px; }
-  .strength-text .meta { display: inline-flex; align-items: center; gap: 12px; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); border-top: 1px solid var(--line); padding-top: 18px; margin-top: 12px; }
-  @media (max-width: 880px) {
-    .strength-block { grid-template-columns: 1fr; gap: 40px; }
-    .strength-block.reverse > *:first-child { order: 0; }
-    .strength-block + .strength-block { margin-top: 80px; }
+  .concept-photo img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 8s ease-out;
+  }
+  .concept-photo:hover img { transform: scale(1.04); }
+  .concept-text { padding: 0; }
+  .concept-text p {
+    font-family: 'Fraunces', serif; font-weight: 300;
+    font-variation-settings: "opsz" 36;
+    font-size: clamp(17px, 4.5vw, 22px);
+    line-height: 2.0;
+    color: var(--ink);
+    margin-bottom: 22px;
+  }
+  .concept-text p.tail {
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    font-size: 13px; line-height: 2.05;
+    color: var(--ink-mute);
+    margin-top: 28px;
+  }
+  @media (min-width: 720px) {
+    .concept-grid { grid-template-columns: 1.1fr 1fr; gap: 80px; }
+    .concept-photo { margin: 0; }
+    .concept-photo::before { content:""; position:absolute; top:-16px; left:-16px; width:64px; height:64px; border-top:1px solid var(--accent); border-left:1px solid var(--accent); z-index:2; }
+    .concept-photo::after { content:""; position:absolute; bottom:-16px; right:-16px; width:64px; height:64px; border-bottom:1px solid var(--accent); border-right:1px solid var(--accent); z-index:2; }
   }
 
-  /* ─────────── Booking Flow ─────────── */
+  /* ─────────────────────────────────────────────────────
+     Editorial Spread — 1 photo per scroll, full-bleed
+     ───────────────────────────────────────────────────── */
+  .editorial { background: var(--bg-deep); padding: 0; color: #faf3e3; }
+  .ed-intro {
+    text-align: center;
+    padding: 96px 22px 48px;
+    border-bottom: 1px solid rgba(216,201,176,0.18);
+  }
+  .ed-intro .h2 { color: #faf3e3; }
+  .ed-intro .lead { color: rgba(250,243,227,0.7); max-width: 56ch; margin: 0 auto; }
+
+  .spread {
+    position: relative;
+    height: 100svh; min-height: 540px;
+    overflow: hidden;
+  }
+  .spread .photo {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.85) contrast(1.04);
+  }
+  .spread::after {
+    content: ""; position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(20,17,13,0.20) 0%, rgba(20,17,13,0.0) 30%, rgba(20,17,13,0.0) 50%, rgba(20,17,13,0.85) 100%);
+  }
+  .spread .caption {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 0 24px calc(56px + env(safe-area-inset-bottom));
+    color: #faf3e3;
+  }
+  .spread .caption .num {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
+    font-size: 14px; letter-spacing: 0.06em;
+    color: var(--gold-hi);
+    margin-bottom: 10px;
+  }
+  .spread .caption h3 {
+    font-family: 'Fraunces', serif; font-weight: 300;
+    font-variation-settings: "opsz" 144;
+    font-size: clamp(26px, 7.5vw, 44px);
+    line-height: 1.18;
+    letter-spacing: -0.005em;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.4);
+    max-width: 18ch;
+  }
+  .spread .caption .tag {
+    margin-top: 14px;
+    font-size: 10.5px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: rgba(250,243,227,0.7);
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .spread .caption .tag::before { content: ""; display: block; width: 18px; height: 1px; background: rgba(250,243,227,0.55); }
+
+  /* spreads with photo */
+  .spread-1 .photo { background-image: url('photos/06-editorial-pair.jpg'); background-position: center 28%; }
+  .spread-2 .photo { background-image: url('photos/07-studio-orange.jpg'); background-position: center 30%; }
+  .spread-3 .photo { background-image: url('photos/09-stairs-pair.jpg'); background-position: center 35%; }
+
+  @media (min-width: 720px) {
+    .spread .caption { padding: 0 6vw 9vh; }
+  }
+
+  /* ─────────────────────────────────────────────────────
+     Interior — full-bleed cinematic
+     ───────────────────────────────────────────────────── */
+  .interior { background: var(--bg-deep); padding: 0; }
+  .interior-photo {
+    position: relative;
+    height: 90svh; min-height: 580px;
+    background-image: url('photos/03-interior.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  .interior-photo::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(20,17,13,0.0) 50%, rgba(20,17,13,0.85) 100%);
+  }
+  .interior-caption {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 0 24px calc(60px + env(safe-area-inset-bottom));
+    color: #faf3e3;
+  }
+  .interior-caption .eyebrow { color: var(--gold-hi); }
+  .interior-caption h2 {
+    font-family: 'Fraunces', serif; font-weight: 280;
+    font-size: clamp(28px, 8vw, 52px);
+    line-height: 1.15;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.35);
+    max-width: 16ch;
+  }
+  .interior-caption p {
+    margin-top: 18px;
+    font-size: 14px;
+    line-height: 1.95;
+    color: rgba(250,243,227,0.86);
+    max-width: 50ch;
+  }
+  @media (min-width: 720px) {
+    .interior-caption { padding: 0 6vw 9vh; }
+  }
+
+  /* ─────────────────────────────────────────────────────
+     Strengths — photo on top (full-bleed) → text card
+     ───────────────────────────────────────────────────── */
+  .strengths { background: var(--bg); }
+  .strength-block + .strength-block { margin-top: 80px; }
+  .strength-photo {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    margin: 0 -22px 36px;
+  }
+  .strength-photo img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .strength-photo .tag {
+    position: absolute; top: 18px; left: 18px;
+    background: rgba(20,17,13,0.7);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    color: var(--gold-hi);
+    padding: 6px 12px;
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+  }
+  .strength-text { padding: 0 4px; }
+  .strength-text h3 {
+    font-family: 'Fraunces', serif; font-weight: 300;
+    font-variation-settings: "opsz" 96;
+    font-size: clamp(24px, 6.5vw, 36px);
+    line-height: 1.25;
+    margin-bottom: 22px;
+    letter-spacing: -0.005em;
+  }
+  .strength-text p {
+    font-size: 14.5px;
+    line-height: 2.05;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+  .strength-text .meta {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent);
+    border-top: 1px solid var(--line);
+    padding-top: 18px;
+    margin-top: 14px;
+  }
+  @media (min-width: 720px) {
+    .strength-block { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .strength-block.reverse > *:first-child { order: 2; }
+    .strength-photo { margin: 0; aspect-ratio: 4/5; }
+    .strength-block + .strength-block { margin-top: 140px; }
+  }
+
+  /* ─────────────────────────────────────────────────────
+     Menu — clean list, generous mobile typography
+     ───────────────────────────────────────────────────── */
+  .menu { background: var(--paper); }
+  .menu-head { text-align: center; margin-bottom: 56px; }
+  .menu-list { border-top: 1px solid var(--line); }
+  .menu-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 18px 16px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .menu-row .name {
+    font-family: 'Fraunces', serif; font-weight: 400;
+    font-size: 17px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .menu-row .desc {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--ink-mute);
+    margin-top: 6px;
+    letter-spacing: 0.04em;
+  }
+  .menu-row .price {
+    font-family: 'Fraunces', serif; font-weight: 400;
+    font-size: 16px;
+    color: var(--accent);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .menu-foot {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 11.5px;
+    color: var(--ink-mute);
+    letter-spacing: 0.04em;
+    line-height: 2;
+  }
+
+  /* ─────────────────────────────────────────────────────
+     Booking flow — compact mobile cards
+     ───────────────────────────────────────────────────── */
   .flow {
     background: linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
-    padding: 120px 0;
   }
-  .flow-head { text-align: center; margin-bottom: 64px; }
-  .flow-head .lead { max-width: 56ch; margin: 16px auto 0; }
+  .flow-head { text-align: center; margin-bottom: 48px; }
+  .flow-head .lead { max-width: 50ch; margin: 14px auto 0; }
   .flow-list {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-    margin-bottom: 56px;
-    counter-reset: flow;
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
   .flow-list li {
     background: var(--paper);
     border: 1px solid var(--line);
-    padding: 32px 28px;
+    padding: 22px 22px 22px 70px;
     position: relative;
-    transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s;
+    transition: transform .35s, box-shadow .35s;
   }
-  .flow-list li:hover { transform: translateY(-4px); box-shadow: 0 24px 48px -16px rgba(36,26,18,0.18); }
+  .flow-list li:hover, .flow-list li:active { transform: translateY(-3px); box-shadow: 0 22px 44px -16px rgba(36,26,18,0.18); }
   .flow-list .num {
+    position: absolute; top: 18px; left: 22px;
     font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
-    font-size: 44px; color: var(--accent); opacity: 0.7;
-    line-height: 1; margin-bottom: 12px;
+    font-size: 32px; line-height: 1;
+    color: var(--accent); opacity: 0.8;
   }
   .flow-list h3 {
     font-family: 'Fraunces', serif; font-weight: 400;
-    font-size: 19px; line-height: 1.4; margin-bottom: 10px;
+    font-size: 17px;
+    line-height: 1.4;
+    margin-bottom: 6px;
   }
-  .flow-list p { font-size: 13px; line-height: 1.95; color: var(--ink-soft); }
-  @media (max-width: 720px) {
-    .flow-list { grid-template-columns: 1fr; gap: 16px; }
-    .flow-list li { padding: 22px 20px; }
+  .flow-list p {
+    font-size: 13px;
+    line-height: 1.95;
+    color: var(--ink-soft);
   }
-  .flow-cta { text-align: center; }
-  .flow-cta .btn { gap: 10px; }
   .flow-cta-note {
-    margin-top: 14px;
-    font-size: 11px; letter-spacing: 0.06em;
+    text-align: center;
+    margin-top: 32px;
+    font-size: 11.5px;
     color: var(--ink-mute);
+    letter-spacing: 0.04em;
+  }
+  @media (min-width: 720px) {
+    .flow-list { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .flow-list li { padding: 32px 28px; }
+    .flow-list .num { position: static; font-size: 44px; margin-bottom: 14px; }
   }
 
-  .menu-cta { margin-top: 36px; text-align: center; }
-
-  /* ─────────── Menu ─────────── */
-  .menu { background: var(--paper); padding: 120px 0; }
-  .menu-head { text-align: center; margin-bottom: 72px; }
-  .menu-list { max-width: 760px; margin: 0 auto; border-top: 1px solid var(--line); }
-  .menu-row { display: grid; grid-template-columns: 1fr auto; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
-  .menu-row .name { font-family: 'Fraunces', serif; font-weight: 400; font-size: 17px; color: var(--ink); }
-  .menu-row .desc { display: block; font-family: 'Inter', 'Noto Sans JP', sans-serif; font-size: 11.5px; color: var(--ink-mute); margin-top: 4px; letter-spacing: 0.02em; }
-  .menu-row .price { font-family: 'Fraunces', serif; font-weight: 400; font-size: 17px; color: var(--accent); white-space: nowrap; font-variant-numeric: tabular-nums; }
-  .menu-foot { text-align: center; margin-top: 32px; font-size: 11px; color: var(--ink-mute); letter-spacing: 0.04em; }
-
-  /* ─────────── CTA ─────────── */
-  .cta-final { position: relative; overflow: hidden; background: var(--bg-deep); color: #f8f1e3; padding: 120px 0; }
+  /* ─────────────────────────────────────────────────────
+     Final CTA — full-bleed cinematic
+     ───────────────────────────────────────────────────── */
+  .cta-final {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-deep);
+    color: #faf3e3;
+    padding: 0;
+    min-height: 100svh;
+    display: flex; align-items: center;
+  }
   .cta-photo {
     position: absolute; inset: 0;
     background-image: url('photos/08-trio-laugh.jpg');
-    background-size: cover; background-position: center;
-    filter: brightness(0.42) contrast(1.05) saturate(0.9);
-    transform: scale(1.04);
+    background-size: cover;
+    background-position: center 35%;
+    filter: brightness(0.42) contrast(1.06) saturate(0.95);
   }
   .cta-final::after {
     content: ""; position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse at center, rgba(184,138,74,0.16) 0%, transparent 60%),
-      linear-gradient(180deg, rgba(26,22,18,0.55) 0%, rgba(26,22,18,0.85) 100%);
+      radial-gradient(ellipse at 50% 70%, rgba(184,138,74,0.22) 0%, transparent 60%),
+      linear-gradient(180deg, rgba(20,17,13,0.6) 0%, rgba(20,17,13,0.85) 100%);
   }
-  .cta-content { position: relative; z-index: 2; text-align: center; }
-  .cta-content .eyebrow { color: rgba(254,224,176,0.9); margin-bottom: 22px; }
-  .cta-content h2 { font-family: 'Fraunces', serif; font-weight: 300; font-size: clamp(34px, 5vw, 64px); line-height: 1.2; margin-bottom: 36px; }
-  .cta-content h2 em { font-style: italic; color: #fde8c6; }
-  .cta-row { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 16px 32px; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; transition: transform .25s, background .25s, color .25s, border-color .25s, box-shadow .25s; border: 1px solid transparent; }
-  .btn-primary {
-    background: linear-gradient(180deg, #d9b986 0%, #b88a4a 100%);
-    color: #1a1612;
-    box-shadow: 0 14px 32px -10px rgba(184,138,74,0.5), inset 0 1px 0 rgba(255,236,200,0.4);
+  .cta-content {
+    position: relative; z-index: 2;
+    text-align: center;
+    width: 100%;
+    padding: 96px 24px;
+  }
+  .cta-content .eyebrow { color: var(--gold-hi); }
+  .cta-content h2 {
+    font-family: 'Fraunces', serif; font-weight: 280;
+    font-variation-settings: "opsz" 144;
+    font-size: clamp(34px, 9.5vw, 64px);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    margin-bottom: 36px;
+    max-width: 14ch;
+    margin-left: auto; margin-right: auto;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.4);
+  }
+  .cta-content h2 em { font-style: italic; color: var(--cream); }
+  .cta-row {
+    display: flex; gap: 12px; flex-direction: column; align-items: center;
+  }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 18px 30px;
+    min-height: 52px;
+    font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
     font-weight: 600;
+    transition: transform .25s, box-shadow .25s;
+    border: 1px solid transparent;
+    border-radius: 1px;
+    width: 100%;
+    max-width: 320px;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 22px 44px -12px rgba(184,138,74,0.6), inset 0 1px 0 rgba(255,236,200,0.5); }
-  .btn-ghost { background: transparent; color: #f8f1e3; border-color: rgba(248,241,227,0.4); }
-  .btn-ghost:hover { background: rgba(248,241,227,0.1); border-color: #f8f1e3; }
+  .btn-primary {
+    background: linear-gradient(180deg, var(--gold-hi) 0%, var(--gold) 100%);
+    color: #1a1612;
+    box-shadow: 0 16px 36px -10px rgba(184,138,74,0.55), inset 0 1px 0 rgba(255,236,200,0.45);
+  }
+  .btn-primary:hover, .btn-primary:active { transform: translateY(-2px); box-shadow: 0 24px 48px -12px rgba(184,138,74,0.7), inset 0 1px 0 rgba(255,236,200,0.55); }
+  .btn-ghost { background: transparent; color: #faf3e3; border-color: rgba(250,243,227,0.5); }
+  .btn-ghost:hover, .btn-ghost:active { background: rgba(250,243,227,0.1); border-color: #faf3e3; }
   .btn .arrow { transition: transform .25s; }
   .btn:hover .arrow { transform: translateX(4px); }
-
-  /* ─────────── Info ─────────── */
-  .info { background: var(--bg-alt); padding: 100px 0; }
-  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
-  .info dl { display: grid; grid-template-columns: max-content 1fr; gap: 16px 28px; font-size: 13px; line-height: 1.9; }
-  .info dt { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; color: var(--accent); font-size: 12px; letter-spacing: 0.04em; padding-top: 2px; }
-  .info dd { color: var(--ink-soft); }
-  .info .map-card { aspect-ratio: 4/3; background: var(--paper); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; text-align: center; color: var(--ink-mute); font-size: 12px; letter-spacing: 0.04em; padding: 24px; }
-  .info .map-card a { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
-  @media (max-width: 880px) { .info-grid { grid-template-columns: 1fr; gap: 48px; } }
-
-  /* ─────────── Sticky Mobile CTA ─────────── */
-  .sticky-cta {
-    position: fixed; left: 0; right: 0; bottom: 0;
-    z-index: 90;
-    display: none;
-    gap: 10px;
-    padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
-    background: rgba(245, 239, 230, 0.96);
-    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-    border-top: 1px solid var(--line);
-    transform: translateY(120%);
-    transition: transform .4s cubic-bezier(.22,1,.36,1);
+  @media (min-width: 480px) {
+    .cta-row { flex-direction: row; justify-content: center; }
+    .btn { width: auto; max-width: none; }
   }
-  .sticky-cta.is-visible { transform: translateY(0); }
-  .sticky-tel {
-    flex: 0 0 auto;
-    padding: 14px 18px;
-    border: 1px solid var(--ink);
-    color: var(--ink);
-    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+
+  /* ─────────────────────────────────────────────────────
+     Info — contact + map, mobile single column
+     ───────────────────────────────────────────────────── */
+  .info { background: var(--bg-alt); }
+  .info-grid { display: grid; grid-template-columns: 1fr; gap: 36px; }
+  .info dl {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 14px 18px;
+    font-size: 14px;
+    line-height: 1.85;
+  }
+  .info dt {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    padding-top: 3px;
+  }
+  .info dd { color: var(--ink-soft); }
+  .info dd a { color: var(--ink-soft); border-bottom: 1px solid var(--line); padding-bottom: 1px; }
+  .info dd a:hover { color: var(--accent); border-color: var(--accent); }
+  .map-card {
+    aspect-ratio: 4/3;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    color: var(--ink-mute);
+    font-size: 12px; letter-spacing: 0.04em;
+    padding: 28px;
+    line-height: 1.85;
+  }
+  .map-card a { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
+  @media (min-width: 720px) {
+    .info-grid { grid-template-columns: 1fr 1fr; gap: 64px; }
+  }
+
+  /* ─────────────────────────────────────────────────────
+     Footer
+     ───────────────────────────────────────────────────── */
+  footer {
+    background: var(--bg-deep);
+    color: rgba(250,243,227,0.66);
+    padding: 56px 0 56px;
+    font-size: 11px; letter-spacing: 0.04em;
+  }
+  footer .inner {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 18px;
     text-align: center;
   }
-  .sticky-book {
-    flex: 1 1 auto;
-    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-    padding: 14px 20px;
-    background: linear-gradient(180deg, #d9b986 0%, #b88a4a 100%);
-    color: #1a1612;
-    font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
-    font-weight: 600;
-    box-shadow: 0 12px 24px -8px rgba(184,138,74,0.5), inset 0 1px 0 rgba(255,236,200,0.4);
+  footer .brand {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
+    font-size: 32px;
+    color: #faf3e3;
+    margin-bottom: 4px;
   }
-  @media (max-width: 720px) {
-    .sticky-cta { display: flex; }
-    /* 末尾セクションが隠れないよう余白を作る */
-    footer { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
+  footer .links { display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; }
+  footer .links a { border-bottom: 1px solid rgba(250,243,227,0.3); padding-bottom: 1px; }
+  footer .cr { color: rgba(250,243,227,0.4); }
+  @media (min-width: 720px) {
+    footer .inner { flex-direction: row; justify-content: space-between; align-items: flex-end; text-align: left; }
   }
-
-  /* ─────────── Footer ─────────── */
-  footer { background: var(--bg-deep); color: rgba(248,241,227,0.66); padding: 60px 0 40px; font-size: 11px; letter-spacing: 0.04em; }
-  footer .inner { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
-  footer .brand { font-family: 'Fraunces', serif; font-style: italic; font-weight: 300; font-size: 28px; color: #f8f1e3; margin-bottom: 6px; }
-  footer a { border-bottom: 1px solid rgba(248,241,227,0.3); }
-  footer .cr { color: rgba(248,241,227,0.4); }
 </style>
 </head>
 <body>
 
 <!-- ─── Header ─── -->
-<header class="site-header">
+<header class="site-header" id="siteHeader">
   <div class="inner">
     <a href="#top" class="brand-mark">marici</a>
-    <nav class="nav">
-      <a href="#concept">Concept</a>
-      <a href="#editorial">Works</a>
-      <a href="#strengths">Craft</a>
-      <a href="#menu">Menu</a>
-      <a href="#flow">Booking</a>
-      <a href="#info">Info</a>
-    </nav>
-    <a href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" class="nav-cta nav-cta-primary" target="_blank" rel="noopener">
-      <span class="live-dot" aria-hidden></span>
-      <span class="nav-cta-label-full">ご予約 / 空席を見る</span>
+    <a href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" class="nav-cta" target="_blank" rel="noopener">
+      <span class="live-dot"></span>
+      <span class="nav-cta-label-full">ご予約</span>
       <span class="nav-cta-label-short">予約</span>
     </a>
   </div>
@@ -398,14 +702,14 @@
 <section class="hero" id="top">
   <div class="hero-photo"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">marici — hair salon, kumamoto</div>
-    <h1 class="hero-title serif">
+    <div class="hero-eyebrow">marici — kumamoto</div>
+    <h1 class="hero-title">
       流れにまかせて、<br />
       <em>自分らしい髪</em>へ。
     </h1>
     <div class="hero-meta">
       <span>Care Bleach</span>
-      <span>Color Specialist</span>
+      <span>Color</span>
       <span>髪質改善</span>
     </div>
   </div>
@@ -419,9 +723,10 @@
       <div class="concept-photo reveal">
         <img src="photos/02-portrait-bob.jpg" alt="marici portrait" loading="lazy" />
       </div>
-      <div class="concept-text reveal">
-        <div class="section-eyebrow">Concept</div>
-        <h2 class="section-title serif">
+      <div class="concept-text reveal reveal-slow">
+        <span class="eyebrow">Concept</span>
+        <div class="divider-brass"></div>
+        <h2 class="h2">
           技術は静かに、<br />
           仕上がりは<em>はっきりと</em>。
         </h2>
@@ -436,30 +741,50 @@
   </div>
 </section>
 
-<!-- ─── Editorial ─── -->
+<!-- ─── Editorial spreads — 1 photo per scroll ─── -->
 <section class="editorial" id="editorial">
-  <div class="container">
-    <div class="editorial-head reveal">
-      <div class="section-eyebrow">Works</div>
-      <h2 class="section-title serif">
-        色も、表情も、<br />
-        その人の<em>季節</em>に合わせて。
-      </h2>
-    </div>
-    <div class="editorial-grid">
-      <a class="ed ed-1 reveal" href="#menu"><img src="photos/06-editorial-pair.jpg" alt="copper short and wavy" loading="lazy" /></a>
-      <a class="ed ed-2 reveal" href="#menu"><img src="photos/07-studio-orange.jpg" alt="studio editorial" loading="lazy" /></a>
-      <a class="ed ed-3 reveal" href="#menu"><img src="photos/09-stairs-pair.jpg" alt="stairs editorial" loading="lazy" /></a>
-      <a class="ed ed-4 reveal" href="#menu"><img src="photos/02-portrait-bob.jpg" alt="bob portrait" loading="lazy" /></a>
-      <a class="ed ed-5 reveal" href="#menu"><img src="photos/01-hero-trio.jpg" alt="trio concrete" loading="lazy" /></a>
-    </div>
+  <div class="ed-intro reveal">
+    <span class="eyebrow on-dark">Works</span>
+    <h2 class="h2 on-dark">
+      色も、表情も、<br />
+      その人の<em>季節</em>に合わせて。
+    </h2>
+    <p class="lead">同じ髪は、ふたつとない。<br />ひとりひとりに、誂えるように。</p>
   </div>
+
+  <article class="spread spread-1">
+    <div class="photo"></div>
+    <div class="caption reveal">
+      <div class="num">— 01</div>
+      <h3>柔らかな赤茶と、<br />風に混ざるショート。</h3>
+      <div class="tag">Color × Cut</div>
+    </div>
+  </article>
+
+  <article class="spread spread-2">
+    <div class="photo"></div>
+    <div class="caption reveal">
+      <div class="num">— 02</div>
+      <h3>毎日に、<br />ひと匙のあかるさを。</h3>
+      <div class="tag">Editorial</div>
+    </div>
+  </article>
+
+  <article class="spread spread-3">
+    <div class="photo"></div>
+    <div class="caption reveal">
+      <div class="num">— 03</div>
+      <h3>ふたりの空気感まで、<br />仕上げの一部に。</h3>
+      <div class="tag">Style Shoot</div>
+    </div>
+  </article>
 </section>
 
 <!-- ─── Interior ─── -->
 <section class="interior">
   <div class="interior-photo">
     <div class="interior-caption">
+      <span class="eyebrow">Salon</span>
       <h2 class="serif">熊本・上通り、<br />光と素材の店内で。</h2>
       <p>コンクリートの床に、抜けの良い天井。落ち着いた間接照明。<br />4 席のちいさな店だから、ひとりひとりに丁寧に向き合えます。</p>
     </div>
@@ -471,10 +796,12 @@
   <div class="container">
     <div class="strength-block">
       <div class="strength-photo reveal">
-        <img src="photos/04-treatment.jpg" alt="髪質改善 / treatment" loading="lazy" />
+        <img src="photos/04-treatment.jpg" alt="髪質改善" loading="lazy" />
+        <div class="tag">— 01 / Care</div>
       </div>
-      <div class="strength-text reveal">
-        <div class="num serif">01</div>
+      <div class="strength-text reveal reveal-slow">
+        <span class="eyebrow">Craft</span>
+        <div class="divider-brass"></div>
         <h3 class="serif">髪質改善 — 触れたくなる、<br />ツヤと指通り。</h3>
         <p>薬剤を強く効かせるのではなく、髪の状態に合わせてベース・カラー・トリートメントの順序を組み立てます。</p>
         <p>一度の施術で「魅せる艶」、繰り返すごとに「育てる髪」へ。長くつきあえる髪を、丁寧に積み上げていきます。</p>
@@ -485,9 +812,11 @@
     <div class="strength-block reverse">
       <div class="strength-photo reveal">
         <img src="photos/05-color-grid.jpg" alt="color showcase" loading="lazy" />
+        <div class="tag">— 02 / Color</div>
       </div>
-      <div class="strength-text reveal">
-        <div class="num serif">02</div>
+      <div class="strength-text reveal reveal-slow">
+        <span class="eyebrow">Craft</span>
+        <div class="divider-brass"></div>
         <h3 class="serif">繊細なカラー —<br />明るさを、諦めない。</h3>
         <p>ケアブリーチの薬剤選定とリフトコントロールで、ダメージを抑えながら、ピンク・シルバー・オレンジ・ブルー・ペールベージュまで、自由に。</p>
         <p>オフィスカラーから派手髪まで、暮らしに馴染む色を一緒に決めていきます。</p>
@@ -497,47 +826,13 @@
   </div>
 </section>
 
-<!-- ─── Booking Flow ─── -->
-<section class="flow" id="flow">
-  <div class="container-narrow">
-    <div class="flow-head reveal">
-      <div class="section-eyebrow">How to book</div>
-      <h2 class="section-title serif">ご予約は、<br /><em>3 ステップ</em>で完了。</h2>
-      <p class="lead" style="margin: 0 auto;">深夜でも早朝でも、お好きな時に。空席はリアルタイムで表示されるので、二重予約や折り返しの心配はありません。</p>
-    </div>
-    <ol class="flow-list">
-      <li class="reveal">
-        <div class="num serif">01</div>
-        <div class="body">
-          <h3 class="serif">空席を選ぶ</h3>
-          <p>カレンダーから希望日を選ぶと、その日の空き時間が一覧で表示されます。</p>
-        </div>
-      </li>
-      <li class="reveal">
-        <div class="num serif">02</div>
-        <div class="body">
-          <h3 class="serif">メニューを選ぶ</h3>
-          <p>カット・カラー・ケアブリーチ・髪質改善などから、ご希望のメニューを選択。</p>
-        </div>
-      </li>
-      <li class="reveal">
-        <div class="num serif">03</div>
-        <div class="body">
-          <h3 class="serif">お名前と連絡先を入力</h3>
-          <p>30 秒で完了。LINE 登録があると次回からは入力不要です。</p>
-        </div>
-      </li>
-    </ol>
-    <p class="flow-cta-note reveal" style="text-align:center;">クレジットカード登録不要 ・ キャンセルもオンラインで OK</p>
-  </div>
-</section>
-
 <!-- ─── Menu ─── -->
 <section class="menu" id="menu">
   <div class="container-narrow">
     <div class="menu-head reveal">
-      <div class="section-eyebrow">Menu</div>
-      <h2 class="section-title serif">Menu &amp; Price</h2>
+      <span class="eyebrow">Menu</span>
+      <div class="divider-brass" style="margin-left:auto;margin-right:auto;"></div>
+      <h2 class="h2">Menu &amp; Price</h2>
     </div>
     <div class="menu-list">
       <div class="menu-row reveal"><div><div class="name">カット</div><span class="desc">Cut</span></div><div class="price">¥4,450</div></div>
@@ -555,24 +850,52 @@
   </div>
 </section>
 
-<!-- ─── Final CTA ─── -->
+<!-- ─── Booking flow ─── -->
+<section class="flow" id="flow">
+  <div class="container-narrow">
+    <div class="flow-head reveal">
+      <span class="eyebrow">How to book</span>
+      <div class="divider-brass" style="margin-left:auto;margin-right:auto;"></div>
+      <h2 class="h2">ご予約は、<em>3 ステップ</em>で。</h2>
+      <p class="lead">深夜でも早朝でも。空席はリアルタイムで反映され、二重予約や折り返しの心配はありません。</p>
+    </div>
+    <ol class="flow-list">
+      <li class="reveal">
+        <div class="num">01</div>
+        <h3>空席を選ぶ</h3>
+        <p>カレンダーから希望日を選ぶと、その日の空き時間が一覧で表示されます。</p>
+      </li>
+      <li class="reveal">
+        <div class="num">02</div>
+        <h3>メニューを選ぶ</h3>
+        <p>カット・カラー・ケアブリーチ・髪質改善などから、ご希望のメニューを選択。</p>
+      </li>
+      <li class="reveal">
+        <div class="num">03</div>
+        <h3>お名前と連絡先を入力</h3>
+        <p>30 秒で完了。LINE 登録があると次回からは入力不要です。</p>
+      </li>
+    </ol>
+    <p class="flow-cta-note reveal">クレジットカード登録不要 ・ キャンセルもオンラインで OK</p>
+  </div>
+</section>
+
+<!-- ─── Final CTA — full-bleed ─── -->
 <section class="cta-final">
   <div class="cta-photo"></div>
-  <div class="container">
-    <div class="cta-content">
-      <div class="eyebrow uppercase-spaced">Reservation</div>
-      <h2 class="serif">
-        次に座る席を、<br />
-        <em>marici</em>で。
-      </h2>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener">
-          ご予約ページへ <span class="arrow">→</span>
-        </a>
-        <a class="btn btn-ghost" href="tel:0962884232">
-          096-288-4232 にかける
-        </a>
-      </div>
+  <div class="cta-content">
+    <span class="eyebrow">Reservation</span>
+    <h2 class="serif">
+      次に座る席を、<br />
+      <em>marici</em>で。
+    </h2>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener">
+        <span class="live-dot live-dot-light"></span>
+        24時間オンライン予約
+        <span class="arrow">→</span>
+      </a>
+      <a class="btn btn-ghost" href="tel:0962884232">096-288-4232</a>
     </div>
   </div>
 </section>
@@ -582,15 +905,16 @@
   <div class="container">
     <div class="info-grid">
       <div class="reveal">
-        <div class="section-eyebrow">Salon Information</div>
-        <h2 class="section-title serif">marici</h2>
+        <span class="eyebrow">Information</span>
+        <div class="divider-brass"></div>
+        <h2 class="h2">marici</h2>
         <dl>
           <dt>Address</dt><dd>熊本県熊本市中央区草葉町2-32<br />ウェルブライト上通り 1F-A</dd>
           <dt>Tel</dt><dd><a href="tel:0962884232">096-288-4232</a></dd>
           <dt>Open</dt><dd>10:00 – 19:00</dd>
           <dt>Close</dt><dd>不定休</dd>
           <dt>Web</dt><dd><a href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener">ご予約フォーム</a></dd>
-          <dt>Instagram</dt><dd><a href="https://www.instagram.com/marici_nakanishi/" target="_blank" rel="noopener">@marici_nakanishi</a></dd>
+          <dt>IG</dt><dd><a href="https://www.instagram.com/marici_nakanishi/" target="_blank" rel="noopener">@marici_nakanishi</a></dd>
         </dl>
       </div>
       <div class="map-card reveal">
@@ -609,8 +933,14 @@
   <div class="container">
     <div class="inner">
       <div>
-        <div class="brand serif">marici</div>
+        <div class="brand">marici</div>
         <div>hair salon, Kumamoto</div>
+      </div>
+      <div class="links">
+        <a href="#concept">Concept</a>
+        <a href="#editorial">Works</a>
+        <a href="#menu">Menu</a>
+        <a href="#info">Info</a>
       </div>
       <div class="cr">© marici. All rights reserved.</div>
     </div>
@@ -618,17 +948,39 @@
 </footer>
 
 <script>
+  // Reveal-on-scroll
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.14, rootMargin: '0px 0px -60px 0px' });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
     document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
   } else {
     document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-in'));
   }
 
+  // Header background switches dark when over dark sections (editorial/interior/cta)
+  const header = document.getElementById('siteHeader');
+  const darkSections = document.querySelectorAll('.editorial, .interior, .cta-final');
+  if (header && 'IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((entries) => {
+      // visible dark sections push header to dark mode
+      const anyDark = [...darkSections].some((s) => {
+        const r = s.getBoundingClientRect();
+        return r.top < 80 && r.bottom > 80;
+      });
+      header.classList.toggle('is-dark', anyDark);
+    }, { threshold: [0, 0.1, 0.5, 1] });
+    darkSections.forEach((s) => obs.observe(s));
+    window.addEventListener('scroll', () => {
+      const anyDark = [...darkSections].some((s) => {
+        const r = s.getBoundingClientRect();
+        return r.top < 80 && r.bottom > 80;
+      });
+      header.classList.toggle('is-dark', anyDark);
+    }, { passive: true });
+  }
 </script>
 </body>
 </html>
