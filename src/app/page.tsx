@@ -175,7 +175,7 @@ function Hero() {
               <CountUp
                 to={30}
                 durationMs={1400}
-                format={(n) => `${n}分`}
+                suffix="分"
                 className="display-serif text-[24px] md:text-[36px] text-[#efe3c8] tabular-nums"
               />
             </StatCell>
@@ -183,7 +183,9 @@ function Hero() {
               <CountUp
                 to={4980}
                 durationMs={1600}
-                format={(n) => `¥${n.toLocaleString('ja-JP')}〜`}
+                prefix="¥"
+                suffix="〜"
+                comma
                 className="display-serif text-[24px] md:text-[36px] text-[#efe3c8] tabular-nums"
               />
             </StatCell>

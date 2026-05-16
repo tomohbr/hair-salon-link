@@ -9,12 +9,16 @@ import { useEffect, useRef, useState } from 'react';
 export default function CountUp({
   to,
   durationMs = 1400,
-  format,
+  prefix = '',
+  suffix = '',
+  comma = false,
   className,
 }: {
   to: number;
   durationMs?: number;
-  format: (n: number) => string;
+  prefix?: string;
+  suffix?: string;
+  comma?: boolean;
   className?: string;
 }) {
   const [n, setN] = useState(0);
@@ -49,9 +53,11 @@ export default function CountUp({
     return () => io.disconnect();
   }, [to, durationMs]);
 
+  const body = comma ? n.toLocaleString('ja-JP') : String(n);
+
   return (
     <span ref={ref} className={className}>
-      {format(n)}
+      {prefix}{body}{suffix}
     </span>
   );
 }
