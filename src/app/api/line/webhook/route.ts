@@ -57,16 +57,17 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // 店舗を特定できない Webhook は、署名検証も成立しない＝正規の店舗に
+  // 紐付かないイベント。別店舗の顧客として誤登録しないよう、ここで安全に終了する。
+  // （200 を返して LINE 側の不要なリトライを防ぐ）
   if (!salon) {
-    if (!verifySignature(body, signature)) {
-      return NextResponse.json({ error: 'invalid signature or salon not found' }, { status: 401 });
-    }
-    salon = await prisma.salon.findFirst({ where: { status: 'active' } });
+    return NextResponse.json({ ok: true, salonId: null });
   }
 
-  const creds = salon
-    ? { accessToken: salon.lineAccessToken, channelSecret: salon.lineChannelSecret }
-    : undefined;
+  const creds = {
+    accessToken: salon.lineAccessToken,
+    channelSecret: salon.lineChannelSecret,
+  };
 
   const salonName = salon?.name || 'HairSalonLink';
   const slug = salon?.slug || 'demo';

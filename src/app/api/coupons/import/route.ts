@@ -5,7 +5,10 @@ import { parseCouponsCsv } from '@/lib/csv/hpb';
 
 export async function POST(req: NextRequest) {
   try {
-    const { salon } = await getCurrentSalon();
+    const { salon, session } = await getCurrentSalon();
+    if (session.role === 'staff') {
+      return NextResponse.json({ error: '権限がありません' }, { status: 403 });
+    }
     const db = prismaForSalon(salon.id);
     const { csv } = await req.json();
     if (!csv) return NextResponse.json({ error: 'CSV が空です' }, { status: 400 });

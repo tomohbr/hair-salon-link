@@ -5,7 +5,10 @@ import { toCsv } from '@/lib/csv/hpb';
 
 export async function GET() {
   try {
-    const { salon } = await getCurrentSalon();
+    const { salon, session } = await getCurrentSalon();
+    if (session.role === 'staff') {
+      return NextResponse.json({ error: '権限がありません' }, { status: 403 });
+    }
     const db = prismaForSalon(salon.id);
     const coupons = await db.coupon.findMany({
       orderBy: { createdAt: 'desc' },

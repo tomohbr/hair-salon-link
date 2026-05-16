@@ -146,5 +146,6 @@ async function seed(req: NextRequest) {
   });
 }
 
-export const GET = seed;
+// 一回用の移行エンドポイント。状態を変更するため POST のみ許可する
+// （GET だとブラウザのプリフェッチ／クローラで意図せず実行され得る）。
 export const POST = seed;

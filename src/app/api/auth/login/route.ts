@@ -8,13 +8,13 @@ import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/db';
 import { buildRedirectUrl } from '@/lib/baseUrl';
 import { rateLimit, RATE_LIMITS, getClientIp } from '@/lib/rateLimit';
+import { getSessionSecret } from '@/lib/sessionSecret';
 
 const COOKIE_NAME = 'hairsalonlink_session';
 const ALG = 'HS256';
 
 function getSecret() {
-  const secret = process.env.SESSION_SECRET || 'dev-secret-change-me-in-production-12345678';
-  return new TextEncoder().encode(secret);
+  return getSessionSecret();
 }
 
 function withNoCache(res: NextResponse) {

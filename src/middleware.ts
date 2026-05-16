@@ -1,11 +1,11 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
+import { getSessionSecret } from '@/lib/sessionSecret';
 
 const COOKIE_NAME = 'hairsalonlink_session';
 
 function getSecret() {
-  const secret = process.env.SESSION_SECRET || 'dev-secret-change-me-in-production-12345678';
-  return new TextEncoder().encode(secret);
+  return getSessionSecret();
 }
 
 /**
@@ -48,6 +48,8 @@ const protectedPaths = [
   '/messages',
   '/designs',
   '/analytics',
+  '/sales',
+  '/inventory',
   '/settings',
   '/superadmin',
   '/account',
@@ -95,6 +97,8 @@ export const config = {
     '/messages/:path*',
     '/designs/:path*',
     '/analytics/:path*',
+    '/sales/:path*',
+    '/inventory/:path*',
     '/settings/:path*',
     '/superadmin/:path*',
     '/account/:path*',
