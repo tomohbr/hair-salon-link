@@ -84,6 +84,17 @@ export function parseBusinessHours(raw: unknown): BusinessHoursMap {
   return out;
 }
 
+// サロンの営業時間・予約はすべて日本時間(JST)基準。サーバーは UTC で動くため、
+// 「今日」「現在時刻」を UTC で計算すると最大 9 時間ズレる（深夜〜午前は前日扱いになり、
+// 過去の枠が予約可能と表示される）。JST の壁時計を UTC フィールドで表す Date を作る。
+const JST_OFFSET_MS = 9 * 60 * 60 * 1000;
+function nowInJst(): Date {
+  return new Date(Date.now() + JST_OFFSET_MS);
+}
+function todayJst(): string {
+  return nowInJst().toISOString().slice(0, 10);
+}
+
 function toMinutes(hhmm: string): number {
   const [h, m] = hhmm.split(':').map(Number);
   return h * 60 + m;
@@ -137,7 +148,8 @@ export async function getAvailableSlots(
   const closeMin = toMinutes(dayHours.close);
   const breakStart = dayHours.break_start ? toMinutes(dayHours.break_start) : -1;
   const breakEnd = dayHours.break_end ? toMinutes(dayHours.break_end) : -1;
-  const nowMin = isToday(date) ? new Date().getHours() * 60 + new Date().getMinutes() : -1;
+  const jstNow = nowInJst();
+  const nowMin = isToday(date) ? jstNow.getUTCHours() * 60 + jstNow.getUTCMinutes() : -1;
 
   const slots: Slot[] = [];
   for (let t = openMin; t + durationMin <= closeMin; t += interval) {
@@ -182,8 +194,7 @@ export async function getAvailableSlots(
 }
 
 function isToday(date: string): boolean {
-  const today = new Date().toISOString().slice(0, 10);
-  return date === today;
+  return date === todayJst();
 }
 
 /**

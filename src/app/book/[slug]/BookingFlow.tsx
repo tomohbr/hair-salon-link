@@ -54,12 +54,15 @@ export default function BookingFlow({
       });
   }, [step, selectedMenu, selectedDate, slug]);
 
-  // 次の14日間の日付を生成
+  // 次の14日間の日付を生成。
+  // iso は端末ローカル日付（＝来店客の居る日本時間）から組み立てる。
+  // toISOString() だと UTC 変換され、表示ラベルと送信値が前日にズレることがある。
   const nextDays = Array.from({ length: 14 }, (_, i) => {
     const d = new Date();
     d.setDate(d.getDate() + i);
+    const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
     return {
-      iso: d.toISOString().slice(0, 10),
+      iso,
       label: `${d.getMonth() + 1}/${d.getDate()}`,
       dow: ['日', '月', '火', '水', '木', '金', '土'][d.getDay()],
       isWeekend: d.getDay() === 0 || d.getDay() === 6,
