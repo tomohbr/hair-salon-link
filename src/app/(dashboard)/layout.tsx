@@ -1,6 +1,7 @@
 import Sidebar from '@/components/shared/Sidebar';
 import MobileTabBar from '@/components/shared/MobileTabBar';
 import CommandPalette from '@/components/shared/CommandPalette';
+import FeedbackButton from '@/components/shared/FeedbackButton';
 import { getCurrentSalon } from '@/lib/salonData';
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -41,6 +42,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
         )}
         <div className="max-w-7xl mx-auto px-3 py-4 sm:px-4 md:px-8 md:py-6">{children}</div>
       </main>
+      <FeedbackButton />
       <MobileTabBar
         userName={session.name}
         userRole={userRole}
