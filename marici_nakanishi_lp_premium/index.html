@@ -212,6 +212,216 @@
   }
 
   /* ─────────────────────────────────────────────────────
+     Designer-grade additions
+     ───────────────────────────────────────────────────── */
+
+  /* —— Loading curtain (first paint reveal) —— */
+  .curtain {
+    position: fixed; inset: 0; z-index: 200;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 1s ease-out, transform 1s cubic-bezier(.7, 0, .3, 1);
+    transform-origin: top;
+    pointer-events: none;
+  }
+  .curtain.is-out { opacity: 0; transform: translateY(-101%); }
+  .curtain .mark {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-weight: 300;
+    font-size: 32px;
+    color: var(--ink);
+    opacity: 0;
+    animation: curtainMark 1.6s cubic-bezier(.22,1,.36,1) forwards;
+  }
+  @keyframes curtainMark {
+    0% { opacity: 0; letter-spacing: 0.2em; transform: translateY(8px); }
+    40% { opacity: 1; }
+    100% { opacity: 1; letter-spacing: 0.04em; transform: translateY(0); }
+  }
+
+  /* —— Scroll progress (top brass hairline) —— */
+  .progress {
+    position: fixed; top: 0; left: 0;
+    height: 1.5px; width: 0;
+    background: linear-gradient(90deg, var(--gold), var(--accent));
+    z-index: 101;
+    transition: width .12s linear;
+  }
+
+  /* —— Custom cursor follower (desktop only) —— */
+  @media (hover: hover) and (pointer: fine) {
+    body.has-cursor { cursor: none; }
+    .cursor-dot {
+      position: fixed; top: 0; left: 0; z-index: 200;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--ink);
+      pointer-events: none;
+      transform: translate3d(-50%, -50%, 0);
+      transition: width .25s, height .25s, background .25s, opacity .25s;
+      mix-blend-mode: difference;
+    }
+    .cursor-ring {
+      position: fixed; top: 0; left: 0; z-index: 199;
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid rgba(184, 138, 74, 0.5);
+      pointer-events: none;
+      transform: translate3d(-50%, -50%, 0);
+      transition: width .4s cubic-bezier(.22,1,.36,1), height .4s cubic-bezier(.22,1,.36,1), border-color .25s, opacity .25s;
+    }
+    body.cursor-hover .cursor-ring {
+      width: 64px; height: 64px;
+      border-color: rgba(184, 138, 74, 0.85);
+    }
+    body.cursor-hover .cursor-dot {
+      background: var(--gold);
+      width: 4px; height: 4px;
+    }
+  }
+  @media (hover: none), (pointer: coarse) {
+    .cursor-dot, .cursor-ring { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cursor-dot, .cursor-ring { display: none; }
+    .curtain { display: none; }
+  }
+
+  /* —— Photo grain overlay (subtle film texture) —— */
+  .grain-overlay::after {
+    content: ""; position: absolute; inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 0.92  0 0 0 0 0.78  0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+    z-index: 1;
+  }
+
+  /* —— Editorial vol-label —— */
+  .vol-label {
+    display: inline-flex; align-items: baseline; gap: 8px;
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-weight: 400;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+  }
+  .vol-label::before {
+    content: ""; display: block; width: 16px; height: 1px; background: var(--gold);
+  }
+  .vol-label.on-dark { color: var(--gold-hi); }
+  .vol-label.on-dark::before { background: var(--gold-hi); }
+
+  /* —— Pull-quote section (editorial intermission) —— */
+  .pull-quote {
+    background: var(--bg);
+    padding: 96px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .pull-quote-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+    text-align: center;
+  }
+  .pull-quote-mark {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-weight: 200;
+    font-size: 84px;
+    color: var(--accent);
+    opacity: 0.4;
+    line-height: 0.4;
+    margin-bottom: 32px;
+  }
+  .pull-quote-text {
+    font-family: 'Fraunces', serif;
+    font-weight: 280;
+    font-variation-settings: "opsz" 144;
+    font-size: clamp(22px, 5.5vw, 36px);
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .pull-quote-text em { font-style: italic; color: var(--accent); }
+  .pull-quote-attribution {
+    margin-top: 36px;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .pull-quote-attribution::before,
+  .pull-quote-attribution::after { content: ""; display: block; width: 20px; height: 1px; background: var(--line); }
+  @media (min-width: 720px) { .pull-quote { padding: 140px 0; } }
+
+  /* —— Magnetic CTA hover (designer-grade button feel) —— */
+  .nav-cta {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .nav-cta::before {
+    content: ""; position: absolute;
+    width: 200%; height: 200%;
+    left: var(--mx, 50%); top: var(--my, 50%);
+    background: radial-gradient(circle at center, rgba(255, 236, 200, 0.55), transparent 50%);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity .25s ease;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .nav-cta:hover::before { opacity: 1; }
+
+  /* —— Subtle header progress —— */
+  .site-header.is-dark + .progress { mix-blend-mode: screen; }
+
+  /* —— Editorial figure caption (small Fig. number) —— */
+  .fig-caption {
+    position: absolute; right: 18px; bottom: 18px;
+    z-index: 3;
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 11px;
+    color: rgba(250, 243, 227, 0.7);
+    letter-spacing: 0.08em;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    background: rgba(20, 17, 13, 0.35);
+    padding: 4px 9px;
+    border-radius: 999px;
+  }
+
+  /* —— Hover lift for spreads —— */
+  .spread {
+    isolation: isolate;
+    transition: filter 1s ease;
+  }
+  .spread .photo { transition: transform 8s cubic-bezier(.22, 1, .36, 1), filter 1s ease; }
+  .spread:hover .photo { transform: scale(1.025); filter: brightness(0.9) contrast(1.06); }
+
+  /* —— Wordmark detail under "marici" in hero (designer signature) —— */
+  .hero-wordmark-detail {
+    margin-top: 10px;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 11px;
+    color: rgba(250, 243, 227, 0.6);
+    letter-spacing: 0.18em;
+  }
+  .hero-wordmark-detail::before,
+  .hero-wordmark-detail::after { content: ""; display: block; width: 12px; height: 1px; background: rgba(250, 243, 227, 0.4); }
+
+  /* —— Refined Footer signature —— */
+  footer .sig {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-weight: 300;
+    font-size: 12px;
+    color: rgba(250, 243, 227, 0.55);
+    margin-top: 8px;
+  }
+  footer .sig em { color: var(--gold-hi); font-style: normal; }
+
+  /* ─────────────────────────────────────────────────────
      Section base
      ───────────────────────────────────────────────────── */
   section { padding: 96px 0; }
@@ -686,6 +896,18 @@
 </head>
 <body>
 
+<!-- ─── Loading curtain ─── -->
+<div class="curtain" id="curtain">
+  <div class="mark">marici</div>
+</div>
+
+<!-- ─── Scroll progress ─── -->
+<div class="progress" id="progress"></div>
+
+<!-- ─── Custom cursor (desktop only) ─── -->
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
 <!-- ─── Header ─── -->
 <header class="site-header" id="siteHeader">
   <div class="inner">
@@ -699,7 +921,7 @@
 </header>
 
 <!-- ─── Hero ─── -->
-<section class="hero" id="top">
+<section class="hero grain-overlay" id="top">
   <div class="hero-photo"></div>
   <div class="hero-content">
     <div class="hero-eyebrow">marici — kumamoto</div>
@@ -707,6 +929,7 @@
       流れにまかせて、<br />
       <em>自分らしい髪</em>へ。
     </h1>
+    <div class="hero-wordmark-detail">est. for hair, no.04</div>
     <div class="hero-meta">
       <span>Care Bleach</span>
       <span>Color</span>
@@ -724,7 +947,7 @@
         <img src="photos/02-portrait-bob.jpg" alt="marici portrait" loading="lazy" />
       </div>
       <div class="concept-text reveal reveal-slow">
-        <span class="eyebrow">Concept</span>
+        <div class="vol-label">Vol. 01 ・ Concept</div>
         <div class="divider-brass"></div>
         <h2 class="h2">
           技術は静かに、<br />
@@ -741,10 +964,22 @@
   </div>
 </section>
 
+<!-- ─── Pull quote — editorial intermission ─── -->
+<section class="pull-quote">
+  <div class="pull-quote-inner">
+    <div class="pull-quote-mark reveal">"</div>
+    <p class="pull-quote-text reveal">
+      派手な変化を求めるより、<em>「ちょっと触ってみたくなる髪」</em>を、<br />
+      時間をかけて積み上げていく。
+    </p>
+    <div class="pull-quote-attribution reveal">marici — note</div>
+  </div>
+</section>
+
 <!-- ─── Editorial spreads — 1 photo per scroll ─── -->
 <section class="editorial" id="editorial">
   <div class="ed-intro reveal">
-    <span class="eyebrow on-dark">Works</span>
+    <div class="vol-label on-dark" style="justify-content:center;">Vol. 02 ・ Works</div>
     <h2 class="h2 on-dark">
       色も、表情も、<br />
       その人の<em>季節</em>に合わせて。
@@ -752,8 +987,9 @@
     <p class="lead">同じ髪は、ふたつとない。<br />ひとりひとりに、ぴったりの一本を。</p>
   </div>
 
-  <article class="spread spread-1">
+  <article class="spread spread-1 grain-overlay">
     <div class="photo"></div>
+    <span class="fig-caption">Fig. 01</span>
     <div class="caption reveal">
       <div class="num">— 01</div>
       <h3>やわらかな赤茶の、<br />軽やかなショート。</h3>
@@ -761,8 +997,9 @@
     </div>
   </article>
 
-  <article class="spread spread-2">
+  <article class="spread spread-2 grain-overlay">
     <div class="photo"></div>
+    <span class="fig-caption">Fig. 02</span>
     <div class="caption reveal">
       <div class="num">— 02</div>
       <h3>毎日に、<br />ちょっとの明るさを。</h3>
@@ -770,8 +1007,9 @@
     </div>
   </article>
 
-  <article class="spread spread-3">
+  <article class="spread spread-3 grain-overlay">
     <div class="photo"></div>
+    <span class="fig-caption">Fig. 03</span>
     <div class="caption reveal">
       <div class="num">— 03</div>
       <h3>ふたりの空気感まで、<br />仕上げの一部に。</h3>
@@ -782,9 +1020,9 @@
 
 <!-- ─── Interior ─── -->
 <section class="interior">
-  <div class="interior-photo">
+  <div class="interior-photo grain-overlay">
     <div class="interior-caption">
-      <span class="eyebrow">Salon</span>
+      <div class="vol-label on-dark">Vol. 03 ・ Salon</div>
       <h2 class="serif">熊本・上通り、<br />光と素材の店内で。</h2>
       <p>コンクリートの床に、抜けの良い天井。落ち着いた間接照明。<br />4 席のちいさな店だから、ひとりひとりに丁寧に向き合えます。</p>
     </div>
@@ -800,7 +1038,7 @@
         <div class="tag">— 01 / Care</div>
       </div>
       <div class="strength-text reveal reveal-slow">
-        <span class="eyebrow">Craft</span>
+        <div class="vol-label">Vol. 04 ・ Craft 01</div>
         <div class="divider-brass"></div>
         <h3 class="serif">髪質改善 — 触れたくなる、<br />ツヤと指通り。</h3>
         <p>薬剤を強く効かせるのではなく、髪の状態に合わせてベース・カラー・トリートメントの順序を組み立てます。</p>
@@ -815,7 +1053,7 @@
         <div class="tag">— 02 / Color</div>
       </div>
       <div class="strength-text reveal reveal-slow">
-        <span class="eyebrow">Craft</span>
+        <div class="vol-label">Vol. 04 ・ Craft 02</div>
         <div class="divider-brass"></div>
         <h3 class="serif">繊細なカラー —<br />明るさを、諦めない。</h3>
         <p>ケアブリーチの薬剤選定とリフトコントロールで、ダメージを抑えながら、ピンク・シルバー・オレンジ・ブルー・ペールベージュまで、自由に。</p>
@@ -830,7 +1068,7 @@
 <section class="menu" id="menu">
   <div class="container-narrow">
     <div class="menu-head reveal">
-      <span class="eyebrow">Menu</span>
+      <div class="vol-label" style="justify-content:center;">Vol. 05 ・ Menu</div>
       <div class="divider-brass" style="margin-left:auto;margin-right:auto;"></div>
       <h2 class="h2">Menu &amp; Price</h2>
     </div>
@@ -854,7 +1092,7 @@
 <section class="flow" id="flow">
   <div class="container-narrow">
     <div class="flow-head reveal">
-      <span class="eyebrow">How to book</span>
+      <div class="vol-label" style="justify-content:center;">Vol. 06 ・ How to book</div>
       <div class="divider-brass" style="margin-left:auto;margin-right:auto;"></div>
       <h2 class="h2">ご予約は、<em>3 ステップ</em>で。</h2>
       <p class="lead">深夜でも早朝でも。空席はリアルタイムで反映され、二重予約や折り返しの心配はありません。</p>
@@ -881,10 +1119,10 @@
 </section>
 
 <!-- ─── Final CTA — full-bleed ─── -->
-<section class="cta-final">
+<section class="cta-final grain-overlay">
   <div class="cta-photo"></div>
   <div class="cta-content">
-    <span class="eyebrow">Reservation</span>
+    <div class="vol-label on-dark" style="justify-content:center;">Vol. 07 ・ Reservation</div>
     <h2 class="serif">
       次に座る席を、<br />
       <em>marici</em>で。
@@ -905,7 +1143,7 @@
   <div class="container">
     <div class="info-grid">
       <div class="reveal">
-        <span class="eyebrow">Information</span>
+        <div class="vol-label">Vol. 08 ・ Information</div>
         <div class="divider-brass"></div>
         <h2 class="h2">marici</h2>
         <dl>
@@ -935,6 +1173,7 @@
       <div>
         <div class="brand">marici</div>
         <div>hair salon, Kumamoto</div>
+        <div class="sig">Crafted with care — <em>est. 2024</em></div>
       </div>
       <div class="links">
         <a href="#concept">Concept</a>
@@ -948,7 +1187,7 @@
 </footer>
 
 <script>
-  // Reveal-on-scroll
+  // ───── Reveal-on-scroll ─────
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
@@ -958,6 +1197,63 @@
     document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
   } else {
     document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-in'));
+  }
+
+  // ───── Loading curtain ─────
+  const curtain = document.getElementById('curtain');
+  if (curtain) {
+    const lift = () => { curtain.classList.add('is-out'); setTimeout(() => curtain.remove(), 1100); };
+    if (document.readyState === 'complete') setTimeout(lift, 1100);
+    else window.addEventListener('load', () => setTimeout(lift, 900));
+  }
+
+  // ───── Scroll progress bar ─────
+  const progress = document.getElementById('progress');
+  if (progress) {
+    const onScroll = () => {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - doc.clientHeight;
+      const ratio = max > 0 ? (window.scrollY / max) : 0;
+      progress.style.width = (ratio * 100).toFixed(2) + '%';
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  // ───── Custom cursor (desktop / mouse only) ─────
+  const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (isFinePointer && !prefersReduced) {
+    document.body.classList.add('has-cursor');
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+    let rx = mx, ry = my;
+    window.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate3d(${mx}px, ${my}px, 0) translate(-50%, -50%)`; }, { passive: true });
+    const raf = () => {
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      if (ring) ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+
+    // hover effect on clickable elements
+    const hoverables = 'a, button, .spread, .concept-photo, .strength-photo, summary, [role="button"]';
+    document.querySelectorAll(hoverables).forEach((el) => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+
+    // Magnetic CTA glow
+    const navCta = document.querySelector('.nav-cta');
+    if (navCta) {
+      navCta.addEventListener('mousemove', (e) => {
+        const r = navCta.getBoundingClientRect();
+        navCta.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+        navCta.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+      });
+    }
   }
 
   // Header background switches dark when over dark sections (editorial/interior/cta)
