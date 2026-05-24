@@ -411,6 +411,98 @@
   .hero-wordmark-detail::before,
   .hero-wordmark-detail::after { content: ""; display: block; width: 12px; height: 1px; background: rgba(250, 243, 227, 0.4); }
 
+  /* —— Split-text reveal (character-by-character) —— */
+  .split-line { display: inline-block; overflow: hidden; vertical-align: top; }
+  .split-line .ch {
+    display: inline-block;
+    transform: translateY(110%);
+    opacity: 0;
+    transition: transform 1.1s cubic-bezier(.22, 1, .36, 1), opacity .8s ease;
+    will-change: transform;
+  }
+  .split-line.is-in .ch { transform: translateY(0); opacity: 1; }
+  /* whitespace preserve */
+  .split-line .ws { display: inline-block; width: .25em; }
+
+  /* —— "View" label on cursor over editorial spreads —— */
+  @media (hover: hover) and (pointer: fine) {
+    .cursor-view {
+      position: fixed; top: 0; left: 0; z-index: 201;
+      padding: 8px 14px;
+      background: var(--gold);
+      color: var(--bg-deep);
+      font-family: 'Fraunces', serif; font-style: italic;
+      font-size: 12px; letter-spacing: 0.06em;
+      border-radius: 999px;
+      pointer-events: none;
+      opacity: 0;
+      transform: translate3d(-50%, -50%, 0) scale(0.6);
+      transition: opacity .25s, transform .35s cubic-bezier(.22,1,.36,1);
+    }
+    body.cursor-view-on .cursor-view { opacity: 1; transform: translate3d(-50%, calc(-50% - 24px), 0) scale(1); }
+    body.cursor-view-on .cursor-dot,
+    body.cursor-view-on .cursor-ring { opacity: 0; }
+  }
+
+  /* —— Marquee ticker —— */
+  .ticker {
+    background: var(--bg-deep);
+    color: var(--cream);
+    padding: 18px 0;
+    overflow: hidden;
+    border-top: 1px solid rgba(216, 201, 176, 0.12);
+    border-bottom: 1px solid rgba(216, 201, 176, 0.12);
+  }
+  .ticker-track {
+    display: flex;
+    gap: 48px;
+    white-space: nowrap;
+    animation: tickerMove 38s linear infinite;
+    width: max-content;
+  }
+  .ticker-item {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    color: rgba(245, 232, 207, 0.85);
+    display: inline-flex; align-items: center; gap: 48px;
+  }
+  .ticker-item .sep {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.6;
+  }
+  @keyframes tickerMove {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track { animation: none; }
+  }
+
+  /* —— Signature mark (recurring brass motif) —— */
+  .sig-mark {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+  .sig-mark svg { width: 100%; height: 100%; }
+  .sig-mark.center { margin: 0 auto; display: flex; }
+
+  /* —— Hero parallax (slows photo on scroll) —— */
+  .hero-photo {
+    will-change: transform;
+  }
+
+  /* —— Color-shift gradient on body (subtle scroll-bound) —— */
+  body {
+    background: linear-gradient(180deg, var(--bg) 0%, #f1e7d3 35%, var(--bg) 70%, #f1e7d3 100%);
+    background-attachment: fixed;
+  }
+
   /* —— Refined Footer signature —— */
   footer .sig {
     font-family: 'Fraunces', serif; font-style: italic;
@@ -907,6 +999,17 @@
 <!-- ─── Custom cursor (desktop only) ─── -->
 <div class="cursor-ring" id="cursorRing"></div>
 <div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-view" id="cursorView">View</div>
+
+<!-- ─── SVG defs (reusable signature mark) ─── -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="sigMark" viewBox="0 0 28 28">
+    <g fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
+      <path d="M14 2 L14 26 M2 14 L26 14 M5 5 L23 23 M23 5 L5 23" opacity="0.8" />
+      <circle cx="14" cy="14" r="3" stroke-width="0.8" />
+    </g>
+  </symbol>
+</svg>
 
 <!-- ─── Header ─── -->
 <header class="site-header" id="siteHeader">
@@ -925,7 +1028,7 @@
   <div class="hero-photo"></div>
   <div class="hero-content">
     <div class="hero-eyebrow">marici — kumamoto</div>
-    <h1 class="hero-title">
+    <h1 class="hero-title" data-split>
       流れにまかせて、<br />
       <em>自分らしい髪</em>へ。
     </h1>
@@ -967,6 +1070,7 @@
 <!-- ─── Pull quote — editorial intermission ─── -->
 <section class="pull-quote">
   <div class="pull-quote-inner">
+    <div class="sig-mark center reveal" style="margin-bottom: 32px;"><svg><use href="#sigMark"/></svg></div>
     <div class="pull-quote-mark reveal">"</div>
     <p class="pull-quote-text reveal">
       派手な変化を求めるより、<em>「ちょっと触ってみたくなる髪」</em>を、<br />
@@ -987,7 +1091,7 @@
     <p class="lead">同じ髪は、ふたつとない。<br />ひとりひとりに、ぴったりの一本を。</p>
   </div>
 
-  <article class="spread spread-1 grain-overlay">
+  <article class="spread spread-1 grain-overlay" data-cursor-view>
     <div class="photo"></div>
     <span class="fig-caption">Fig. 01</span>
     <div class="caption reveal">
@@ -997,7 +1101,7 @@
     </div>
   </article>
 
-  <article class="spread spread-2 grain-overlay">
+  <article class="spread spread-2 grain-overlay" data-cursor-view>
     <div class="photo"></div>
     <span class="fig-caption">Fig. 02</span>
     <div class="caption reveal">
@@ -1007,7 +1111,7 @@
     </div>
   </article>
 
-  <article class="spread spread-3 grain-overlay">
+  <article class="spread spread-3 grain-overlay" data-cursor-view>
     <div class="photo"></div>
     <span class="fig-caption">Fig. 03</span>
     <div class="caption reveal">
@@ -1017,6 +1121,14 @@
     </div>
   </article>
 </section>
+
+<!-- ─── Marquee ticker ─── -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">Now booking — Spring 2026<span class="sep"></span>marici, Kumamoto<span class="sep"></span>Hair, with care<span class="sep"></span>Care Bleach &amp; Color<span class="sep"></span>髪質改善<span class="sep"></span></span>
+    <span class="ticker-item">Now booking — Spring 2026<span class="sep"></span>marici, Kumamoto<span class="sep"></span>Hair, with care<span class="sep"></span>Care Bleach &amp; Color<span class="sep"></span>髪質改善<span class="sep"></span></span>
+  </div>
+</div>
 
 <!-- ─── Interior ─── -->
 <section class="interior">
@@ -1173,7 +1285,7 @@
       <div>
         <div class="brand">marici</div>
         <div>hair salon, Kumamoto</div>
-        <div class="sig">Crafted with care — <em>est. 2024</em></div>
+        <div class="sig"><span class="sig-mark" style="vertical-align: middle; margin-right: 8px;"><svg><use href="#sigMark"/></svg></span>Crafted with care — <em>est. 2024</em></div>
       </div>
       <div class="links">
         <a href="#concept">Concept</a>
@@ -1254,6 +1366,85 @@
         navCta.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
       });
     }
+
+    // "View" label on cursor over editorial spreads
+    const viewBox = document.getElementById('cursorView');
+    if (viewBox) {
+      const update = (e) => { viewBox.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`; };
+      window.addEventListener('mousemove', update, { passive: true });
+      document.querySelectorAll('[data-cursor-view]').forEach((el) => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-view-on'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-view-on'));
+      });
+    }
+  }
+
+  // ───── Hero parallax (photo moves at 0.45x scroll) ─────
+  const heroPhoto = document.querySelector('.hero-photo');
+  if (heroPhoto && !prefersReduced) {
+    let raf;
+    const update = () => {
+      const y = window.scrollY;
+      if (y > window.innerHeight * 1.2) return;
+      heroPhoto.style.transform = `translate3d(0, ${y * 0.32}px, 0) scale(${1 + y * 0.00015})`;
+    };
+    window.addEventListener('scroll', () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => { update(); raf = null; });
+    }, { passive: true });
+  }
+
+  // ───── Split-text reveal ─────
+  if (!prefersReduced) {
+    const splitNodes = document.querySelectorAll('[data-split]');
+    splitNodes.forEach((node) => {
+      // Walk through child nodes, preserve <em> and <br />
+      const wrap = (text) => {
+        const frag = document.createDocumentFragment();
+        Array.from(text).forEach((c, i) => {
+          if (c === ' ' || c === '　') {
+            const ws = document.createElement('span');
+            ws.className = 'ws'; ws.textContent = c;
+            frag.appendChild(ws);
+            return;
+          }
+          const ch = document.createElement('span');
+          ch.className = 'ch';
+          ch.style.transitionDelay = (i * 28) + 'ms';
+          ch.textContent = c;
+          frag.appendChild(ch);
+        });
+        return frag;
+      };
+      const transform = (el) => {
+        Array.from(el.childNodes).forEach((node) => {
+          if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+            const line = document.createElement('span');
+            line.className = 'split-line';
+            line.appendChild(wrap(node.textContent));
+            node.replaceWith(line);
+          } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'BR') {
+            transform(node);
+            // wrap the whole em in a line too
+            if (node.tagName === 'EM') {
+              node.classList.add('split-line');
+            }
+          }
+        });
+      };
+      transform(node);
+
+      // observe and trigger
+      const io2 = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            node.querySelectorAll('.split-line').forEach((line) => line.classList.add('is-in'));
+            io2.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      io2.observe(node);
+    });
   }
 
   // Header background switches dark when over dark sections (editorial/interior/cta)
