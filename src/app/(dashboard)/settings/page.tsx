@@ -102,6 +102,8 @@ export default async function SettingsPage() {
           <HpbInboundForm
             initialToken={salon.hpbInboundToken}
             baseUrl={baseUrl}
+            slug={salon.slug}
+            emailDomain={process.env.NEXT_PUBLIC_HPB_EMAIL_DOMAIN || 'hpb.hair-salon-link.app'}
           />
         </div>
 

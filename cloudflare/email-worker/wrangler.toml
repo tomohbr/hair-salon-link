@@ -1,0 +1,11 @@
+name = "hpb-inbound"
+main = "worker.js"
+compatibility_date = "2024-12-01"
+
+# 環境変数 (本番では Cloudflare ダッシュボードの Secret として設定すること)
+# wrangler secret put APP_BASE_URL
+# wrangler secret put SHARED_SECRET
+#
+# ローカル開発時のみここに書く:
+# [vars]
+# APP_BASE_URL = "https://hair-salon-link-production.up.railway.app"
