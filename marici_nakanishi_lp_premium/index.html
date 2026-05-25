@@ -4,8 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>marici — hair salon, Kumamoto</title>
-<meta name="description" content="熊本のヘアサロン marici(マリーチ)。ケアブリーチ・髪質改善・繊細なカラーで、自分らしい髪へ。" />
-<meta name="theme-color" content="#1a1612" />
+<meta name="description" content="熊本のヘアサロン marici(マリーチ)。" />
+<meta name="theme-color" content="#1a201d" />
 <meta property="og:title" content="marici — hair salon, Kumamoto" />
 <meta property="og:description" content="熊本のヘアサロン marici(マリーチ)。" />
 <meta property="og:type" content="website" />
@@ -13,31 +13,39 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200..700;1,9..144,300..600&family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@200;300;400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
 
 <style>
-  /* ─────────────────────────────────────────────────────
-     Tokens — editorial neutrals + brass
-     ───────────────────────────────────────────────────── */
+  /* ───────────────────────────────────────────────
+     Design tokens — Groen-inspired forest palette
+     ─────────────────────────────────────────────── */
   :root {
-    --bg:        #f5efe6;     /* warm ivory */
-    --bg-alt:    #ebe1d2;
-    --bg-deep:   #14110d;     /* near black, warm */
-    --bg-deep-2: #1f1a14;
-    --paper:     #ffffff;
-    --ink:       #14110d;
-    --ink-soft:  #4a3f33;
-    --ink-mute:  #8a7a66;
-    --ink-dim:   #b5a68f;
-    --line:      #d8c9b0;
-    --accent:    #8b5e3c;     /* terracotta */
-    --gold:      #b88a4a;
-    --gold-hi:   #d9b986;
-    --cream:     #f5e8cf;
+    /* Dark forest base */
+    --ink:        #1a201d;    /* primary near-black with green undertone */
+    --ink-2:      #2a312e;
+    --ink-soft:   #4a5450;
+    --ink-mute:   #7a8580;
+
+    /* Forest green accent (Groen's hallmark) */
+    --green:      #2d4a3a;
+    --green-deep: #1d3326;
+    --green-hi:   #4a6b56;
+
+    /* Cream paper */
+    --paper:      #f5f0e6;    /* warm ivory */
+    --paper-2:    #ebe3d2;
+    --paper-3:    #ddd0b8;
+
+    /* Borderlines */
+    --line:       #d4c8af;
+    --line-dark:  rgba(245, 240, 230, 0.16);
+
+    /* Stone accent */
+    --stone:      #8a8073;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  *:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+  *:focus-visible { outline: 1px solid var(--green); outline-offset: 4px; }
 
   html {
     scroll-behavior: smooth;
@@ -45,1020 +53,758 @@
     text-rendering: optimizeLegibility;
   }
   body {
-    background: var(--bg);
+    background: var(--paper);
     color: var(--ink);
     font-family: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-weight: 400;
+    font-weight: 350;
     line-height: 1.85;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
   img { display: block; max-width: 100%; height: auto; }
   a { color: inherit; text-decoration: none; }
-  picture { display: block; }
 
   .serif {
-    font-family: 'Fraunces', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+    font-family: 'Cormorant Garamond', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
     font-weight: 300;
-    font-variation-settings: "opsz" 144, "SOFT" 50, "WONK" 0;
     letter-spacing: 0.005em;
   }
-  .serif-italic {
-    font-family: 'Fraunces', serif;
+
+  /* Bilingual section label (English + 日本語) — Groen signature */
+  .bilingual-label {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 28px;
+  }
+  .bilingual-label .en {
+    font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-weight: 300;
-    font-variation-settings: "opsz" 144;
+    font-size: 28px;
+    color: var(--green);
+    line-height: 1;
+    letter-spacing: 0.04em;
   }
-  .uc { text-transform: uppercase; letter-spacing: 0.32em; font-size: 10px; font-weight: 500; }
+  .bilingual-label .ja {
+    font-size: 10.5px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
 
-  .container { max-width: 1280px; margin: 0 auto; padding: 0 22px; }
-  .container-narrow { max-width: 720px; margin: 0 auto; padding: 0 22px; }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 22px;
+  }
+  .container-narrow {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 22px;
+  }
 
-  /* ─────────────────────────────────────────────────────
-     Reveal — scroll-driven
-     ───────────────────────────────────────────────────── */
-  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s cubic-bezier(.22,1,.36,1), transform 1s cubic-bezier(.22,1,.36,1); }
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1.1s cubic-bezier(.22,1,.36,1), transform 1.1s cubic-bezier(.22,1,.36,1); }
   .reveal.is-in { opacity: 1; transform: none; }
-  .reveal-slow { transition-duration: 1.4s; }
   @media (prefers-reduced-motion: reduce) {
-    .reveal, .reveal-slow { opacity: 1; transform: none; transition: none; }
-    *[class*="anim-"] { animation: none !important; }
+    .reveal { opacity: 1; transform: none; transition: none; }
   }
 
-  /* ─────────────────────────────────────────────────────
-     Header — minimal, always visible
-     ───────────────────────────────────────────────────── */
+  /* ───────────────────────────────────────────────
+     Header — sticky, minimal
+     ─────────────────────────────────────────────── */
   .site-header {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    height: 56px;
-    background: rgba(245, 239, 230, 0.78);
+    position: fixed; top: 0; left: 0; right: 0; z-index: 80;
+    background: rgba(245, 240, 230, 0.86);
     backdrop-filter: blur(18px) saturate(140%);
     -webkit-backdrop-filter: blur(18px) saturate(140%);
-    border-bottom: 1px solid rgba(216, 201, 176, 0.5);
+    border-bottom: 1px solid rgba(212, 200, 175, 0.5);
     transition: background .4s, border-color .4s;
   }
   .site-header.is-dark {
-    background: rgba(20, 17, 13, 0.72);
-    border-bottom-color: rgba(216, 201, 176, 0.18);
+    background: rgba(26, 32, 29, 0.7);
+    border-bottom-color: rgba(245, 240, 230, 0.12);
   }
-  .site-header.is-dark .brand-mark { color: #f5e8cf; }
-  .site-header .inner {
+  .site-header.is-dark .brand,
+  .site-header.is-dark .menu-trigger { color: var(--paper); }
+  .header-inner {
+    height: 60px;
+    padding: 0 22px;
+    max-width: 1400px;
+    margin: 0 auto;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0 18px; max-width: 1400px; margin: 0 auto;
-    height: 100%;
   }
-  .brand-mark {
-    font-family: 'Fraunces', serif;
-    font-weight: 300;
+  .brand {
+    font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 22px;
+    font-weight: 400;
+    font-size: 26px;
     letter-spacing: 0.04em;
     color: var(--ink);
     transition: color .4s;
   }
-  .nav-cta {
+  .header-right { display: flex; align-items: center; gap: 8px; }
+
+  /* Menu trigger (hamburger-style) */
+  .menu-trigger {
+    background: none; border: none;
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .menu-trigger .bars {
+    display: inline-flex; flex-direction: column; gap: 4px;
+  }
+  .menu-trigger .bars span {
+    display: block; width: 18px; height: 1px; background: currentColor;
+    transition: transform .3s, opacity .3s;
+  }
+  .menu-trigger[aria-expanded="true"] .bars span:nth-child(1) { transform: translateY(2.5px) rotate(45deg); }
+  .menu-trigger[aria-expanded="true"] .bars span:nth-child(2) { transform: translateY(-2.5px) rotate(-45deg); }
+
+  .book-btn {
     display: inline-flex; align-items: center; gap: 7px;
-    padding: 10px 16px;
-    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-    font-weight: 600;
-    background: linear-gradient(180deg, var(--gold-hi) 0%, var(--gold) 100%);
-    color: #1a1612;
-    border-radius: 1px;
-    box-shadow: 0 8px 22px -8px rgba(184,138,74,0.55), inset 0 1px 0 rgba(255,236,200,0.45);
-    transition: transform .25s, box-shadow .25s;
+    padding: 10px 18px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    background: var(--green);
+    color: var(--paper);
+    border-radius: 999px;
+    transition: background .3s, transform .25s;
   }
-  .nav-cta:hover, .nav-cta:active { transform: translateY(-1px); box-shadow: 0 12px 28px -10px rgba(184,138,74,0.7), inset 0 1px 0 rgba(255,236,200,0.6); }
-  .nav-cta-label-full { display: none; }
-  @media (min-width: 481px) { .nav-cta-label-full { display: inline; } .nav-cta-label-short { display: none; } }
-
-  /* live dot */
-  .live-dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: #2a8a4a;
-    box-shadow: 0 0 0 0 rgba(42,138,74,0.7);
-    animation: livePulse 2.2s ease-out infinite;
+  .book-btn:hover { background: var(--green-deep); transform: translateY(-1px); }
+  .book-btn .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--paper-3);
+    box-shadow: 0 0 0 0 rgba(245, 240, 230, 0.6);
+    animation: pulseDot 2.4s ease-out infinite;
   }
-  .live-dot-light { background: #9affc7; box-shadow: 0 0 0 0 rgba(154,255,199,0.7); animation-name: livePulseLight; }
-  @keyframes livePulse { 0%{box-shadow:0 0 0 0 rgba(42,138,74,0.7);} 70%{box-shadow:0 0 0 8px rgba(42,138,74,0);} 100%{box-shadow:0 0 0 0 rgba(42,138,74,0);} }
-  @keyframes livePulseLight { 0%{box-shadow:0 0 0 0 rgba(154,255,199,0.7);} 70%{box-shadow:0 0 0 8px rgba(154,255,199,0);} 100%{box-shadow:0 0 0 0 rgba(154,255,199,0);} }
+  @keyframes pulseDot {
+    0%   { box-shadow: 0 0 0 0 rgba(245, 240, 230, 0.55); }
+    70%  { box-shadow: 0 0 0 6px rgba(245, 240, 230, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(245, 240, 230, 0); }
+  }
 
-  /* ─────────────────────────────────────────────────────
-     Hero — cinematic, mobile portrait first
-     ───────────────────────────────────────────────────── */
+  /* Full-screen menu overlay */
+  .menu-overlay {
+    position: fixed; inset: 0; z-index: 70;
+    background: var(--ink);
+    color: var(--paper);
+    transform: translateY(-100%);
+    transition: transform .55s cubic-bezier(.7,0,.3,1);
+    display: flex; flex-direction: column;
+  }
+  .menu-overlay.is-open { transform: translateY(0); }
+  .menu-overlay nav {
+    flex: 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 28px;
+    padding: 60px 22px;
+  }
+  .menu-overlay a {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(28px, 8vw, 56px);
+    color: var(--paper);
+    line-height: 1.2;
+    position: relative;
+    transition: color .3s;
+  }
+  .menu-overlay a .num {
+    position: absolute; top: -6px; right: -22px;
+    font-size: 11px;
+    font-style: normal;
+    letter-spacing: 0.2em;
+    color: var(--green-hi);
+    font-family: 'Inter', sans-serif;
+  }
+  .menu-overlay a:hover { color: var(--green-hi); }
+  .menu-overlay-foot {
+    padding: 22px;
+    text-align: center;
+    border-top: 1px solid var(--line-dark);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  /* ───────────────────────────────────────────────
+     Hero — full bleed photo + minimalist text
+     ─────────────────────────────────────────────── */
   .hero {
     position: relative;
     height: 100svh; min-height: 600px;
     overflow: hidden;
-    background: var(--bg-deep);
+    background: var(--ink);
   }
   .hero-photo {
     position: absolute; inset: 0;
     background-image: url('photos/01-hero-trio.jpg');
     background-size: cover;
-    background-position: center 30%;
-    filter: brightness(0.78) contrast(1.04) saturate(1.02);
-    transform: scale(1.08);
-    animation: heroZoom 22s ease-out forwards;
-    will-change: transform;
+    background-position: center 25%;
+    filter: brightness(0.75) contrast(1.05);
+    transform: scale(1.06);
+    animation: heroZoom 24s ease-out forwards;
   }
-  @keyframes heroZoom { from { transform: scale(1.08); } to { transform: scale(1.0); } }
-  /* darker scrim from bottom for text legibility */
+  @keyframes heroZoom { from { transform: scale(1.06); } to { transform: scale(1); } }
   .hero::after {
     content: ""; position: absolute; inset: 0;
     background:
-      linear-gradient(180deg, rgba(20,17,13,0.32) 0%, rgba(20,17,13,0.0) 28%, rgba(20,17,13,0.0) 48%, rgba(20,17,13,0.78) 100%);
-    pointer-events: none;
+      linear-gradient(180deg,
+        rgba(26, 32, 29, 0.38) 0%,
+        rgba(26, 32, 29, 0.05) 30%,
+        rgba(26, 32, 29, 0.05) 60%,
+        rgba(26, 32, 29, 0.78) 100%);
   }
   .hero-content {
     position: absolute; inset: 0;
     display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 0 24px calc(56px + env(safe-area-inset-bottom));
-    color: #faf3e3;
+    padding: 0 26px calc(64px + env(safe-area-inset-bottom));
+    color: var(--paper);
   }
-  .hero-eyebrow {
-    font-size: 10px; letter-spacing: 0.42em; text-transform: uppercase;
-    color: rgba(250,243,227,0.75);
-    margin-bottom: 18px;
-  }
-  .hero-title {
-    font-family: 'Fraunces', serif; font-weight: 250;
-    font-variation-settings: "opsz" 144;
-    font-size: clamp(38px, 11.5vw, 88px);
-    line-height: 1.02;
-    letter-spacing: -0.018em;
-    max-width: 14ch;
+  .hero-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(42px, 11vw, 96px);
+    line-height: 1.05;
+    letter-spacing: -0.008em;
     text-shadow: 0 2px 24px rgba(0,0,0,0.35);
   }
-  .hero-title em { font-style: italic; font-weight: 300; color: var(--cream); }
-  .hero-meta {
-    margin-top: 20px;
-    display: flex; gap: 14px; flex-wrap: wrap;
-    font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase;
-    color: rgba(250,243,227,0.78);
+  .hero-ja {
+    margin-top: 18px;
+    font-size: 13px;
+    letter-spacing: 0.28em;
+    color: rgba(245, 240, 230, 0.78);
   }
-  .hero-meta span { display: inline-flex; align-items: center; gap: 8px; }
-  .hero-meta span::before { content: ""; display: block; width: 14px; height: 1px; background: rgba(250,243,227,0.5); }
+  .hero-mark {
+    position: absolute; top: 84px; right: 26px;
+    text-align: right;
+    color: var(--paper);
+    opacity: 0.62;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .hero-mark .small {
+    display: block;
+    font-style: normal;
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
   .hero-scroll {
-    position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
-    color: rgba(250,243,227,0.65);
-    font-size: 9px; letter-spacing: 0.42em; text-transform: uppercase;
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+    color: rgba(245, 240, 230, 0.62);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    display: inline-flex; align-items: center; gap: 10px;
   }
-  .hero-scroll::after { content: ""; display: block; width: 1px; height: 22px; background: rgba(250,243,227,0.5); animation: scrollLine 1.8s ease-in-out infinite; }
-  @keyframes scrollLine { 0%,100% { transform: scaleY(0.4); transform-origin: top; } 50% { transform: scaleY(1); } }
-
+  .hero-scroll::after {
+    content: ""; display: block;
+    width: 1px; height: 28px;
+    background: rgba(245, 240, 230, 0.5);
+    animation: scrollLine 1.8s ease-in-out infinite;
+    transform-origin: top;
+  }
+  @keyframes scrollLine {
+    0%, 100% { transform: scaleY(0.3); }
+    50% { transform: scaleY(1); }
+  }
   @media (min-width: 720px) {
     .hero-content { padding: 0 6vw 9vh; }
+    .hero-mark { top: 100px; right: 6vw; }
   }
 
-  /* ─────────────────────────────────────────────────────
-     Designer-grade additions
-     ───────────────────────────────────────────────────── */
+  /* ───────────────────────────────────────────────
+     Section base — generous whitespace
+     ─────────────────────────────────────────────── */
+  section { padding: 100px 0; }
+  @media (min-width: 720px) { section { padding: 160px 0; } }
 
-  /* —— Loading curtain (first paint reveal) —— */
-  .curtain {
-    position: fixed; inset: 0; z-index: 200;
-    background: var(--bg);
-    display: flex; align-items: center; justify-content: center;
-    transition: opacity 1s ease-out, transform 1s cubic-bezier(.7, 0, .3, 1);
-    transform-origin: top;
-    pointer-events: none;
-  }
-  .curtain.is-out { opacity: 0; transform: translateY(-101%); }
-  .curtain .mark {
-    font-family: 'Fraunces', serif; font-style: italic;
+  /* Section heading common */
+  .sec-head { text-align: center; margin-bottom: 64px; }
+  .sec-title {
+    font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
-    font-size: 32px;
-    color: var(--ink);
-    opacity: 0;
-    animation: curtainMark 1.6s cubic-bezier(.22,1,.36,1) forwards;
-  }
-  @keyframes curtainMark {
-    0% { opacity: 0; letter-spacing: 0.2em; transform: translateY(8px); }
-    40% { opacity: 1; }
-    100% { opacity: 1; letter-spacing: 0.04em; transform: translateY(0); }
-  }
-
-  /* —— Scroll progress (top brass hairline) —— */
-  .progress {
-    position: fixed; top: 0; left: 0;
-    height: 1.5px; width: 0;
-    background: linear-gradient(90deg, var(--gold), var(--accent));
-    z-index: 101;
-    transition: width .12s linear;
-  }
-
-  /* —— Custom cursor follower (desktop only) —— */
-  @media (hover: hover) and (pointer: fine) {
-    body.has-cursor { cursor: none; }
-    .cursor-dot {
-      position: fixed; top: 0; left: 0; z-index: 200;
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--ink);
-      pointer-events: none;
-      transform: translate3d(-50%, -50%, 0);
-      transition: width .25s, height .25s, background .25s, opacity .25s;
-      mix-blend-mode: difference;
-    }
-    .cursor-ring {
-      position: fixed; top: 0; left: 0; z-index: 199;
-      width: 36px; height: 36px; border-radius: 50%;
-      border: 1px solid rgba(184, 138, 74, 0.5);
-      pointer-events: none;
-      transform: translate3d(-50%, -50%, 0);
-      transition: width .4s cubic-bezier(.22,1,.36,1), height .4s cubic-bezier(.22,1,.36,1), border-color .25s, opacity .25s;
-    }
-    body.cursor-hover .cursor-ring {
-      width: 64px; height: 64px;
-      border-color: rgba(184, 138, 74, 0.85);
-    }
-    body.cursor-hover .cursor-dot {
-      background: var(--gold);
-      width: 4px; height: 4px;
-    }
-  }
-  @media (hover: none), (pointer: coarse) {
-    .cursor-dot, .cursor-ring { display: none; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .cursor-dot, .cursor-ring { display: none; }
-    .curtain { display: none; }
-  }
-
-  /* —— Photo grain overlay (subtle film texture) —— */
-  .grain-overlay::after {
-    content: ""; position: absolute; inset: 0;
-    pointer-events: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 0.92  0 0 0 0 0.78  0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-    opacity: 0.5;
-    mix-blend-mode: overlay;
-    z-index: 1;
-  }
-
-  /* —— Editorial vol-label —— */
-  .vol-label {
-    display: inline-flex; align-items: baseline; gap: 8px;
-    font-family: 'Fraunces', serif; font-style: italic;
-    font-weight: 400;
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 0.04em;
-    margin-bottom: 14px;
-  }
-  .vol-label::before {
-    content: ""; display: block; width: 16px; height: 1px; background: var(--gold);
-  }
-  .vol-label.on-dark { color: var(--gold-hi); }
-  .vol-label.on-dark::before { background: var(--gold-hi); }
-
-  /* —— Pull-quote section (editorial intermission) —— */
-  .pull-quote {
-    background: var(--bg);
-    padding: 96px 0;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-  }
-  .pull-quote-inner {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 0 24px;
-    text-align: center;
-  }
-  .pull-quote-mark {
-    font-family: 'Fraunces', serif; font-style: italic;
-    font-weight: 200;
-    font-size: 84px;
-    color: var(--accent);
-    opacity: 0.4;
-    line-height: 0.4;
-    margin-bottom: 32px;
-  }
-  .pull-quote-text {
-    font-family: 'Fraunces', serif;
-    font-weight: 280;
-    font-variation-settings: "opsz" 144;
-    font-size: clamp(22px, 5.5vw, 36px);
-    line-height: 1.55;
+    font-size: clamp(32px, 8vw, 64px);
+    line-height: 1.18;
     letter-spacing: -0.005em;
     color: var(--ink);
   }
-  .pull-quote-text em { font-style: italic; color: var(--accent); }
-  .pull-quote-attribution {
-    margin-top: 36px;
-    font-size: 11px;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    display: inline-flex; align-items: center; gap: 14px;
-  }
-  .pull-quote-attribution::before,
-  .pull-quote-attribution::after { content: ""; display: block; width: 20px; height: 1px; background: var(--line); }
-  @media (min-width: 720px) { .pull-quote { padding: 140px 0; } }
-
-  /* —— Magnetic CTA hover (designer-grade button feel) —— */
-  .nav-cta {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
-  }
-  .nav-cta::before {
-    content: ""; position: absolute;
-    width: 200%; height: 200%;
-    left: var(--mx, 50%); top: var(--my, 50%);
-    background: radial-gradient(circle at center, rgba(255, 236, 200, 0.55), transparent 50%);
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity .25s ease;
-    z-index: -1;
-    pointer-events: none;
-  }
-  .nav-cta:hover::before { opacity: 1; }
-
-  /* —— Subtle header progress —— */
-  .site-header.is-dark + .progress { mix-blend-mode: screen; }
-
-  /* —— Editorial figure caption (small Fig. number) —— */
-  .fig-caption {
-    position: absolute; right: 18px; bottom: 18px;
-    z-index: 3;
-    font-family: 'Fraunces', serif; font-style: italic;
-    font-size: 11px;
-    color: rgba(250, 243, 227, 0.7);
-    letter-spacing: 0.08em;
-    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-    background: rgba(20, 17, 13, 0.35);
-    padding: 4px 9px;
-    border-radius: 999px;
-  }
-
-  /* —— Hover lift for spreads —— */
-  .spread {
-    isolation: isolate;
-    transition: filter 1s ease;
-  }
-  .spread .photo { transition: transform 8s cubic-bezier(.22, 1, .36, 1), filter 1s ease; }
-  .spread:hover .photo { transform: scale(1.025); filter: brightness(0.9) contrast(1.06); }
-
-  /* —— Wordmark detail under "marici" in hero (designer signature) —— */
-  .hero-wordmark-detail {
-    margin-top: 10px;
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: 'Fraunces', serif; font-style: italic;
-    font-size: 11px;
-    color: rgba(250, 243, 227, 0.6);
-    letter-spacing: 0.18em;
-  }
-  .hero-wordmark-detail::before,
-  .hero-wordmark-detail::after { content: ""; display: block; width: 12px; height: 1px; background: rgba(250, 243, 227, 0.4); }
-
-  /* —— Split-text reveal (character-by-character) —— */
-  .split-line { display: inline-block; overflow: hidden; vertical-align: top; }
-  .split-line .ch {
-    display: inline-block;
-    transform: translateY(110%);
-    opacity: 0;
-    transition: transform 1.1s cubic-bezier(.22, 1, .36, 1), opacity .8s ease;
-    will-change: transform;
-  }
-  .split-line.is-in .ch { transform: translateY(0); opacity: 1; }
-  /* whitespace preserve */
-  .split-line .ws { display: inline-block; width: .25em; }
-
-  /* —— "View" label on cursor over editorial spreads —— */
-  @media (hover: hover) and (pointer: fine) {
-    .cursor-view {
-      position: fixed; top: 0; left: 0; z-index: 201;
-      padding: 8px 14px;
-      background: var(--gold);
-      color: var(--bg-deep);
-      font-family: 'Fraunces', serif; font-style: italic;
-      font-size: 12px; letter-spacing: 0.06em;
-      border-radius: 999px;
-      pointer-events: none;
-      opacity: 0;
-      transform: translate3d(-50%, -50%, 0) scale(0.6);
-      transition: opacity .25s, transform .35s cubic-bezier(.22,1,.36,1);
-    }
-    body.cursor-view-on .cursor-view { opacity: 1; transform: translate3d(-50%, calc(-50% - 24px), 0) scale(1); }
-    body.cursor-view-on .cursor-dot,
-    body.cursor-view-on .cursor-ring { opacity: 0; }
-  }
-
-  /* —— Marquee ticker —— */
-  .ticker {
-    background: var(--bg-deep);
-    color: var(--cream);
-    padding: 18px 0;
-    overflow: hidden;
-    border-top: 1px solid rgba(216, 201, 176, 0.12);
-    border-bottom: 1px solid rgba(216, 201, 176, 0.12);
-  }
-  .ticker-track {
-    display: flex;
-    gap: 48px;
-    white-space: nowrap;
-    animation: tickerMove 38s linear infinite;
-    width: max-content;
-  }
-  .ticker-item {
-    font-family: 'Fraunces', serif; font-style: italic;
-    font-weight: 300;
-    font-size: 22px;
-    letter-spacing: 0.04em;
-    color: rgba(245, 232, 207, 0.85);
-    display: inline-flex; align-items: center; gap: 48px;
-  }
-  .ticker-item .sep {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--gold);
-    opacity: 0.6;
-  }
-  @keyframes tickerMove {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .ticker-track { animation: none; }
-  }
-
-  /* —— Signature mark (recurring brass motif) —— */
-  .sig-mark {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 28px; height: 28px;
-    color: var(--gold);
-    opacity: 0.7;
-  }
-  .sig-mark svg { width: 100%; height: 100%; }
-  .sig-mark.center { margin: 0 auto; display: flex; }
-
-  /* —— Hero parallax (slows photo on scroll) —— */
-  .hero-photo {
-    will-change: transform;
-  }
-
-  /* —— Color-shift gradient on body (subtle scroll-bound) —— */
-  body {
-    background: linear-gradient(180deg, var(--bg) 0%, #f1e7d3 35%, var(--bg) 70%, #f1e7d3 100%);
-    background-attachment: fixed;
-  }
-
-  /* —— Refined Footer signature —— */
-  footer .sig {
-    font-family: 'Fraunces', serif; font-style: italic;
-    font-weight: 300;
-    font-size: 12px;
-    color: rgba(250, 243, 227, 0.55);
-    margin-top: 8px;
-  }
-  footer .sig em { color: var(--gold-hi); font-style: normal; }
-
-  /* ─────────────────────────────────────────────────────
-     Section base
-     ───────────────────────────────────────────────────── */
-  section { padding: 96px 0; }
-  @media (min-width: 720px) { section { padding: 140px 0; } }
-
-  .eyebrow {
-    display: inline-block;
-    font-size: 10px; letter-spacing: 0.42em; text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 18px;
-  }
-  .eyebrow.on-dark { color: var(--gold-hi); }
-  .h2 {
-    font-family: 'Fraunces', serif; font-weight: 280;
-    font-variation-settings: "opsz" 144;
-    font-size: clamp(30px, 8vw, 56px);
-    line-height: 1.16;
-    letter-spacing: -0.01em;
-    margin-bottom: 22px;
-  }
-  .h2 em { font-style: italic; color: var(--accent); font-weight: 300; }
-  .h2.on-dark em { color: var(--cream); }
-  .lead {
-    font-size: 15px;
+  .sec-title em { font-style: italic; color: var(--green); }
+  .sec-lead {
+    margin-top: 22px;
+    font-size: 14px;
     line-height: 2.05;
     color: var(--ink-soft);
+    max-width: 50ch;
+    margin-left: auto; margin-right: auto;
   }
-  .divider-brass {
-    width: 36px; height: 1px;
-    background: var(--gold);
-    margin: 0 0 22px;
-  }
-  .center .divider-brass { margin-left: auto; margin-right: auto; }
-  .center { text-align: center; }
 
-  /* ─────────────────────────────────────────────────────
-     Concept — vertical: photo → text on mobile
-     ───────────────────────────────────────────────────── */
-  .concept { background: var(--bg); }
-  .concept-grid {
-    display: grid; grid-template-columns: 1fr; gap: 48px;
-    align-items: center;
+  /* ───────────────────────────────────────────────
+     Greeting (philosophy)
+     ─────────────────────────────────────────────── */
+  .greeting { background: var(--paper); }
+  .greeting-grid {
+    display: grid; grid-template-columns: 1fr; gap: 56px;
   }
-  .concept-photo {
-    position: relative;
-    aspect-ratio: 3/4;
-    overflow: hidden;
+  .greeting-photo {
     margin: 0 -22px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
   }
-  .concept-photo img {
+  .greeting-photo img {
     width: 100%; height: 100%; object-fit: cover;
     transition: transform 8s ease-out;
   }
-  .concept-photo:hover img { transform: scale(1.04); }
-  .concept-text { padding: 0; }
-  .concept-text p {
-    font-family: 'Fraunces', serif; font-weight: 300;
-    font-variation-settings: "opsz" 36;
-    font-size: clamp(17px, 4.5vw, 22px);
-    line-height: 2.0;
-    color: var(--ink);
-    margin-bottom: 22px;
-  }
-  .concept-text p.tail {
-    font-family: 'Inter', 'Noto Sans JP', sans-serif;
-    font-size: 13px; line-height: 2.05;
-    color: var(--ink-mute);
-    margin-top: 28px;
-  }
-  @media (min-width: 720px) {
-    .concept-grid { grid-template-columns: 1.1fr 1fr; gap: 80px; }
-    .concept-photo { margin: 0; }
-    .concept-photo::before { content:""; position:absolute; top:-16px; left:-16px; width:64px; height:64px; border-top:1px solid var(--accent); border-left:1px solid var(--accent); z-index:2; }
-    .concept-photo::after { content:""; position:absolute; bottom:-16px; right:-16px; width:64px; height:64px; border-bottom:1px solid var(--accent); border-right:1px solid var(--accent); z-index:2; }
-  }
-
-  /* ─────────────────────────────────────────────────────
-     Editorial Spread — 1 photo per scroll, full-bleed
-     ───────────────────────────────────────────────────── */
-  .editorial { background: var(--bg-deep); padding: 0; color: #faf3e3; }
-  .ed-intro {
-    text-align: center;
-    padding: 96px 22px 48px;
-    border-bottom: 1px solid rgba(216,201,176,0.18);
-  }
-  .ed-intro .h2 { color: #faf3e3; }
-  .ed-intro .lead { color: rgba(250,243,227,0.7); max-width: 56ch; margin: 0 auto; }
-
-  .spread {
-    position: relative;
-    height: 100svh; min-height: 540px;
-    overflow: hidden;
-  }
-  .spread .photo {
-    position: absolute; inset: 0;
-    background-size: cover;
-    background-position: center;
-    filter: brightness(0.85) contrast(1.04);
-  }
-  .spread::after {
-    content: ""; position: absolute; inset: 0;
-    background:
-      linear-gradient(180deg, rgba(20,17,13,0.20) 0%, rgba(20,17,13,0.0) 30%, rgba(20,17,13,0.0) 50%, rgba(20,17,13,0.85) 100%);
-  }
-  .spread .caption {
-    position: absolute; left: 0; right: 0; bottom: 0;
-    padding: 0 24px calc(56px + env(safe-area-inset-bottom));
-    color: #faf3e3;
-  }
-  .spread .caption .num {
-    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
-    font-size: 14px; letter-spacing: 0.06em;
-    color: var(--gold-hi);
-    margin-bottom: 10px;
-  }
-  .spread .caption h3 {
-    font-family: 'Fraunces', serif; font-weight: 300;
-    font-variation-settings: "opsz" 144;
-    font-size: clamp(26px, 7.5vw, 44px);
-    line-height: 1.18;
-    letter-spacing: -0.005em;
-    text-shadow: 0 2px 16px rgba(0,0,0,0.4);
-    max-width: 18ch;
-  }
-  .spread .caption .tag {
-    margin-top: 14px;
-    font-size: 10.5px; letter-spacing: 0.28em; text-transform: uppercase;
-    color: rgba(250,243,227,0.7);
-    display: inline-flex; align-items: center; gap: 10px;
-  }
-  .spread .caption .tag::before { content: ""; display: block; width: 18px; height: 1px; background: rgba(250,243,227,0.55); }
-
-  /* spreads with photo */
-  .spread-1 .photo { background-image: url('photos/06-editorial-pair.jpg'); background-position: center 28%; }
-  .spread-2 .photo { background-image: url('photos/07-studio-orange.jpg'); background-position: center 30%; }
-  .spread-3 .photo { background-image: url('photos/09-stairs-pair.jpg'); background-position: center 35%; }
-
-  @media (min-width: 720px) {
-    .spread .caption { padding: 0 6vw 9vh; }
-  }
-
-  /* ─────────────────────────────────────────────────────
-     Interior — full-bleed cinematic
-     ───────────────────────────────────────────────────── */
-  .interior { background: var(--bg-deep); padding: 0; }
-  .interior-photo {
-    position: relative;
-    height: 90svh; min-height: 580px;
-    background-image: url('photos/03-interior.jpg');
-    background-size: cover;
-    background-position: center;
-  }
-  .interior-photo::after {
-    content: ""; position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(20,17,13,0.0) 50%, rgba(20,17,13,0.85) 100%);
-  }
-  .interior-caption {
-    position: absolute; left: 0; right: 0; bottom: 0;
-    padding: 0 24px calc(60px + env(safe-area-inset-bottom));
-    color: #faf3e3;
-  }
-  .interior-caption .eyebrow { color: var(--gold-hi); }
-  .interior-caption h2 {
-    font-family: 'Fraunces', serif; font-weight: 280;
-    font-size: clamp(28px, 8vw, 52px);
-    line-height: 1.15;
-    text-shadow: 0 2px 16px rgba(0,0,0,0.35);
-    max-width: 16ch;
-  }
-  .interior-caption p {
-    margin-top: 18px;
-    font-size: 14px;
+  .greeting-photo:hover img { transform: scale(1.04); }
+  .greeting-text { padding: 0 4px; }
+  .greeting-text p {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(19px, 4.8vw, 26px);
     line-height: 1.95;
-    color: rgba(250,243,227,0.86);
-    max-width: 50ch;
+    color: var(--ink);
+    margin-bottom: 28px;
   }
-  @media (min-width: 720px) {
-    .interior-caption { padding: 0 6vw 9vh; }
-  }
-
-  /* ─────────────────────────────────────────────────────
-     Strengths — photo on top (full-bleed) → text card
-     ───────────────────────────────────────────────────── */
-  .strengths { background: var(--bg); }
-  .strength-block + .strength-block { margin-top: 80px; }
-  .strength-photo {
-    position: relative;
-    aspect-ratio: 4/5;
-    overflow: hidden;
-    margin: 0 -22px 36px;
-  }
-  .strength-photo img {
-    width: 100%; height: 100%; object-fit: cover;
-  }
-  .strength-photo .tag {
-    position: absolute; top: 18px; left: 18px;
-    background: rgba(20,17,13,0.7);
-    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-    color: var(--gold-hi);
-    padding: 6px 12px;
-    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-  }
-  .strength-text { padding: 0 4px; }
-  .strength-text h3 {
-    font-family: 'Fraunces', serif; font-weight: 300;
-    font-variation-settings: "opsz" 96;
-    font-size: clamp(24px, 6.5vw, 36px);
-    line-height: 1.25;
-    margin-bottom: 22px;
-    letter-spacing: -0.005em;
-  }
-  .strength-text p {
+  .greeting-text p.body {
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
     font-size: 14.5px;
-    line-height: 2.05;
+    line-height: 2.1;
     color: var(--ink-soft);
-    margin-bottom: 16px;
+    margin-top: 32px;
   }
-  .strength-text .meta {
-    display: inline-flex; align-items: center; gap: 12px;
-    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--accent);
-    border-top: 1px solid var(--line);
-    padding-top: 18px;
-    margin-top: 14px;
-  }
-  @media (min-width: 720px) {
-    .strength-block { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-    .strength-block.reverse > *:first-child { order: 2; }
-    .strength-photo { margin: 0; aspect-ratio: 4/5; }
-    .strength-block + .strength-block { margin-top: 140px; }
+  @media (min-width: 880px) {
+    .greeting-grid { grid-template-columns: 1.1fr 1fr; gap: 96px; align-items: center; }
+    .greeting-photo { margin: 0; aspect-ratio: 4/5; }
+    .greeting-text { padding: 0 24px 0 0; }
   }
 
-  /* ─────────────────────────────────────────────────────
-     Menu — clean list, generous mobile typography
-     ───────────────────────────────────────────────────── */
-  .menu { background: var(--paper); }
-  .menu-head { text-align: center; margin-bottom: 56px; }
-  .menu-list { border-top: 1px solid var(--line); }
-  .menu-row {
+  /* ───────────────────────────────────────────────
+     Style (works gallery) — Groen-style grid
+     ─────────────────────────────────────────────── */
+  .style { background: var(--paper-2); }
+  .style-grid {
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 18px 16px;
-    padding: 22px 0;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .style-tile {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    background: var(--ink);
+  }
+  .style-tile img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 1.4s cubic-bezier(.22, 1, .36, 1), filter 1s;
+    filter: saturate(0.95);
+  }
+  .style-tile::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 65%, rgba(26, 32, 29, 0.55) 100%);
+    pointer-events: none;
+    transition: opacity .6s;
+  }
+  .style-tile:hover img { transform: scale(1.05); filter: saturate(1.05); }
+  .style-tile-caption {
+    position: absolute; bottom: 14px; left: 14px;
+    color: var(--paper);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    z-index: 2;
+    transform: translateY(4px);
+    opacity: 0;
+    transition: transform .5s cubic-bezier(.22,1,.36,1), opacity .4s;
+  }
+  .style-tile:hover .style-tile-caption {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  @media (min-width: 720px) {
+    .style-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  }
+
+  /* ───────────────────────────────────────────────
+     Menu — price list
+     ─────────────────────────────────────────────── */
+  .menu { background: var(--paper); }
+  .menu-list {
+    border-top: 1px solid var(--line);
+  }
+  .menu-row {
+    display: grid; grid-template-columns: 1fr auto; gap: 14px;
+    padding: 24px 0;
     border-bottom: 1px solid var(--line);
     align-items: baseline;
   }
   .menu-row .name {
-    font-family: 'Fraunces', serif; font-weight: 400;
-    font-size: 17px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 18px;
     color: var(--ink);
-    line-height: 1.4;
   }
   .menu-row .desc {
     display: block;
     font-family: 'Inter', sans-serif;
-    font-size: 11px;
+    font-size: 11.5px;
     color: var(--ink-mute);
-    margin-top: 6px;
+    margin-top: 4px;
     letter-spacing: 0.04em;
   }
   .menu-row .price {
-    font-family: 'Fraunces', serif; font-weight: 400;
-    font-size: 16px;
-    color: var(--accent);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    color: var(--green);
     white-space: nowrap;
     font-variant-numeric: tabular-nums;
   }
-  .menu-foot {
+  .menu-note {
     text-align: center;
-    margin-top: 32px;
+    margin-top: 36px;
     font-size: 11.5px;
     color: var(--ink-mute);
     letter-spacing: 0.04em;
     line-height: 2;
   }
 
-  /* ─────────────────────────────────────────────────────
-     Booking flow — compact mobile cards
-     ───────────────────────────────────────────────────── */
-  .flow {
-    background: linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+  /* ───────────────────────────────────────────────
+     Gallery — interior + style scroll-x on mobile
+     ─────────────────────────────────────────────── */
+  .gallery { background: var(--ink); color: var(--paper); padding-bottom: 0; }
+  .gallery .sec-title { color: var(--paper); }
+  .gallery .sec-title em { color: var(--green-hi); }
+  .gallery .bilingual-label .en { color: var(--green-hi); }
+  .gallery .bilingual-label .ja { color: rgba(245, 240, 230, 0.62); }
+  .gallery .sec-lead { color: rgba(245, 240, 230, 0.7); }
+
+  .gallery-scroll {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 22px 80px;
+    scrollbar-width: none;
   }
-  .flow-head { text-align: center; margin-bottom: 48px; }
-  .flow-head .lead { max-width: 50ch; margin: 14px auto 0; }
-  .flow-list {
-    list-style: none;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  .flow-list li {
-    background: var(--paper);
-    border: 1px solid var(--line);
-    padding: 22px 22px 22px 70px;
+  .gallery-scroll::-webkit-scrollbar { display: none; }
+  .gallery-card {
+    flex: 0 0 76%;
+    max-width: 420px;
+    aspect-ratio: 3/4;
+    scroll-snap-align: center;
+    background: var(--ink-2);
+    overflow: hidden;
     position: relative;
-    transition: transform .35s, box-shadow .35s;
   }
-  .flow-list li:hover, .flow-list li:active { transform: translateY(-3px); box-shadow: 0 22px 44px -16px rgba(36,26,18,0.18); }
-  .flow-list .num {
-    position: absolute; top: 18px; left: 22px;
-    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
-    font-size: 32px; line-height: 1;
-    color: var(--accent); opacity: 0.8;
+  .gallery-card img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: saturate(0.92);
   }
-  .flow-list h3 {
-    font-family: 'Fraunces', serif; font-weight: 400;
-    font-size: 17px;
-    line-height: 1.4;
-    margin-bottom: 6px;
-  }
-  .flow-list p {
+  .gallery-card .gc-caption {
+    position: absolute; bottom: 16px; left: 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
     font-size: 13px;
-    line-height: 1.95;
-    color: var(--ink-soft);
-  }
-  .flow-cta-note {
-    text-align: center;
-    margin-top: 32px;
-    font-size: 11.5px;
-    color: var(--ink-mute);
-    letter-spacing: 0.04em;
+    color: var(--paper);
   }
   @media (min-width: 720px) {
-    .flow-list { grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    .flow-list li { padding: 32px 28px; }
-    .flow-list .num { position: static; font-size: 44px; margin-bottom: 14px; }
+    .gallery-scroll {
+      padding: 0 6vw 100px;
+      gap: 24px;
+    }
+    .gallery-card { flex: 0 0 38%; max-width: 480px; }
   }
 
-  /* ─────────────────────────────────────────────────────
-     Final CTA — full-bleed cinematic
-     ───────────────────────────────────────────────────── */
-  .cta-final {
-    position: relative;
-    overflow: hidden;
-    background: var(--bg-deep);
-    color: #faf3e3;
-    padding: 0;
-    min-height: 100svh;
-    display: flex; align-items: center;
+  /* ───────────────────────────────────────────────
+     Information (hours, calendar-like)
+     ─────────────────────────────────────────────── */
+  .info { background: var(--paper); }
+  .info-grid { display: grid; grid-template-columns: 1fr; gap: 56px; }
+  .info-block {
+    border-top: 1px solid var(--line);
+    padding-top: 28px;
   }
-  .cta-photo {
-    position: absolute; inset: 0;
-    background-image: url('photos/08-trio-laugh.jpg');
-    background-size: cover;
-    background-position: center 35%;
-    filter: brightness(0.42) contrast(1.06) saturate(0.95);
-  }
-  .cta-final::after {
-    content: ""; position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse at 50% 70%, rgba(184,138,74,0.22) 0%, transparent 60%),
-      linear-gradient(180deg, rgba(20,17,13,0.6) 0%, rgba(20,17,13,0.85) 100%);
-  }
-  .cta-content {
-    position: relative; z-index: 2;
-    text-align: center;
-    width: 100%;
-    padding: 96px 24px;
-  }
-  .cta-content .eyebrow { color: var(--gold-hi); }
-  .cta-content h2 {
-    font-family: 'Fraunces', serif; font-weight: 280;
-    font-variation-settings: "opsz" 144;
-    font-size: clamp(34px, 9.5vw, 64px);
-    line-height: 1.12;
-    letter-spacing: -0.01em;
-    margin-bottom: 36px;
-    max-width: 14ch;
-    margin-left: auto; margin-right: auto;
-    text-shadow: 0 2px 24px rgba(0,0,0,0.4);
-  }
-  .cta-content h2 em { font-style: italic; color: var(--cream); }
-  .cta-row {
-    display: flex; gap: 12px; flex-direction: column; align-items: center;
-  }
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-    padding: 18px 30px;
-    min-height: 52px;
-    font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
-    font-weight: 600;
-    transition: transform .25s, box-shadow .25s;
-    border: 1px solid transparent;
-    border-radius: 1px;
-    width: 100%;
-    max-width: 320px;
-  }
-  .btn-primary {
-    background: linear-gradient(180deg, var(--gold-hi) 0%, var(--gold) 100%);
-    color: #1a1612;
-    box-shadow: 0 16px 36px -10px rgba(184,138,74,0.55), inset 0 1px 0 rgba(255,236,200,0.45);
-  }
-  .btn-primary:hover, .btn-primary:active { transform: translateY(-2px); box-shadow: 0 24px 48px -12px rgba(184,138,74,0.7), inset 0 1px 0 rgba(255,236,200,0.55); }
-  .btn-ghost { background: transparent; color: #faf3e3; border-color: rgba(250,243,227,0.5); }
-  .btn-ghost:hover, .btn-ghost:active { background: rgba(250,243,227,0.1); border-color: #faf3e3; }
-  .btn .arrow { transition: transform .25s; }
-  .btn:hover .arrow { transform: translateX(4px); }
-  @media (min-width: 480px) {
-    .cta-row { flex-direction: row; justify-content: center; }
-    .btn { width: auto; max-width: none; }
-  }
-
-  /* ─────────────────────────────────────────────────────
-     Info — contact + map, mobile single column
-     ───────────────────────────────────────────────────── */
-  .info { background: var(--bg-alt); }
-  .info-grid { display: grid; grid-template-columns: 1fr; gap: 36px; }
-  .info dl {
-    display: grid;
-    grid-template-columns: 64px 1fr;
-    gap: 14px 18px;
-    font-size: 14px;
-    line-height: 1.85;
-  }
-  .info dt {
-    font-family: 'Fraunces', serif;
+  .info-block h3 {
+    font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-weight: 400;
-    color: var(--accent);
-    font-size: 12px;
-    letter-spacing: 0.04em;
+    font-size: 22px;
+    color: var(--green);
+    margin-bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .info-block h3::before {
+    content: ""; display: block; width: 22px; height: 1px; background: var(--green); opacity: 0.7;
+  }
+  .info-block dl { display: grid; grid-template-columns: max-content 1fr; gap: 12px 24px; font-size: 14px; }
+  .info-block dt {
+    font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--ink-mute);
     padding-top: 3px;
   }
-  .info dd { color: var(--ink-soft); }
-  .info dd a { color: var(--ink-soft); border-bottom: 1px solid var(--line); padding-bottom: 1px; }
-  .info dd a:hover { color: var(--accent); border-color: var(--accent); }
-  .map-card {
-    aspect-ratio: 4/3;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    display: flex; align-items: center; justify-content: center;
-    text-align: center;
-    color: var(--ink-mute);
-    font-size: 12px; letter-spacing: 0.04em;
-    padding: 28px;
-    line-height: 1.85;
-  }
-  .map-card a { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
+  .info-block dd { color: var(--ink-soft); line-height: 1.85; }
+  .info-block dd a { color: var(--green); border-bottom: 1px solid var(--green); padding-bottom: 1px; }
   @media (min-width: 720px) {
     .info-grid { grid-template-columns: 1fr 1fr; gap: 64px; }
   }
 
-  /* ─────────────────────────────────────────────────────
-     Footer
-     ───────────────────────────────────────────────────── */
-  footer {
-    background: var(--bg-deep);
-    color: rgba(250,243,227,0.66);
-    padding: 56px 0 56px;
-    font-size: 11px; letter-spacing: 0.04em;
-  }
-  footer .inner {
-    display: flex; flex-direction: column;
-    align-items: center; gap: 18px;
+  /* ───────────────────────────────────────────────
+     Access (map + address)
+     ─────────────────────────────────────────────── */
+  .access { background: var(--paper-2); }
+  .access-grid { display: grid; grid-template-columns: 1fr; gap: 36px; align-items: center; }
+  .access-map {
+    aspect-ratio: 4/3;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink-mute);
+    font-size: 12px;
     text-align: center;
+    padding: 24px;
+    line-height: 1.9;
   }
-  footer .brand {
-    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
-    font-size: 32px;
-    color: #faf3e3;
-    margin-bottom: 4px;
+  .access-map a {
+    color: var(--green);
+    border-bottom: 1px solid var(--green);
+    padding-bottom: 1px;
   }
-  footer .links { display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; }
-  footer .links a { border-bottom: 1px solid rgba(250,243,227,0.3); padding-bottom: 1px; }
-  footer .cr { color: rgba(250,243,227,0.4); }
+  .access-info p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .access-info .addr {
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--ink-soft);
+  }
+  .access-info .tel {
+    display: inline-block;
+    margin-top: 14px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    color: var(--green);
+    letter-spacing: 0.02em;
+  }
   @media (min-width: 720px) {
-    footer .inner { flex-direction: row; justify-content: space-between; align-items: flex-end; text-align: left; }
+    .access-grid { grid-template-columns: 1fr 1fr; gap: 64px; }
+  }
+
+  /* ───────────────────────────────────────────────
+     Final CTA — full bleed dark with green wash
+     ─────────────────────────────────────────────── */
+  .final-cta {
+    position: relative;
+    background: var(--ink);
+    color: var(--paper);
+    overflow: hidden;
+    padding: 0;
+    min-height: 100svh;
+    display: flex; align-items: center;
+  }
+  .final-cta-photo {
+    position: absolute; inset: 0;
+    background-image: url('photos/08-trio-laugh.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    filter: brightness(0.42) saturate(0.85) hue-rotate(-8deg);
+  }
+  .final-cta::after {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 60%, rgba(45, 74, 58, 0.4) 0%, transparent 60%),
+      linear-gradient(180deg, rgba(26, 32, 29, 0.5) 0%, rgba(26, 32, 29, 0.85) 100%);
+  }
+  .final-cta-content {
+    position: relative; z-index: 2;
+    width: 100%;
+    text-align: center;
+    padding: 100px 24px;
+  }
+  .final-cta-content .bilingual-label .en { color: #c5d4c4; }
+  .final-cta-content .bilingual-label .ja { color: rgba(245, 240, 230, 0.6); }
+  .final-cta-content h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(38px, 9vw, 76px);
+    line-height: 1.1;
+    color: var(--paper);
+    margin: 0 auto 40px;
+    max-width: 16ch;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.4);
+  }
+  .final-cta-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 20px 36px;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 17px;
+    letter-spacing: 0.04em;
+    border-radius: 999px;
+    transition: transform .25s, background .3s;
+  }
+  .final-cta-btn:hover { background: var(--paper-2); transform: translateY(-2px); }
+  .final-cta-btn .arrow {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--green);
+    color: var(--paper);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: transform .3s;
+    font-size: 12px;
+    font-style: normal;
+  }
+  .final-cta-btn:hover .arrow { transform: translateX(4px) rotate(-12deg); }
+  .final-cta-tel {
+    display: block;
+    margin-top: 22px;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    color: rgba(245, 240, 230, 0.62);
+  }
+  .final-cta-tel a { color: inherit; border-bottom: 1px solid rgba(245, 240, 230, 0.3); padding-bottom: 1px; }
+
+  /* ───────────────────────────────────────────────
+     Footer
+     ─────────────────────────────────────────────── */
+  footer {
+    background: var(--ink);
+    color: rgba(245, 240, 230, 0.6);
+    padding: 64px 24px 48px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+  }
+  footer .f-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 30px;
+    color: var(--paper);
+    margin-bottom: 6px;
+  }
+  footer .f-sub {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 230, 0.5);
+    margin-bottom: 28px;
+  }
+  footer .f-links {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 18px;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+    color: rgba(245, 240, 230, 0.7);
+  }
+  footer .f-links a { transition: color .25s; }
+  footer .f-links a:hover { color: var(--green-hi); }
+  footer .f-cr {
+    font-size: 10px;
+    color: rgba(245, 240, 230, 0.4);
+    letter-spacing: 0.2em;
   }
 </style>
 </head>
 <body>
 
-<!-- ─── Loading curtain ─── -->
-<div class="curtain" id="curtain">
-  <div class="mark">marici</div>
-</div>
-
-<!-- ─── Scroll progress ─── -->
-<div class="progress" id="progress"></div>
-
-<!-- ─── Custom cursor (desktop only) ─── -->
-<div class="cursor-ring" id="cursorRing"></div>
-<div class="cursor-dot" id="cursorDot"></div>
-<div class="cursor-view" id="cursorView">View</div>
-
-<!-- ─── SVG defs (reusable signature mark) ─── -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="sigMark" viewBox="0 0 28 28">
-    <g fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
-      <path d="M14 2 L14 26 M2 14 L26 14 M5 5 L23 23 M23 5 L5 23" opacity="0.8" />
-      <circle cx="14" cy="14" r="3" stroke-width="0.8" />
-    </g>
-  </symbol>
-</svg>
-
-<!-- ─── Header ─── -->
+<!-- ═══ Header ═══ -->
 <header class="site-header" id="siteHeader">
-  <div class="inner">
-    <a href="#top" class="brand-mark">marici</a>
-    <a href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" class="nav-cta" target="_blank" rel="noopener">
-      <span class="live-dot"></span>
-      <span class="nav-cta-label-full">ご予約</span>
-      <span class="nav-cta-label-short">予約</span>
-    </a>
+  <div class="header-inner">
+    <a href="#top" class="brand">marici</a>
+    <div class="header-right">
+      <button class="menu-trigger" id="menuTrigger" aria-controls="menuOverlay" aria-expanded="false" type="button">
+        <span class="bars"><span></span><span></span></span>
+        <span>Menu</span>
+      </button>
+      <a href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" class="book-btn" target="_blank" rel="noopener">
+        <span class="dot"></span>
+        Reserve
+      </a>
+    </div>
   </div>
 </header>
 
-<!-- ─── Hero ─── -->
-<section class="hero grain-overlay" id="top">
+<!-- ═══ Full-screen menu ═══ -->
+<div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+  <nav>
+    <a href="#greeting" data-menu-link>Greeting<span class="num">01</span></a>
+    <a href="#style" data-menu-link>Style<span class="num">02</span></a>
+    <a href="#menu" data-menu-link>Menu<span class="num">03</span></a>
+    <a href="#gallery" data-menu-link>Gallery<span class="num">04</span></a>
+    <a href="#info" data-menu-link>Information<span class="num">05</span></a>
+    <a href="#access" data-menu-link>Access<span class="num">06</span></a>
+  </nav>
+  <div class="menu-overlay-foot">marici — hair salon, Kumamoto</div>
+</div>
+
+<!-- ═══ Hero ═══ -->
+<section class="hero" id="top">
   <div class="hero-photo"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">marici — kumamoto</div>
-    <h1 class="hero-title" data-split>
-      流れにまかせて、<br />
-      <em>自分らしい髪</em>へ。
-    </h1>
-    <div class="hero-wordmark-detail">est. for hair, no.04</div>
-    <div class="hero-meta">
-      <span>Care Bleach</span>
-      <span>Color</span>
-      <span>髪質改善</span>
-    </div>
+  <div class="hero-mark">
+    marici<span class="small">est. 2024</span>
   </div>
-  <div class="hero-scroll">scroll</div>
+  <div class="hero-content">
+    <h1 class="hero-en">
+      Good afternoon,<br />
+      a quiet new self.
+    </h1>
+    <div class="hero-ja">流されない、わたしの髪を。</div>
+  </div>
+  <a href="#greeting" class="hero-scroll" aria-label="scroll">scroll</a>
 </section>
 
-<!-- ─── Concept ─── -->
-<section class="concept" id="concept">
+<!-- ═══ Greeting ═══ -->
+<section class="greeting" id="greeting">
   <div class="container">
-    <div class="concept-grid">
-      <div class="concept-photo reveal">
-        <img src="photos/02-portrait-bob.jpg" alt="marici portrait" loading="lazy" />
+    <div class="bilingual-label reveal" style="display:flex; justify-content:center;">
+      <div class="en">Greeting</div>
+      <div class="ja">No. 01 ・ ごあいさつ</div>
+    </div>
+    <div class="greeting-grid">
+      <div class="greeting-photo reveal">
+        <img src="photos/02-portrait-bob.jpg" alt="" loading="lazy" />
       </div>
-      <div class="concept-text reveal reveal-slow">
-        <div class="vol-label">Vol. 01 ・ Concept</div>
-        <div class="divider-brass"></div>
-        <h2 class="h2">
-          技術は静かに、<br />
-          仕上がりは<em>はっきりと</em>。
-        </h2>
-        <p>marici(マリーチ)は、熊本市・上通りに佇む、ちいさなヘアサロンです。</p>
-        <p>ケアブリーチでつくる繊細なカラーと、髪質改善の組み合わせで、「明るい色を諦めない」「綺麗な髪を諦めない」を、両立させていきます。</p>
-        <p class="tail">
+      <div class="greeting-text reveal">
+        <p>
+          毎朝の鏡が、<br />
+          すこし楽しみになる。<br />
+          そんな髪を、ふたりで。
+        </p>
+        <p class="body">
+          marici(マリーチ)は、熊本市・上通りにある、ちいさなヘアサロンです。
+          ケアブリーチでつくる繊細なカラーと、髪質改善を組み合わせて、「明るい色を諦めない」「綺麗な髪を諦めない」を、両立させていきます。
+        </p>
+        <p class="body">
           オーダーは、写真でも、雰囲気の言葉でも構いません。<br />
           似合うを一緒に探す時間を、大切にしています。
         </p>
@@ -1067,207 +813,143 @@
   </div>
 </section>
 
-<!-- ─── Pull quote — editorial intermission ─── -->
-<section class="pull-quote">
-  <div class="pull-quote-inner">
-    <div class="sig-mark center reveal" style="margin-bottom: 32px;"><svg><use href="#sigMark"/></svg></div>
-    <div class="pull-quote-mark reveal">"</div>
-    <p class="pull-quote-text reveal">
-      派手な変化を求めるより、<em>「ちょっと触ってみたくなる髪」</em>を、<br />
-      時間をかけて積み上げていく。
-    </p>
-    <div class="pull-quote-attribution reveal">marici — note</div>
-  </div>
-</section>
-
-<!-- ─── Editorial spreads — 1 photo per scroll ─── -->
-<section class="editorial" id="editorial">
-  <div class="ed-intro reveal">
-    <div class="vol-label on-dark" style="justify-content:center;">Vol. 02 ・ Works</div>
-    <h2 class="h2 on-dark">
-      色も、表情も、<br />
-      その人の<em>季節</em>に合わせて。
-    </h2>
-    <p class="lead">同じ髪は、ふたつとない。<br />ひとりひとりに、ぴったりの一本を。</p>
-  </div>
-
-  <article class="spread spread-1 grain-overlay" data-cursor-view>
-    <div class="photo"></div>
-    <span class="fig-caption">Fig. 01</span>
-    <div class="caption reveal">
-      <div class="num">— 01</div>
-      <h3>やわらかな赤茶の、<br />軽やかなショート。</h3>
-      <div class="tag">Color × Cut</div>
-    </div>
-  </article>
-
-  <article class="spread spread-2 grain-overlay" data-cursor-view>
-    <div class="photo"></div>
-    <span class="fig-caption">Fig. 02</span>
-    <div class="caption reveal">
-      <div class="num">— 02</div>
-      <h3>毎日に、<br />ちょっとの明るさを。</h3>
-      <div class="tag">Editorial</div>
-    </div>
-  </article>
-
-  <article class="spread spread-3 grain-overlay" data-cursor-view>
-    <div class="photo"></div>
-    <span class="fig-caption">Fig. 03</span>
-    <div class="caption reveal">
-      <div class="num">— 03</div>
-      <h3>ふたりの空気感まで、<br />仕上げの一部に。</h3>
-      <div class="tag">Style Shoot</div>
-    </div>
-  </article>
-</section>
-
-<!-- ─── Marquee ticker ─── -->
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span class="ticker-item">Now booking — Spring 2026<span class="sep"></span>marici, Kumamoto<span class="sep"></span>Hair, with care<span class="sep"></span>Care Bleach &amp; Color<span class="sep"></span>髪質改善<span class="sep"></span></span>
-    <span class="ticker-item">Now booking — Spring 2026<span class="sep"></span>marici, Kumamoto<span class="sep"></span>Hair, with care<span class="sep"></span>Care Bleach &amp; Color<span class="sep"></span>髪質改善<span class="sep"></span></span>
-  </div>
-</div>
-
-<!-- ─── Interior ─── -->
-<section class="interior">
-  <div class="interior-photo grain-overlay">
-    <div class="interior-caption">
-      <div class="vol-label on-dark">Vol. 03 ・ Salon</div>
-      <h2 class="serif">熊本・上通り、<br />光と素材の店内で。</h2>
-      <p>コンクリートの床に、抜けの良い天井。落ち着いた間接照明。<br />4 席のちいさな店だから、ひとりひとりに丁寧に向き合えます。</p>
-    </div>
-  </div>
-</section>
-
-<!-- ─── Strengths ─── -->
-<section class="strengths" id="strengths">
+<!-- ═══ Style ═══ -->
+<section class="style" id="style">
   <div class="container">
-    <div class="strength-block">
-      <div class="strength-photo reveal">
-        <img src="photos/04-treatment.jpg" alt="髪質改善" loading="lazy" />
-        <div class="tag">— 01 / Care</div>
+    <div class="sec-head reveal">
+      <div class="bilingual-label" style="display:flex; justify-content:center;">
+        <div class="en">Style</div>
+        <div class="ja">No. 02 ・ 作品</div>
       </div>
-      <div class="strength-text reveal reveal-slow">
-        <div class="vol-label">Vol. 04 ・ Craft 01</div>
-        <div class="divider-brass"></div>
-        <h3 class="serif">髪質改善 — 触れたくなる、<br />ツヤと指通り。</h3>
-        <p>薬剤を強く効かせるのではなく、髪の状態に合わせてベース・カラー・トリートメントの順序を組み立てます。</p>
-        <p>一度の施術で「魅せる艶」、繰り返すごとに「育てる髪」へ。長くつきあえる髪を、丁寧に積み上げていきます。</p>
-        <div class="meta">→ カット + 美髪矯正 + トリートメント / ¥19,200</div>
-      </div>
+      <h2 class="sec-title">色も、表情も、<em>その人の季節</em>に。</h2>
     </div>
-
-    <div class="strength-block reverse">
-      <div class="strength-photo reveal">
-        <img src="photos/05-color-grid.jpg" alt="color showcase" loading="lazy" />
-        <div class="tag">— 02 / Color</div>
-      </div>
-      <div class="strength-text reveal reveal-slow">
-        <div class="vol-label">Vol. 04 ・ Craft 02</div>
-        <div class="divider-brass"></div>
-        <h3 class="serif">繊細なカラー —<br />明るさを、諦めない。</h3>
-        <p>ケアブリーチの薬剤選定とリフトコントロールで、ダメージを抑えながら、ピンク・シルバー・オレンジ・ブルー・ペールベージュまで、自由に。</p>
-        <p>オフィスカラーから派手髪まで、暮らしに馴染む色を一緒に決めていきます。</p>
-        <div class="meta">→ ケアブリーチ + カラー / ¥16,800〜</div>
-      </div>
+    <div class="style-grid">
+      <a class="style-tile reveal" href="#menu">
+        <img src="photos/06-editorial-pair.jpg" alt="" loading="lazy" />
+        <span class="style-tile-caption">Color &amp; Cut</span>
+      </a>
+      <a class="style-tile reveal" href="#menu">
+        <img src="photos/07-studio-orange.jpg" alt="" loading="lazy" />
+        <span class="style-tile-caption">Editorial</span>
+      </a>
+      <a class="style-tile reveal" href="#menu">
+        <img src="photos/09-stairs-pair.jpg" alt="" loading="lazy" />
+        <span class="style-tile-caption">Style Shoot</span>
+      </a>
+      <a class="style-tile reveal" href="#menu">
+        <img src="photos/04-treatment.jpg" alt="" loading="lazy" />
+        <span class="style-tile-caption">Care &amp; Shine</span>
+      </a>
+      <a class="style-tile reveal" href="#menu">
+        <img src="photos/05-color-grid.jpg" alt="" loading="lazy" />
+        <span class="style-tile-caption">Color Works</span>
+      </a>
+      <a class="style-tile reveal" href="#menu">
+        <img src="photos/01-hero-trio.jpg" alt="" loading="lazy" />
+        <span class="style-tile-caption">marici, three.</span>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ─── Menu ─── -->
+<!-- ═══ Menu ═══ -->
 <section class="menu" id="menu">
   <div class="container-narrow">
-    <div class="menu-head reveal">
-      <div class="vol-label" style="justify-content:center;">Vol. 05 ・ Menu</div>
-      <div class="divider-brass" style="margin-left:auto;margin-right:auto;"></div>
-      <h2 class="h2">Menu &amp; Price</h2>
+    <div class="sec-head reveal">
+      <div class="bilingual-label" style="display:flex; justify-content:center;">
+        <div class="en">Menu</div>
+        <div class="ja">No. 03 ・ メニュー</div>
+      </div>
+      <h2 class="sec-title">Menu &amp; <em>Price</em></h2>
     </div>
     <div class="menu-list">
-      <div class="menu-row reveal"><div><div class="name">カット</div><span class="desc">Cut</span></div><div class="price">¥4,450</div></div>
-      <div class="menu-row reveal"><div><div class="name">カット + カラー</div><span class="desc">Cut + Color</span></div><div class="price">¥9,700</div></div>
-      <div class="menu-row reveal"><div><div class="name">カット + カラー + 3Step</div><span class="desc">Cut + Color + 3 Step Treatment</span></div><div class="price">¥10,700</div></div>
-      <div class="menu-row reveal"><div><div class="name">パーマ + カット</div><span class="desc">Perm + Cut</span></div><div class="price">¥11,000</div></div>
-      <div class="menu-row reveal"><div><div class="name">ケアブリーチ + カラー</div><span class="desc">Care Bleach + Color</span></div><div class="price">¥16,800</div></div>
-      <div class="menu-row reveal"><div><div class="name">カット + 美髪矯正 + トリートメント</div><span class="desc">Cut + 美髪矯正 + Treatment</span></div><div class="price">¥19,200</div></div>
-      <div class="menu-row reveal"><div><div class="name">ケアブリーチ + カラー + カット</div><span class="desc">Care Bleach + Color + Cut</span></div><div class="price">¥19,800</div></div>
+      <div class="menu-row reveal"><div><div class="name">Cut</div><span class="desc">カット</span></div><div class="price">¥4,450</div></div>
+      <div class="menu-row reveal"><div><div class="name">Cut &amp; Color</div><span class="desc">カット + カラー</span></div><div class="price">¥9,700</div></div>
+      <div class="menu-row reveal"><div><div class="name">Cut &amp; Color &amp; 3 Step</div><span class="desc">カット + カラー + 3Step</span></div><div class="price">¥10,700</div></div>
+      <div class="menu-row reveal"><div><div class="name">Perm &amp; Cut</div><span class="desc">パーマ + カット</span></div><div class="price">¥11,000</div></div>
+      <div class="menu-row reveal"><div><div class="name">Care Bleach &amp; Color</div><span class="desc">ケアブリーチ + カラー</span></div><div class="price">¥16,800</div></div>
+      <div class="menu-row reveal"><div><div class="name">Cut &amp; Hair Repair</div><span class="desc">カット + 美髪矯正 + トリートメント</span></div><div class="price">¥19,200</div></div>
+      <div class="menu-row reveal"><div><div class="name">Care Bleach &amp; Color &amp; Cut</div><span class="desc">ケアブリーチ + カラー + カット</span></div><div class="price">¥19,800</div></div>
     </div>
-    <p class="menu-foot reveal">
-      ※ 価格は税込目安。長さ・状態によって変動します。<br />
+    <p class="menu-note reveal">
+      ※ すべて税込目安。長さ・状態によって変動します。<br />
       ※ 当日のメニュー追加・組み替えはお気軽にご相談ください。
     </p>
   </div>
 </section>
 
-<!-- ─── Booking flow ─── -->
-<section class="flow" id="flow">
-  <div class="container-narrow">
-    <div class="flow-head reveal">
-      <div class="vol-label" style="justify-content:center;">Vol. 06 ・ How to book</div>
-      <div class="divider-brass" style="margin-left:auto;margin-right:auto;"></div>
-      <h2 class="h2">ご予約は、<em>3 ステップ</em>で。</h2>
-      <p class="lead">深夜でも早朝でも。空席はリアルタイムで反映され、二重予約や折り返しの心配はありません。</p>
-    </div>
-    <ol class="flow-list">
-      <li class="reveal">
-        <div class="num">01</div>
-        <h3>空席を選ぶ</h3>
-        <p>カレンダーから希望日を選ぶと、その日の空き時間が一覧で表示されます。</p>
-      </li>
-      <li class="reveal">
-        <div class="num">02</div>
-        <h3>メニューを選ぶ</h3>
-        <p>カット・カラー・ケアブリーチ・髪質改善などから、ご希望のメニューを選択。</p>
-      </li>
-      <li class="reveal">
-        <div class="num">03</div>
-        <h3>お名前と連絡先を入力</h3>
-        <p>30 秒で完了。LINE 登録があると次回からは入力不要です。</p>
-      </li>
-    </ol>
-    <p class="flow-cta-note reveal">クレジットカード登録不要 ・ キャンセルもオンラインで OK</p>
-  </div>
-</section>
-
-<!-- ─── Final CTA — full-bleed ─── -->
-<section class="cta-final grain-overlay">
-  <div class="cta-photo"></div>
-  <div class="cta-content">
-    <div class="vol-label on-dark" style="justify-content:center;">Vol. 07 ・ Reservation</div>
-    <h2 class="serif">
-      次に座る席を、<br />
-      <em>marici</em>で。
-    </h2>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener">
-        <span class="live-dot live-dot-light"></span>
-        24時間オンライン予約
-        <span class="arrow">→</span>
-      </a>
-      <a class="btn btn-ghost" href="tel:0962884232">096-288-4232</a>
-    </div>
-  </div>
-</section>
-
-<!-- ─── Info ─── -->
-<section class="info" id="info">
+<!-- ═══ Gallery (店内 / 作品の横スクロール) ═══ -->
+<section class="gallery" id="gallery">
   <div class="container">
+    <div class="sec-head reveal">
+      <div class="bilingual-label" style="display:flex; justify-content:center;">
+        <div class="en">Gallery</div>
+        <div class="ja">No. 04 ・ 店内と作品</div>
+      </div>
+      <h2 class="sec-title">光と素材の、<em>居心地</em>。</h2>
+      <p class="sec-lead">コンクリートの床、開放感のある天井、やわらかい間接照明。<br />4 席だけの、ちいさな店。</p>
+    </div>
+  </div>
+  <div class="gallery-scroll">
+    <div class="gallery-card"><img src="photos/03-interior.jpg" alt="" loading="lazy" /><div class="gc-caption">Salon, interior</div></div>
+    <div class="gallery-card"><img src="photos/04-treatment.jpg" alt="" loading="lazy" /><div class="gc-caption">Hair, in care</div></div>
+    <div class="gallery-card"><img src="photos/05-color-grid.jpg" alt="" loading="lazy" /><div class="gc-caption">Color, six tones</div></div>
+    <div class="gallery-card"><img src="photos/02-portrait-bob.jpg" alt="" loading="lazy" /><div class="gc-caption">Portrait, in green</div></div>
+    <div class="gallery-card"><img src="photos/06-editorial-pair.jpg" alt="" loading="lazy" /><div class="gc-caption">Two, in studio</div></div>
+  </div>
+</section>
+
+<!-- ═══ Information ═══ -->
+<section class="info" id="info">
+  <div class="container-narrow">
+    <div class="sec-head reveal">
+      <div class="bilingual-label" style="display:flex; justify-content:center;">
+        <div class="en">Information</div>
+        <div class="ja">No. 05 ・ ご案内</div>
+      </div>
+      <h2 class="sec-title">Hours &amp; <em>Contact</em></h2>
+    </div>
     <div class="info-grid">
-      <div class="reveal">
-        <div class="vol-label">Vol. 08 ・ Information</div>
-        <div class="divider-brass"></div>
-        <h2 class="h2">marici</h2>
+      <div class="info-block reveal">
+        <h3>Open Hours</h3>
         <dl>
-          <dt>Address</dt><dd>熊本県熊本市中央区草葉町2-32<br />ウェルブライト上通り 1F-A</dd>
-          <dt>Tel</dt><dd><a href="tel:0962884232">096-288-4232</a></dd>
-          <dt>Open</dt><dd>10:00 – 19:00</dd>
-          <dt>Close</dt><dd>不定休</dd>
-          <dt>Web</dt><dd><a href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener">ご予約フォーム</a></dd>
-          <dt>IG</dt><dd><a href="https://www.instagram.com/marici_nakanishi/" target="_blank" rel="noopener">@marici_nakanishi</a></dd>
+          <dt>Mon — Sat</dt><dd>10:00 — 19:00</dd>
+          <dt>Sunday</dt><dd>10:00 — 18:00</dd>
+          <dt>Closed</dt><dd>不定休</dd>
         </dl>
       </div>
-      <div class="map-card reveal">
+      <div class="info-block reveal">
+        <h3>Reservation</h3>
+        <dl>
+          <dt>Online</dt><dd><a href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener">ご予約フォーム</a></dd>
+          <dt>Tel</dt><dd><a href="tel:0962884232">096-288-4232</a></dd>
+          <dt>Instagram</dt><dd><a href="https://www.instagram.com/marici_nakanishi/" target="_blank" rel="noopener">@marici_nakanishi</a></dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Access ═══ -->
+<section class="access" id="access">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="bilingual-label" style="display:flex; justify-content:center;">
+        <div class="en">Access</div>
+        <div class="ja">No. 06 ・ アクセス</div>
+      </div>
+      <h2 class="sec-title">Kumamoto, <em>Uedori</em>.</h2>
+    </div>
+    <div class="access-grid">
+      <div class="access-info reveal">
+        <p>marici</p>
+        <div class="addr">
+          熊本県熊本市中央区草葉町2-32<br />
+          ウェルブライト上通り 1F-A
+        </div>
+        <a class="tel" href="tel:0962884232">096-288-4232</a>
+      </div>
+      <div class="access-map reveal">
         <div>
           熊本市中央区草葉町2-32<br />
           ウェルブライト上通り 1F-A<br /><br />
@@ -1278,196 +960,88 @@
   </div>
 </section>
 
-<!-- ─── Footer ─── -->
-<footer>
-  <div class="container">
-    <div class="inner">
-      <div>
-        <div class="brand">marici</div>
-        <div>hair salon, Kumamoto</div>
-        <div class="sig"><span class="sig-mark" style="vertical-align: middle; margin-right: 8px;"><svg><use href="#sigMark"/></svg></span>Crafted with care — <em>est. 2024</em></div>
-      </div>
-      <div class="links">
-        <a href="#concept">Concept</a>
-        <a href="#editorial">Works</a>
-        <a href="#menu">Menu</a>
-        <a href="#info">Info</a>
-      </div>
-      <div class="cr">© marici. All rights reserved.</div>
+<!-- ═══ Final CTA ═══ -->
+<section class="final-cta" id="reserve">
+  <div class="final-cta-photo"></div>
+  <div class="final-cta-content">
+    <div class="bilingual-label" style="display:flex; justify-content:center;">
+      <div class="en">Reservation</div>
+      <div class="ja">ご予約</div>
+    </div>
+    <h2>
+      Time, just<br />for <em>you</em>.
+    </h2>
+    <a class="final-cta-btn" href="https://hair-salon-link-production.up.railway.app/book/salon-ad76iza2-q47p" target="_blank" rel="noopener">
+      ご予約はこちら
+      <span class="arrow">→</span>
+    </a>
+    <div class="final-cta-tel">
+      お電話 / <a href="tel:0962884232">096 - 288 - 4232</a>
     </div>
   </div>
+</section>
+
+<!-- ═══ Footer ═══ -->
+<footer>
+  <div class="f-brand">marici</div>
+  <div class="f-sub">hair salon, kumamoto</div>
+  <div class="f-links">
+    <a href="#greeting">Greeting</a>
+    <a href="#style">Style</a>
+    <a href="#menu">Menu</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#info">Information</a>
+    <a href="#access">Access</a>
+  </div>
+  <div class="f-cr">© marici. All rights reserved.</div>
 </footer>
 
 <script>
-  // ───── Reveal-on-scroll ─────
+  // Reveal on scroll
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    }, { threshold: 0.14, rootMargin: '0px 0px -50px 0px' });
     document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
   } else {
     document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-in'));
   }
 
-  // ───── Loading curtain ─────
-  const curtain = document.getElementById('curtain');
-  if (curtain) {
-    const lift = () => { curtain.classList.add('is-out'); setTimeout(() => curtain.remove(), 1100); };
-    if (document.readyState === 'complete') setTimeout(lift, 1100);
-    else window.addEventListener('load', () => setTimeout(lift, 900));
-  }
-
-  // ───── Scroll progress bar ─────
-  const progress = document.getElementById('progress');
-  if (progress) {
-    const onScroll = () => {
-      const doc = document.documentElement;
-      const max = doc.scrollHeight - doc.clientHeight;
-      const ratio = max > 0 ? (window.scrollY / max) : 0;
-      progress.style.width = (ratio * 100).toFixed(2) + '%';
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  }
-
-  // ───── Custom cursor (desktop / mouse only) ─────
-  const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (isFinePointer && !prefersReduced) {
-    document.body.classList.add('has-cursor');
-    const dot = document.getElementById('cursorDot');
-    const ring = document.getElementById('cursorRing');
-    let mx = window.innerWidth / 2, my = window.innerHeight / 2;
-    let rx = mx, ry = my;
-    window.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate3d(${mx}px, ${my}px, 0) translate(-50%, -50%)`; }, { passive: true });
-    const raf = () => {
-      rx += (mx - rx) * 0.18;
-      ry += (my - ry) * 0.18;
-      if (ring) ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
-      requestAnimationFrame(raf);
-    };
-    requestAnimationFrame(raf);
-
-    // hover effect on clickable elements
-    const hoverables = 'a, button, .spread, .concept-photo, .strength-photo, summary, [role="button"]';
-    document.querySelectorAll(hoverables).forEach((el) => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-    });
-
-    // Magnetic CTA glow
-    const navCta = document.querySelector('.nav-cta');
-    if (navCta) {
-      navCta.addEventListener('mousemove', (e) => {
-        const r = navCta.getBoundingClientRect();
-        navCta.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
-        navCta.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
-      });
-    }
-
-    // "View" label on cursor over editorial spreads
-    const viewBox = document.getElementById('cursorView');
-    if (viewBox) {
-      const update = (e) => { viewBox.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`; };
-      window.addEventListener('mousemove', update, { passive: true });
-      document.querySelectorAll('[data-cursor-view]').forEach((el) => {
-        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-view-on'));
-        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-view-on'));
-      });
-    }
-  }
-
-  // ───── Hero parallax (photo moves at 0.45x scroll) ─────
-  const heroPhoto = document.querySelector('.hero-photo');
-  if (heroPhoto && !prefersReduced) {
-    let raf;
-    const update = () => {
-      const y = window.scrollY;
-      if (y > window.innerHeight * 1.2) return;
-      heroPhoto.style.transform = `translate3d(0, ${y * 0.32}px, 0) scale(${1 + y * 0.00015})`;
-    };
-    window.addEventListener('scroll', () => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => { update(); raf = null; });
-    }, { passive: true });
-  }
-
-  // ───── Split-text reveal ─────
-  if (!prefersReduced) {
-    const splitNodes = document.querySelectorAll('[data-split]');
-    splitNodes.forEach((node) => {
-      // Walk through child nodes, preserve <em> and <br />
-      const wrap = (text) => {
-        const frag = document.createDocumentFragment();
-        Array.from(text).forEach((c, i) => {
-          if (c === ' ' || c === '　') {
-            const ws = document.createElement('span');
-            ws.className = 'ws'; ws.textContent = c;
-            frag.appendChild(ws);
-            return;
-          }
-          const ch = document.createElement('span');
-          ch.className = 'ch';
-          ch.style.transitionDelay = (i * 28) + 'ms';
-          ch.textContent = c;
-          frag.appendChild(ch);
-        });
-        return frag;
-      };
-      const transform = (el) => {
-        Array.from(el.childNodes).forEach((node) => {
-          if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-            const line = document.createElement('span');
-            line.className = 'split-line';
-            line.appendChild(wrap(node.textContent));
-            node.replaceWith(line);
-          } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'BR') {
-            transform(node);
-            // wrap the whole em in a line too
-            if (node.tagName === 'EM') {
-              node.classList.add('split-line');
-            }
-          }
-        });
-      };
-      transform(node);
-
-      // observe and trigger
-      const io2 = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            node.querySelectorAll('.split-line').forEach((line) => line.classList.add('is-in'));
-            io2.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.3 });
-      io2.observe(node);
-    });
-  }
-
-  // Header background switches dark when over dark sections (editorial/interior/cta)
+  // Header dark on dark sections
   const header = document.getElementById('siteHeader');
-  const darkSections = document.querySelectorAll('.editorial, .interior, .cta-final');
-  if (header && 'IntersectionObserver' in window) {
-    const obs = new IntersectionObserver((entries) => {
-      // visible dark sections push header to dark mode
-      const anyDark = [...darkSections].some((s) => {
-        const r = s.getBoundingClientRect();
-        return r.top < 80 && r.bottom > 80;
-      });
-      header.classList.toggle('is-dark', anyDark);
-    }, { threshold: [0, 0.1, 0.5, 1] });
-    darkSections.forEach((s) => obs.observe(s));
-    window.addEventListener('scroll', () => {
-      const anyDark = [...darkSections].some((s) => {
-        const r = s.getBoundingClientRect();
-        return r.top < 80 && r.bottom > 80;
-      });
-      header.classList.toggle('is-dark', anyDark);
-    }, { passive: true });
-  }
+  const darkSections = ['.hero', '.gallery', '.final-cta'].map((s) => document.querySelector(s)).filter(Boolean);
+  const onScroll = () => {
+    const anyDark = darkSections.some((s) => {
+      const r = s.getBoundingClientRect();
+      return r.top < 70 && r.bottom > 70;
+    });
+    header.classList.toggle('is-dark', anyDark);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Full-screen menu
+  const trigger = document.getElementById('menuTrigger');
+  const overlay = document.getElementById('menuOverlay');
+  const setMenu = (open) => {
+    overlay.classList.toggle('is-open', open);
+    overlay.setAttribute('aria-hidden', open ? 'false' : 'true');
+    trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  trigger.addEventListener('click', () => {
+    const isOpen = overlay.classList.contains('is-open');
+    setMenu(!isOpen);
+  });
+  document.querySelectorAll('[data-menu-link]').forEach((a) => {
+    a.addEventListener('click', () => setMenu(false));
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('is-open')) setMenu(false);
+  });
 </script>
+
 </body>
 </html>
