@@ -4,6 +4,10 @@ import RoiCalculator from './_landing/RoiCalculator';
 import StickyMobileCta from './_landing/StickyMobileCta';
 import Reveal from './_landing/Reveal';
 import CountUp from './_landing/CountUp';
+import LoadingCurtain from './_landing/LoadingCurtain';
+import ScrollProgress from './_landing/ScrollProgress';
+import CustomCursor from './_landing/CustomCursor';
+import SplitText from './_landing/SplitText';
 
 export const metadata = {
   title: 'HairSalonLink — 広告に頼らない経営へ。美容室専用の顧客管理ツール',
@@ -13,6 +17,18 @@ export const metadata = {
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#14100c] text-[#efe3c8]">
+      <LoadingCurtain />
+      <ScrollProgress />
+      <CustomCursor />
+      {/* Reusable signature mark SVG */}
+      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
+        <symbol id="sigMark" viewBox="0 0 28 28">
+          <g fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round">
+            <path d="M14 2 L14 26 M2 14 L26 14 M5 5 L23 23 M23 5 L5 23" opacity="0.8" />
+            <circle cx="14" cy="14" r="3" strokeWidth="0.8" />
+          </g>
+        </symbol>
+      </svg>
       <Header />
       <TrustBar />
       <Hero />
@@ -28,6 +44,7 @@ export default function LandingPage() {
       <Pricing />
       <HomepageOption />
       <Security />
+      <PullQuote />
       <FounderNote />
       <Faq />
       <FinalCta />
@@ -129,17 +146,19 @@ function Hero() {
       />
       <div className="relative max-w-5xl mx-auto px-5 md:px-8 pt-20 pb-20 md:pt-32 md:pb-28 text-center fade-up">
         <Reveal variant="fade" delay={0}>
-          <div className="text-[10px] tracking-[0.32em] uppercase text-[#a89778] mb-8">
-            HAIR SALON &nbsp;×&nbsp; LINE &nbsp;×&nbsp; HOT PEPPER
+          <div className="inline-flex items-center gap-2 mb-8">
+            <span className="w-4 h-px bg-[#c9a675]"></span>
+            <span className="text-[10px] tracking-[0.32em] uppercase text-[#a89778]">
+              HAIR SALON &nbsp;×&nbsp; LINE &nbsp;×&nbsp; HOT PEPPER
+            </span>
+            <span className="w-4 h-px bg-[#c9a675]"></span>
           </div>
         </Reveal>
 
-        <Reveal variant="up" delay={80}>
-          <h1 className="display-serif text-[38px] md:text-[72px] leading-[1.35] md:leading-[1.22] text-[#efe3c8]">
-            広告に<span className="text-brass-sheen">依存しない店</span>へ、<br />
-            静かに切り替えていく。
-          </h1>
-        </Reveal>
+        <SplitText as="h1" className="display-serif text-[38px] md:text-[72px] leading-[1.35] md:leading-[1.22] text-[#efe3c8]">
+          広告に<span className="text-brass-sheen" data-no-split>依存しない店</span>へ、<br />
+          静かに切り替えていく。
+        </SplitText>
 
         <Reveal variant="up" delay={180}>
           <p className="mt-10 text-[14px] md:text-[16px] text-[#bdaa88] leading-[2.1] max-w-2xl mx-auto">
@@ -987,6 +1006,37 @@ function Security() {
 /* ────────────────────────────────────────────────────────── */
 /*  Founder Note                                              */
 /* ────────────────────────────────────────────────────────── */
+
+function PullQuote() {
+  return (
+    <section className="bg-[#14100c] border-y border-[#302519]">
+      <div className="max-w-3xl mx-auto px-5 md:px-8 py-24 md:py-36 text-center">
+        <div className="flex justify-center mb-10">
+          <svg width="36" height="36" viewBox="0 0 28 28" className="text-[#c9a675] opacity-70" aria-hidden>
+            <use href="#sigMark" />
+          </svg>
+        </div>
+        <Reveal variant="fade">
+          <div className="text-[#c9a675] opacity-40 text-[84px] leading-none font-serif italic mb-8" aria-hidden>&ldquo;</div>
+        </Reveal>
+        <Reveal variant="up">
+          <p className="display-serif text-[22px] md:text-[34px] leading-[1.55] tracking-[-0.005em] text-[#efe3c8]">
+            広告を撃つことより、<br />
+            <em className="italic text-[#c9a675]">「もう一度ここに座りたい」</em>を、<br />
+            日々ふやしていく仕事。
+          </p>
+        </Reveal>
+        <Reveal variant="up" delay={120}>
+          <div className="mt-10 inline-flex items-center gap-3 text-[11px] tracking-[0.32em] uppercase text-[#a89778]">
+            <span className="w-5 h-px bg-[#48382a]" />
+            HairSalonLink — note
+            <span className="w-5 h-px bg-[#48382a]" />
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
 
 function FounderNote() {
   return (
