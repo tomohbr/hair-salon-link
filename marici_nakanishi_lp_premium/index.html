@@ -106,11 +106,11 @@
     padding: 0 22px;
   }
 
-  /* Reveal */
-  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1.1s cubic-bezier(.22,1,.36,1), transform 1.1s cubic-bezier(.22,1,.36,1); }
-  .reveal.is-in { opacity: 1; transform: none; }
+  /* Reveal — only hides when JS active (failsafe: no-JS shows everything) */
+  .js .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1.1s cubic-bezier(.22,1,.36,1), transform 1.1s cubic-bezier(.22,1,.36,1); }
+  .js .reveal.is-in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
+    .js .reveal { opacity: 1; transform: none; transition: none; }
   }
 
   /* Text selection + scrollbar (designed details) */
@@ -937,8 +937,8 @@
       <div class="ja">No. 01 ・ ごあいさつ</div>
     </div>
     <div class="greeting-grid">
-      <div class="greeting-photo mask-reveal">
-        <img src="photos/02-portrait-bob.jpg" alt="" loading="lazy" />
+      <div class="greeting-photo reveal">
+        <img src="photos/02-portrait-bob.jpg" alt="marici portrait" loading="lazy" />
       </div>
       <div class="greeting-text reveal">
         <p>
@@ -970,27 +970,27 @@
       <h2 class="sec-title">その人の季節に、<em>そっと寄り添う</em>。</h2>
     </div>
     <div class="style-grid">
-      <a class="style-tile mask-reveal" href="#menu" data-cursor-view>
+      <a class="style-tile reveal" href="#menu" data-cursor-view>
         <img src="photos/06-editorial-pair.jpg" alt="" loading="lazy" />
         <span class="style-tile-caption">Color &amp; Cut</span>
       </a>
-      <a class="style-tile mask-reveal" href="#menu" data-cursor-view>
+      <a class="style-tile reveal" href="#menu" data-cursor-view>
         <img src="photos/07-studio-orange.jpg" alt="" loading="lazy" />
         <span class="style-tile-caption">Editorial</span>
       </a>
-      <a class="style-tile mask-reveal" href="#menu" data-cursor-view>
+      <a class="style-tile reveal" href="#menu" data-cursor-view>
         <img src="photos/09-stairs-pair.jpg" alt="" loading="lazy" />
         <span class="style-tile-caption">Style Shoot</span>
       </a>
-      <a class="style-tile mask-reveal" href="#menu" data-cursor-view>
+      <a class="style-tile reveal" href="#menu" data-cursor-view>
         <img src="photos/04-treatment.jpg" alt="" loading="lazy" />
         <span class="style-tile-caption">Care &amp; Shine</span>
       </a>
-      <a class="style-tile mask-reveal" href="#menu" data-cursor-view>
+      <a class="style-tile reveal" href="#menu" data-cursor-view>
         <img src="photos/05-color-grid.jpg" alt="" loading="lazy" />
         <span class="style-tile-caption">Color Works</span>
       </a>
-      <a class="style-tile mask-reveal" href="#menu" data-cursor-view>
+      <a class="style-tile reveal" href="#menu" data-cursor-view>
         <img src="photos/01-hero-trio.jpg" alt="" loading="lazy" />
         <span class="style-tile-caption">marici — three of us</span>
       </a>
