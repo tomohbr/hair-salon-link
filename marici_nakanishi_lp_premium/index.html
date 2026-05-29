@@ -510,95 +510,61 @@
   /* ───────────────────────────────────────────────
      Style (works gallery) — Groen-style grid
      ─────────────────────────────────────────────── */
-  .style { background: var(--paper-2); }
+  .style { background: var(--paper-2); padding-bottom: 100px; }
+  @media (min-width: 720px) { .style { padding-bottom: 160px; } }
+  .style .sec-lead { font-size: 12px; letter-spacing: 0.1em; color: var(--ink-mute); }
 
-  /* Filter chips */
-  .style-filter {
-    display: flex; flex-wrap: wrap; justify-content: center;
-    gap: 8px;
-    margin-bottom: 40px;
+  /* Horizontal swipe carousel */
+  .style-scroll {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 22px;
+    margin-top: 48px;
+    scrollbar-width: none;
   }
-  .style-filter .chip {
-    appearance: none; cursor: pointer;
-    background: transparent;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 9px 16px;
-    font-family: 'Inter', 'Noto Sans JP', sans-serif;
-    font-size: 12px;
-    color: var(--ink-soft);
-    letter-spacing: 0.04em;
-    line-height: 1;
-    display: inline-flex; align-items: center; gap: 7px;
-    transition: background .3s, color .3s, border-color .3s;
-  }
-  .style-filter .chip span {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 11px;
-    color: var(--ink-mute);
-    transition: color .3s;
-  }
-  .style-filter .chip:hover { border-color: var(--green); color: var(--ink); }
-  .style-filter .chip.is-active {
-    background: var(--green);
-    border-color: var(--green);
-    color: var(--paper);
-  }
-  .style-filter .chip.is-active span { color: var(--paper-3); }
-
-  .style-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-  /* filter transition */
-  .style-tile.is-hidden {
-    display: none;
-  }
-  .style-tile {
-    animation: tileIn .6s cubic-bezier(.22,1,.36,1) both;
-  }
-  @keyframes tileIn {
-    from { opacity: 0; transform: scale(0.96); }
-    to { opacity: 1; transform: none; }
-  }
-  .style-tile {
+  .style-scroll::-webkit-scrollbar { display: none; }
+  .style-card {
+    flex: 0 0 78%;
+    max-width: 420px;
+    aspect-ratio: 3/4;
+    scroll-snap-align: center;
     position: relative;
     overflow: hidden;
-    aspect-ratio: 3/4;
     background: var(--ink);
   }
-  .style-tile img {
+  .style-card img {
     width: 100%; height: 100%; object-fit: cover;
-    transition: transform 1.4s cubic-bezier(.22, 1, .36, 1), filter 1s;
-    filter: saturate(0.95);
+    filter: saturate(0.96);
+    transition: transform 1.4s cubic-bezier(.22,1,.36,1);
   }
-  .style-tile::after {
+  .style-card:hover img { transform: scale(1.04); }
+  .style-card::after {
     content: ""; position: absolute; inset: 0;
-    background: linear-gradient(180deg, transparent 65%, rgba(26, 32, 29, 0.55) 100%);
+    background: linear-gradient(180deg, transparent 60%, rgba(20, 26, 22, 0.6) 100%);
     pointer-events: none;
-    transition: opacity .6s;
   }
-  .style-tile:hover img { transform: scale(1.05); filter: saturate(1.05); }
-  .style-tile-caption {
-    position: absolute; bottom: 14px; left: 14px;
+  .sc-caption {
+    position: absolute; bottom: 16px; left: 16px;
+    z-index: 2;
     color: var(--paper);
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+  .sc-caption em {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 13px;
-    letter-spacing: 0.04em;
-    z-index: 2;
-    transform: translateY(4px);
-    opacity: 0;
-    transition: transform .5s cubic-bezier(.22,1,.36,1), opacity .4s;
-  }
-  .style-tile:hover .style-tile-caption {
-    transform: translateY(0);
-    opacity: 1;
+    font-size: 15px;
+    color: var(--paper);
+    margin-right: 4px;
   }
   @media (min-width: 720px) {
-    .style-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .style-scroll { padding: 0 6vw; gap: 24px; margin-top: 56px; }
+    .style-card { flex: 0 0 34%; max-width: 460px; }
   }
 
   /* ───────────────────────────────────────────────
@@ -1015,46 +981,38 @@
         <div class="ja">No. 02 ・ 作品</div>
       </div>
       <h2 class="sec-title">その人の季節に、<em>そっと寄り添う</em>。</h2>
+      <p class="sec-lead">← 横にスワイプしてご覧ください →</p>
     </div>
-
-    <div class="style-filter reveal" id="styleFilter">
-      <button class="chip is-active" data-filter="all" type="button">すべて<span>All</span></button>
-      <button class="chip" data-filter="color" type="button">カラー<span>Color</span></button>
-      <button class="chip" data-filter="bleach" type="button">ケアブリーチ<span>Care Bleach</span></button>
-      <button class="chip" data-filter="care" type="button">髪質改善<span>Treatment</span></button>
-      <button class="chip" data-filter="cut" type="button">カット・スタイル<span>Cut &amp; Style</span></button>
-    </div>
-
-    <div class="style-grid" id="styleGrid">
-      <a class="style-tile" href="#menu" data-cursor-view data-cat="color">
-        <img src="photos/05-color-grid.jpg" alt="カラー作品" loading="lazy" />
-        <span class="style-tile-caption">Color — six tones</span>
-      </a>
-      <a class="style-tile" href="#menu" data-cursor-view data-cat="bleach">
-        <img src="photos/06-editorial-pair.jpg" alt="ケアブリーチ作品" loading="lazy" />
-        <span class="style-tile-caption">Care Bleach — copper</span>
-      </a>
-      <a class="style-tile" href="#menu" data-cursor-view data-cat="care">
-        <img src="photos/04-treatment.jpg" alt="髪質改善作品" loading="lazy" />
-        <span class="style-tile-caption">Treatment — shine</span>
-      </a>
-      <a class="style-tile" href="#menu" data-cursor-view data-cat="cut">
-        <img src="photos/02-portrait-bob.jpg" alt="カット作品" loading="lazy" />
-        <span class="style-tile-caption">Cut — soft bob</span>
-      </a>
-      <a class="style-tile" href="#menu" data-cursor-view data-cat="bleach">
-        <img src="photos/07-studio-orange.jpg" alt="ハイトーン作品" loading="lazy" />
-        <span class="style-tile-caption">High tone — studio</span>
-      </a>
-      <a class="style-tile" href="#menu" data-cursor-view data-cat="cut">
-        <img src="photos/09-stairs-pair.jpg" alt="スタイル作品" loading="lazy" />
-        <span class="style-tile-caption">Style — two</span>
-      </a>
-      <a class="style-tile" href="#menu" data-cursor-view data-cat="color">
-        <img src="photos/01-hero-trio.jpg" alt="カラー作品" loading="lazy" />
-        <span class="style-tile-caption">Color — three of us</span>
-      </a>
-    </div>
+  </div>
+  <div class="style-scroll">
+    <a class="style-card" href="#menu" data-cursor-view>
+      <img src="photos/05-color-grid.jpg" alt="カラー作品" loading="lazy" />
+      <span class="sc-caption"><em>Color</em> — six tones</span>
+    </a>
+    <a class="style-card" href="#menu" data-cursor-view>
+      <img src="photos/06-editorial-pair.jpg" alt="ケアブリーチ作品" loading="lazy" />
+      <span class="sc-caption"><em>Care Bleach</em> — copper</span>
+    </a>
+    <a class="style-card" href="#menu" data-cursor-view>
+      <img src="photos/04-treatment.jpg" alt="髪質改善作品" loading="lazy" />
+      <span class="sc-caption"><em>Treatment</em> — shine</span>
+    </a>
+    <a class="style-card" href="#menu" data-cursor-view>
+      <img src="photos/02-portrait-bob.jpg" alt="カット作品" loading="lazy" />
+      <span class="sc-caption"><em>Cut</em> — soft bob</span>
+    </a>
+    <a class="style-card" href="#menu" data-cursor-view>
+      <img src="photos/07-studio-orange.jpg" alt="ハイトーン作品" loading="lazy" />
+      <span class="sc-caption"><em>High tone</em> — studio</span>
+    </a>
+    <a class="style-card" href="#menu" data-cursor-view>
+      <img src="photos/09-stairs-pair.jpg" alt="スタイル作品" loading="lazy" />
+      <span class="sc-caption"><em>Style</em> — two</span>
+    </a>
+    <a class="style-card" href="#menu" data-cursor-view>
+      <img src="photos/01-hero-trio.jpg" alt="カラー作品" loading="lazy" />
+      <span class="sc-caption"><em>Color</em> — three of us</span>
+    </a>
   </div>
 </section>
 
@@ -1323,31 +1281,13 @@
       view.style.transform = `translate3d(${mx}px,${my}px,0)`;
     }, { passive: true });
     (function loop() { rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18; ring.style.transform = `translate3d(${rx}px,${ry}px,0) translate(-50%,-50%)`; requestAnimationFrame(loop); })();
-    document.querySelectorAll('a, button, .style-tile, .greeting-photo, [role="button"]').forEach((el) => {
+    document.querySelectorAll('a, button, .style-card, .greeting-photo, [role="button"]').forEach((el) => {
       el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
       el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
     });
     document.querySelectorAll('[data-cursor-view]').forEach((el) => {
       el.addEventListener('mouseenter', () => document.body.classList.add('cursor-view-on'));
       el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-view-on'));
-    });
-  }
-
-  /* ───── Style filter ───── */
-  const filter = document.getElementById('styleFilter');
-  const grid = document.getElementById('styleGrid');
-  if (filter && grid) {
-    const tiles = Array.from(grid.querySelectorAll('.style-tile'));
-    filter.addEventListener('click', (e) => {
-      const chip = e.target.closest('.chip');
-      if (!chip) return;
-      filter.querySelectorAll('.chip').forEach((c) => c.classList.toggle('is-active', c === chip));
-      const cat = chip.dataset.filter;
-      tiles.forEach((t) => {
-        const show = cat === 'all' || t.dataset.cat === cat;
-        t.classList.toggle('is-hidden', !show);
-        if (show) { t.style.animation = 'none'; void t.offsetWidth; t.style.animation = ''; }
-      });
     });
   }
 
