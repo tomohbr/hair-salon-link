@@ -511,10 +511,57 @@
      Style (works gallery) — Groen-style grid
      ─────────────────────────────────────────────── */
   .style { background: var(--paper-2); }
+
+  /* Filter chips */
+  .style-filter {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+  .style-filter .chip {
+    appearance: none; cursor: pointer;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 9px 16px;
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    display: inline-flex; align-items: center; gap: 7px;
+    transition: background .3s, color .3s, border-color .3s;
+  }
+  .style-filter .chip span {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 11px;
+    color: var(--ink-mute);
+    transition: color .3s;
+  }
+  .style-filter .chip:hover { border-color: var(--green); color: var(--ink); }
+  .style-filter .chip.is-active {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--paper);
+  }
+  .style-filter .chip.is-active span { color: var(--paper-3); }
+
   .style-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
+  }
+  /* filter transition */
+  .style-tile.is-hidden {
+    display: none;
+  }
+  .style-tile {
+    animation: tileIn .6s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes tileIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: none; }
   }
   .style-tile {
     position: relative;
@@ -969,30 +1016,43 @@
       </div>
       <h2 class="sec-title">その人の季節に、<em>そっと寄り添う</em>。</h2>
     </div>
-    <div class="style-grid">
-      <a class="style-tile" href="#menu" data-cursor-view>
-        <img src="photos/06-editorial-pair.jpg" alt="" loading="lazy" />
-        <span class="style-tile-caption">Color &amp; Cut</span>
+
+    <div class="style-filter reveal" id="styleFilter">
+      <button class="chip is-active" data-filter="all" type="button">すべて<span>All</span></button>
+      <button class="chip" data-filter="color" type="button">カラー<span>Color</span></button>
+      <button class="chip" data-filter="bleach" type="button">ケアブリーチ<span>Care Bleach</span></button>
+      <button class="chip" data-filter="care" type="button">髪質改善<span>Treatment</span></button>
+      <button class="chip" data-filter="cut" type="button">カット・スタイル<span>Cut &amp; Style</span></button>
+    </div>
+
+    <div class="style-grid" id="styleGrid">
+      <a class="style-tile" href="#menu" data-cursor-view data-cat="color">
+        <img src="photos/05-color-grid.jpg" alt="カラー作品" loading="lazy" />
+        <span class="style-tile-caption">Color — six tones</span>
       </a>
-      <a class="style-tile" href="#menu" data-cursor-view>
-        <img src="photos/07-studio-orange.jpg" alt="" loading="lazy" />
-        <span class="style-tile-caption">Editorial</span>
+      <a class="style-tile" href="#menu" data-cursor-view data-cat="bleach">
+        <img src="photos/06-editorial-pair.jpg" alt="ケアブリーチ作品" loading="lazy" />
+        <span class="style-tile-caption">Care Bleach — copper</span>
       </a>
-      <a class="style-tile" href="#menu" data-cursor-view>
-        <img src="photos/09-stairs-pair.jpg" alt="" loading="lazy" />
-        <span class="style-tile-caption">Style Shoot</span>
+      <a class="style-tile" href="#menu" data-cursor-view data-cat="care">
+        <img src="photos/04-treatment.jpg" alt="髪質改善作品" loading="lazy" />
+        <span class="style-tile-caption">Treatment — shine</span>
       </a>
-      <a class="style-tile" href="#menu" data-cursor-view>
-        <img src="photos/04-treatment.jpg" alt="" loading="lazy" />
-        <span class="style-tile-caption">Care &amp; Shine</span>
+      <a class="style-tile" href="#menu" data-cursor-view data-cat="cut">
+        <img src="photos/02-portrait-bob.jpg" alt="カット作品" loading="lazy" />
+        <span class="style-tile-caption">Cut — soft bob</span>
       </a>
-      <a class="style-tile" href="#menu" data-cursor-view>
-        <img src="photos/05-color-grid.jpg" alt="" loading="lazy" />
-        <span class="style-tile-caption">Color Works</span>
+      <a class="style-tile" href="#menu" data-cursor-view data-cat="bleach">
+        <img src="photos/07-studio-orange.jpg" alt="ハイトーン作品" loading="lazy" />
+        <span class="style-tile-caption">High tone — studio</span>
       </a>
-      <a class="style-tile" href="#menu" data-cursor-view>
-        <img src="photos/01-hero-trio.jpg" alt="" loading="lazy" />
-        <span class="style-tile-caption">marici — three of us</span>
+      <a class="style-tile" href="#menu" data-cursor-view data-cat="cut">
+        <img src="photos/09-stairs-pair.jpg" alt="スタイル作品" loading="lazy" />
+        <span class="style-tile-caption">Style — two</span>
+      </a>
+      <a class="style-tile" href="#menu" data-cursor-view data-cat="color">
+        <img src="photos/01-hero-trio.jpg" alt="カラー作品" loading="lazy" />
+        <span class="style-tile-caption">Color — three of us</span>
       </a>
     </div>
   </div>
@@ -1270,6 +1330,24 @@
     document.querySelectorAll('[data-cursor-view]').forEach((el) => {
       el.addEventListener('mouseenter', () => document.body.classList.add('cursor-view-on'));
       el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-view-on'));
+    });
+  }
+
+  /* ───── Style filter ───── */
+  const filter = document.getElementById('styleFilter');
+  const grid = document.getElementById('styleGrid');
+  if (filter && grid) {
+    const tiles = Array.from(grid.querySelectorAll('.style-tile'));
+    filter.addEventListener('click', (e) => {
+      const chip = e.target.closest('.chip');
+      if (!chip) return;
+      filter.querySelectorAll('.chip').forEach((c) => c.classList.toggle('is-active', c === chip));
+      const cat = chip.dataset.filter;
+      tiles.forEach((t) => {
+        const show = cat === 'all' || t.dataset.cat === cat;
+        t.classList.toggle('is-hidden', !show);
+        if (show) { t.style.animation = 'none'; void t.offsetWidth; t.style.animation = ''; }
+      });
     });
   }
 
