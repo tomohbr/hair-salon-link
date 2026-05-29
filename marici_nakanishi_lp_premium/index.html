@@ -937,7 +937,7 @@
       <div class="ja">No. 01 ・ ごあいさつ</div>
     </div>
     <div class="greeting-grid">
-      <div class="greeting-photo reveal">
+      <div class="greeting-photo">
         <img src="photos/02-portrait-bob.jpg" alt="marici portrait" loading="lazy" />
       </div>
       <div class="greeting-text reveal">
@@ -970,27 +970,27 @@
       <h2 class="sec-title">その人の季節に、<em>そっと寄り添う</em>。</h2>
     </div>
     <div class="style-grid">
-      <a class="style-tile reveal" href="#menu" data-cursor-view>
+      <a class="style-tile" href="#menu" data-cursor-view>
         <img src="photos/06-editorial-pair.jpg" alt="" loading="lazy" />
         <span class="style-tile-caption">Color &amp; Cut</span>
       </a>
-      <a class="style-tile reveal" href="#menu" data-cursor-view>
+      <a class="style-tile" href="#menu" data-cursor-view>
         <img src="photos/07-studio-orange.jpg" alt="" loading="lazy" />
         <span class="style-tile-caption">Editorial</span>
       </a>
-      <a class="style-tile reveal" href="#menu" data-cursor-view>
+      <a class="style-tile" href="#menu" data-cursor-view>
         <img src="photos/09-stairs-pair.jpg" alt="" loading="lazy" />
         <span class="style-tile-caption">Style Shoot</span>
       </a>
-      <a class="style-tile reveal" href="#menu" data-cursor-view>
+      <a class="style-tile" href="#menu" data-cursor-view>
         <img src="photos/04-treatment.jpg" alt="" loading="lazy" />
         <span class="style-tile-caption">Care &amp; Shine</span>
       </a>
-      <a class="style-tile reveal" href="#menu" data-cursor-view>
+      <a class="style-tile" href="#menu" data-cursor-view>
         <img src="photos/05-color-grid.jpg" alt="" loading="lazy" />
         <span class="style-tile-caption">Color Works</span>
       </a>
-      <a class="style-tile reveal" href="#menu" data-cursor-view>
+      <a class="style-tile" href="#menu" data-cursor-view>
         <img src="photos/01-hero-trio.jpg" alt="" loading="lazy" />
         <span class="style-tile-caption">marici — three of us</span>
       </a>
@@ -1174,6 +1174,10 @@
     });
   }, { threshold: 0.14, rootMargin: '0px 0px -50px 0px' });
   document.querySelectorAll('.reveal, .mask-reveal').forEach((el) => io.observe(el));
+  // Failsafe: reveal everything after 3s in case the observer misses anything
+  setTimeout(() => {
+    document.querySelectorAll('.reveal, .mask-reveal').forEach((el) => el.classList.add('is-in'));
+  }, 3000);
 
   /* ───── Split-text (wrap words, animate up) ───── */
   if (!reduced) {
