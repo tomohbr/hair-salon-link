@@ -1203,10 +1203,10 @@ function Footer() {
           </div>
           <div>
             <div className="text-[10px] tracking-[0.28em] uppercase text-[#c9a675] mb-5">Legal</div>
-            <ul className="space-y-3 text-[12px] text-[#6b5b44]">
-              <li>利用規約</li>
-              <li>プライバシーポリシー</li>
-              <li>特定商取引法に基づく表記</li>
+            <ul className="space-y-3 text-[12px]">
+              <li><Link href="/legal/terms" className="hover:text-white transition">利用規約</Link></li>
+              <li><Link href="/legal/privacy" className="hover:text-white transition">プライバシーポリシー</Link></li>
+              <li><Link href="/legal/tokushoho" className="hover:text-white transition">特定商取引法に基づく表記</Link></li>
             </ul>
           </div>
         </div>
