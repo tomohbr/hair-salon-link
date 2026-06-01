@@ -104,7 +104,7 @@ export function inquiryAckTemplate(opts: {
   const subject = '【HairSalonLink】お問合せを受け付けました';
   const html = `
 <!doctype html>
-<html lang="ja"><body style="font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif;color:#14100c;background:#f5e8cf;margin:0;padding:32px 16px;">
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HairSalonLink</title></head><body style="font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif;color:#14100c;background:#f5e8cf;margin:0;padding:32px 16px;">
   <table role="presentation" style="max-width:560px;margin:0 auto;background:#ffffff;border:1px solid #cdbb95;">
     <tr><td style="padding:32px 28px;">
       <div style="font-family:'Georgia',serif;font-style:italic;font-size:24px;color:#14100c;margin-bottom:8px;">HairSalonLink</div>
@@ -153,7 +153,7 @@ export function inquiryNotifyTemplate(opts: {
 }): { subject: string; html: string } {
   const subject = `[Inquiry] ${opts.salonName || opts.name} 様より`;
   const html = `
-<!doctype html><html><body style="font-family:monospace;background:#fff;padding:24px;">
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><title>Inquiry</title></head><body style="font-family:monospace;background:#fff;padding:24px;">
 <h2 style="margin:0 0 16px;font-family:sans-serif;color:#14100c;">新規お問合せ</h2>
 <table cellpadding="6" style="font-size:13px;border-collapse:collapse;">
   <tr><td style="color:#7a857f;width:80px;">From</td><td>${escapeHtml(opts.name)}</td></tr>
