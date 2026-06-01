@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Scissors, ArrowRight, Check, Shield, Zap, Users, TrendingUp, Clock, Database, Sparkles, Quote, Star } from 'lucide-react';
 import RoiCalculator from './_landing/RoiCalculator';
 import StickyMobileCta from './_landing/StickyMobileCta';
+import InquiryForm from './_landing/InquiryForm';
 import Reveal from './_landing/Reveal';
 import CountUp from './_landing/CountUp';
 import LoadingCurtain from './_landing/LoadingCurtain';
@@ -173,9 +174,7 @@ function Hero() {
             <Link href="/register" className="btn-cta">
               無料で HairSalonLink を始める
             </Link>
-            <Link href="#tour" className="btn-cta-ghost">
-              画面ツアーを見る
-            </Link>
+            <InquiryForm source="hero" triggerLabel="資料請求 / お問合せ" buttonClass="btn-cta-ghost" />
           </div>
 
           <div className="mt-6 text-[11px] text-[#7a6850]">
@@ -1139,12 +1138,11 @@ function FinalCta() {
 
         <div className="mt-12 flex flex-col sm:flex-row gap-3 justify-center items-center">
           <Link href="/register" className="btn-cta-gold">HairSalonLink を始める</Link>
-          <Link
-            href="/book/hair-salon-demo"
-            className="inline-flex items-center justify-center gap-2 px-7 py-[15px] text-[13px] font-medium tracking-[0.12em] text-[#efe3c8] border border-[#48382a] hover:border-[#c9a675] hover:text-[#c9a675] transition"
-          >
-            サンプル店舗を見る
-          </Link>
+          <InquiryForm
+            source="final-cta"
+            triggerLabel="資料請求 / お問合せ"
+            buttonClass="inline-flex items-center justify-center gap-2 px-7 py-[15px] text-[13px] font-medium tracking-[0.12em] text-[#efe3c8] border border-[#48382a] hover:border-[#c9a675] hover:text-[#c9a675] transition"
+          />
         </div>
 
         <div className="mt-10 flex items-center justify-center gap-1 text-[#c9a675]">
